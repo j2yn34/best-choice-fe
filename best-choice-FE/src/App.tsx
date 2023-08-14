@@ -3,6 +3,8 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 
+// PR 및 Merge 테스트 - 한세빈
+
 function App() {
   const [count, setCount] = useState(0);
 
