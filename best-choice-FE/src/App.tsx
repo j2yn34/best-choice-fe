@@ -4,6 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 
 // PR 및 Merge 테스트 - 한세빈
+// PR 및 Merge 테스트 - 박지연
 
 function App() {
   const [count, setCount] = useState(0);
