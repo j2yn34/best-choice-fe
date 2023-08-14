@@ -1,1 +1,3 @@
-// 같은 줄 수정 테스트 지연
+import { rest } from "msw";
+
+export const handlers = [];
