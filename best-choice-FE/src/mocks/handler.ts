@@ -1,6 +1,7 @@
 import { rest } from "msw";
 import { postListData, PostListData } from "./mockDatas/postListData";
 import { commentListData, CommentListData } from "./mockDatas/commentListData";
+import { activeChatListData } from "./mockDatas/activeChatListData";
 
 export const handlers = [
   // postListData 조회
@@ -25,5 +26,10 @@ export const handlers = [
     const newData = req.body as CommentListData["content"][0];
     commentListData.content.push(newData);
     return res(ctx.status(201));
+  }),
+
+  // activeChatListData 조회
+  rest.get("/activeChatListData", (_req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(activeChatListData));
   }),
 ];
