@@ -5,7 +5,7 @@
 - [ ] Style: 코드 포맷 변경
 - [ ] Design: css 및 UI 관련 변경
 - [ ] Refactor: 코드 리팩토링
-- [ ] Rename: 폴더명/파일명 변경
+- [ ] Rename: 폴더/파일 이름 및 위치 변경
 - [ ] Test: 테스트 관련
 - [ ] Deploy: 배포 관련
 - [ ] Chore: 빌드, 환경 설정 등 기타 작업
