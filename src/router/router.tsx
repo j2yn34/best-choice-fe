@@ -1,0 +1,32 @@
+import { Routes, Route } from "react-router-dom";
+import IntroPage from "../views/IntroPage";
+import LoginPage from "../views/LoginPage";
+import MainPage from "../views/MainPage";
+import PostListPage from "../views/PostListPage";
+import HotListPage from "../views/HotListPage";
+import ChatListPage from "../views/ChatListPage";
+import SearchPage from "../views/SearchPage";
+import PostDetailPage from "../views/PostDetailPage";
+import CreatePostPage from "../views/CreatePostPage";
+import MemberPage from "../views/MemberPage";
+import NotificationPage from "../views/NotificationPage";
+
+const Router = (): JSX.Element => {
+  return (
+    <Routes>
+      <Route path="/intro" element={<IntroPage />} />
+      <Route path="/" element={<MainPage />} />
+      <Route path="/posts" element={<PostListPage />} />
+      <Route path="/hot" element={<HotListPage />} />
+      <Route path="/chat" element={<ChatListPage />} />
+      <Route path="/search" element={<SearchPage />} />
+      <Route path="/posts/:postId" element={<PostDetailPage />} />
+      <Route path="/create" element={<CreatePostPage />} />
+      <Route path="/member" element={<MemberPage />} />
+      <Route path="/notification" element={<NotificationPage />} />
+      <Route path="/login" element={<LoginPage />} />
+    </Routes>
+  );
+};
+
+export default Router;
