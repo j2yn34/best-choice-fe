@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-import "./index.css";
+import "./assets/style.css";
 import { worker } from "./mocks/worker.ts";
 
 if (process.env.NODE_ENV === "development") {
