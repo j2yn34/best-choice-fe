@@ -10,9 +10,9 @@ const Header = (): JSX.Element => {
   ];
 
   return (
-    <div className="w-ful bg-white flex flex-row items-center h-[70px] shadow-md">
-      <div className="xl:container mx-auto flex flex-row justify-between">
-        <div>
+    <header className="w-ful bg-white flex flex-row items-center h-[70px] shadow-md">
+      <div className="xl:container px-12 mx-auto flex flex-row justify-between">
+        <nav>
           <Link to="/" className="mr-10">
             로고
           </Link>
@@ -21,13 +21,13 @@ const Header = (): JSX.Element => {
               to={`/${menu.name}`}
               key={menu.name}
               className={`text-base mr-6 ${
-                menu.name === "hot" ? "font-semibold" : ""
+                menu.name === "hot" ? "font-bold" : ""
               }`}
             >
               {menu.title}
             </Link>
           ))}
-        </div>
+        </nav>
         <div className="flex flex-row items-center">
           <Link to="/notification" className="text-2xl ml-6">
             <IoMdNotificationsOutline />
@@ -37,7 +37,7 @@ const Header = (): JSX.Element => {
           </Link>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 
