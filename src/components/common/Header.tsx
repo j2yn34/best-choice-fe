@@ -20,7 +20,9 @@ const Header = (): JSX.Element => {
             <Link
               to={`/${menu.name}`}
               key={menu.name}
-              className="text-base mr-6"
+              className={`text-base mr-6 ${
+                menu.name === "hot" ? "font-semibold" : ""
+              }`}
             >
               {menu.title}
             </Link>
