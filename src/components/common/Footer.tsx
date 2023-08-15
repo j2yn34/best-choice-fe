@@ -8,11 +8,11 @@ const Footer = (): JSX.Element => {
       <Link
         to="https://github.com/winnow-2023?tab=repositories"
         target="_blank"
-        className="text-white mr-5 text-2xl"
+        className="text-white mr-2 text-2xl"
       >
         <AiFillGithub />
       </Link>
-      <p className="text-white font-light">
+      <p className="text-white text-xs font-light">
         Copyright © 2023 Best-Choice All rights reserved
       </p>
     </div>
