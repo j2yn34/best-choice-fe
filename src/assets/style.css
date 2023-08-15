@@ -9,3 +9,12 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+:root {
+  color: #1c1c1c;
+  background-color: #f5f6f8;
+}
+
+.main {
+  min-height: calc(100vh - 70px - 96px);
+}

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { IoMdNotifications } from "react-icons/io";
+import { IoMdNotificationsOutline } from "react-icons/io";
 
 const Header = (): JSX.Element => {
   const leftMenus = [
@@ -30,7 +30,7 @@ const Header = (): JSX.Element => {
         </div>
         <div className="flex flex-row items-center">
           <Link to="/notification" className="text-2xl ml-6">
-            <IoMdNotifications />
+            <IoMdNotificationsOutline />
           </Link>
           <Link to="/member" className="text-base ml-6">
             회원페이지
