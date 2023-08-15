@@ -1,6 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import IntroPage from "../views/IntroPage";
-import LoginPage from "../views/LoginPage";
 import MainPage from "../views/MainPage";
 import PostListPage from "../views/PostListPage";
 import HotListPage from "../views/HotListPage";
@@ -10,12 +8,13 @@ import PostDetailPage from "../views/PostDetailPage";
 import CreatePostPage from "../views/CreatePostPage";
 import MemberPage from "../views/MemberPage";
 import NotificationPage from "../views/NotificationPage";
+import LoginPage from "../views/LoginPage";
 
 const Router = (): JSX.Element => {
   return (
     <Routes>
-      <Route path="/intro" element={<IntroPage />} />
       <Route path="/" element={<MainPage />} />
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/posts" element={<PostListPage />} />
       <Route path="/hot" element={<HotListPage />} />
       <Route path="/chat" element={<ChatListPage />} />
@@ -24,7 +23,6 @@ const Router = (): JSX.Element => {
       <Route path="/create" element={<CreatePostPage />} />
       <Route path="/member" element={<MemberPage />} />
       <Route path="/notification" element={<NotificationPage />} />
-      <Route path="/login" element={<LoginPage />} />
     </Routes>
   );
 };
