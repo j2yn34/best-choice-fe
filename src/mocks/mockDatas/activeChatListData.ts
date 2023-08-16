@@ -3,7 +3,7 @@ type Member = {
   nickname: string;
 };
 
-type Post = {
+export type Post = {
   postId: number;
   member: Member;
   title: string;
@@ -16,7 +16,8 @@ type Post = {
   heartCount: number;
   choiceCount: number;
   commentCount: number;
-  liveChatUserCount: number;
+  chattingActive?: boolean;
+  liveChatUserCount?: number;
 };
 
 type Pageable = {
@@ -45,27 +46,27 @@ export const activeChatListData: ActiveChatListData = {
     {
       postId: 2,
       member: { memberId: 2, nickname: "person2" },
-      title: "학교에 대한 질문",
-      content: "학교에 대한 질문입니다.",
-      optionA: "원격 수업이 좋다",
-      optionB: "대면 수업이 좋다.",
-      tag: ["공부", "학교"],
-      createdDate: "2023.08.02",
+      title: "소개팅 장소 어디가 좋을까요?",
+      content: "분위기 좋은 카페와 레스토랑 중에 고민 중인데 어디로 잡을까요?",
+      optionA: "카페",
+      optionB: "레스토랑",
+      tag: ["데이트", "소개팅"],
+      createdDate: "2023.08.10",
       popoularityDate: null,
-      heartCount: 14,
-      choiceCount: 20,
-      commentCount: 5,
-      liveChatUserCount: 6,
+      heartCount: 0,
+      choiceCount: 0,
+      commentCount: 0,
+      liveChatUserCount: 9,
     },
     {
       postId: 5,
       member: { memberId: 5, nickname: "person5" },
-      title: "긴팔 아니면 반팔",
-      content: "요즘 날씨에 어울리는 옷은?",
+      title: "요즘 날씨에 어울리는 옷은?",
+      content: "긴팔 입을까 반팔 입을까",
       optionA: "긴팔",
       optionB: "반팔",
       tag: ["코디", "날씨"],
-      createdDate: "2023.08.10",
+      createdDate: "2023.08.11",
       popoularityDate: null,
       heartCount: 10,
       choiceCount: 10,
@@ -105,8 +106,8 @@ export const activeChatListData: ActiveChatListData = {
     {
       postId: 11,
       member: { memberId: 11, nickname: "person11" },
-      title: "쇼미더머니 지원 영상 보내기 vs 미스터트롯 출연",
-      content: "랩에 소실 없음 그리고 트로트로 소질 없음",
+      title: "쇼미더머니 지원 영상 올리기 vs 미스터트롯 출연",
+      content: "랩에 소질 없음 트로트도 소질 없음",
       optionA: "쇼미더머니",
       optionB: "미스터트롯",
       tag: ["밸런스"],
@@ -116,6 +117,21 @@ export const activeChatListData: ActiveChatListData = {
       choiceCount: 50,
       commentCount: 10,
       liveChatUserCount: 9,
+    },
+    {
+      postId: 12,
+      member: { memberId: 12, nickname: "person12" },
+      title: "1주일 동안 삼시세끼 치킨만 먹기 vs 3년 동안 치킨 못 먹기",
+      content: "1주일 동안 삼시세끼 꼬박꼬박 치킨만 먹어야함.",
+      optionA: "3년 동안 치킨 못 먹기",
+      optionB: "삼시세끼 치킨 먹기",
+      tag: ["밸런스"],
+      createdDate: "2023.08.16",
+      popoularityDate: null,
+      heartCount: 0,
+      choiceCount: 0,
+      commentCount: 0,
+      liveChatUserCount: 6,
     },
     {
       postId: 13,
@@ -141,7 +157,7 @@ export const activeChatListData: ActiveChatListData = {
       optionA: "안읽씹이 더 별로다",
       optionB: "읽씹이 더 별로다.",
       tag: ["연락"],
-      createdDate: "2023.08.16",
+      createdDate: "2023.08.17",
       popoularityDate: null,
       heartCount: 0,
       choiceCount: 0,
@@ -156,7 +172,7 @@ export const activeChatListData: ActiveChatListData = {
       optionA: "1년 내내 여름",
       optionB: "1년 내내 겨울",
       tag: ["계절"],
-      createdDate: "2023.08.16",
+      createdDate: "2023.08.17",
       popoularityDate: null,
       heartCount: 0,
       choiceCount: 0,
@@ -166,17 +182,17 @@ export const activeChatListData: ActiveChatListData = {
     {
       postId: 16,
       member: { memberId: 16, nickname: "person16" },
-      title: "소개팅 장소 어디가 좋을까요?",
-      content: "분위기 좋은 카페와 레스토랑 중에 고민 중인데 어디로 잡을까요?",
-      optionA: "카페",
-      optionB: "레스토랑",
-      tag: ["데이트", "소개팅"],
-      createdDate: "2023.08.16",
+      title: "학교에 대한 질문",
+      content: "학교에 대한 질문입니다.",
+      optionA: "원격 수업이 좋다",
+      optionB: "대면 수업이 좋다.",
+      tag: ["공부", "학교"],
+      createdDate: "2023.08.17",
       popoularityDate: null,
-      heartCount: 0,
-      choiceCount: 0,
-      commentCount: 0,
-      liveChatUserCount: 9,
+      heartCount: 14,
+      choiceCount: 20,
+      commentCount: 5,
+      liveChatUserCount: 6,
     },
     {
       postId: 17,
@@ -186,7 +202,7 @@ export const activeChatListData: ActiveChatListData = {
       optionA: "4개국어 현지인 수준으로 가능",
       optionB: "다른 사람 속마음 읽기(모르는 언어면 못 읽음)",
       tag: ["능력"],
-      createdDate: "2023.08.16",
+      createdDate: "2023.08.18",
       popoularityDate: null,
       heartCount: 0,
       choiceCount: 0,
@@ -201,7 +217,7 @@ export const activeChatListData: ActiveChatListData = {
       optionA: "노래 천재",
       optionB: "춤 천재",
       tag: ["밸런스"],
-      createdDate: "2023.08.16",
+      createdDate: "2023.08.18",
       popoularityDate: null,
       heartCount: 0,
       choiceCount: 0,
@@ -216,7 +232,7 @@ export const activeChatListData: ActiveChatListData = {
       optionA: "100% 확률로 1000만원 받기",
       optionB: "30% 확률로 1억 받기",
       tag: ["밸런스"],
-      createdDate: "2023.08.16",
+      createdDate: "2023.08.19",
       popoularityDate: null,
       heartCount: 0,
       choiceCount: 0,
