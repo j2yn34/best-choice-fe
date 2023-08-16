@@ -16,7 +16,8 @@ export type Post = {
   heartCount: number;
   choiceCount: number;
   commentCount: number;
-  chattingActive: boolean;
+  chattingActive?: boolean;
+  liveChatUserCount?: number;
 };
 
 type Pageable = {
@@ -60,16 +61,16 @@ export const postListData: PostListData = {
     {
       postId: 2,
       member: { memberId: 2, nickname: "person2" },
-      title: "학교에 대한 질문",
-      content: "학교에 대한 질문입니다.",
-      optionA: "원격 수업이 좋다",
-      optionB: "대면 수업이 좋다.",
-      tag: ["공부", "학교"],
-      createdDate: "2023.08.02",
+      title: "소개팅 장소 어디가 좋을까요?",
+      content: "분위기 좋은 카페와 레스토랑 중에 고민 중인데 어디로 잡을까요?",
+      optionA: "카페",
+      optionB: "레스토랑",
+      tag: ["데이트", "소개팅"],
+      createdDate: "2023.08.10",
       popoularityDate: null,
-      heartCount: 14,
-      choiceCount: 20,
-      commentCount: 5,
+      heartCount: 0,
+      choiceCount: 0,
+      commentCount: 0,
       chattingActive: true,
     },
     {
@@ -80,7 +81,7 @@ export const postListData: PostListData = {
       optionA: "친구랑",
       optionB: "혼자",
       tag: ["여행"],
-      createdDate: "2023.08.05",
+      createdDate: "2023.08.10",
       popoularityDate: null,
       heartCount: 4,
       choiceCount: 10,
@@ -95,7 +96,7 @@ export const postListData: PostListData = {
       optionA: "도와줄 수 있다.",
       optionB: "절대 안 된다.",
       tag: ["연애"],
-      createdDate: "2023.08.07",
+      createdDate: "2023.08.11",
       popoularityDate: "2023.8.15",
       heartCount: 50,
       choiceCount: 100,
@@ -105,12 +106,12 @@ export const postListData: PostListData = {
     {
       postId: 5,
       member: { memberId: 5, nickname: "person5" },
-      title: "긴팔 아니면 반팔",
-      content: "요즘 날씨에 어울리는 옷은?",
+      title: "요즘 날씨에 어울리는 옷은?",
+      content: "긴팔 입을까 반팔 입을까",
       optionA: "긴팔",
       optionB: "반팔",
       tag: ["코디", "날씨"],
-      createdDate: "2023.08.10",
+      createdDate: "2023.08.11",
       popoularityDate: null,
       heartCount: 10,
       choiceCount: 10,
@@ -125,7 +126,7 @@ export const postListData: PostListData = {
       optionA: "라면",
       optionB: "피자",
       tag: ["음식"],
-      createdDate: "2023.08.10",
+      createdDate: "2023.08.11",
       popoularityDate: null,
       heartCount: 20,
       choiceCount: 30,
@@ -185,7 +186,7 @@ export const postListData: PostListData = {
       optionA: "딱복",
       optionB: "말복",
       tag: ["밸런스"],
-      createdDate: "2023.08.16",
+      createdDate: "2023.08.15",
       popoularityDate: "2023.08.22",
       heartCount: 60,
       choiceCount: 120,
@@ -195,8 +196,8 @@ export const postListData: PostListData = {
     {
       postId: 11,
       member: { memberId: 11, nickname: "person11" },
-      title: "쇼미더머니 지원 영상 보내기 vs 미스터트롯 출연",
-      content: "랩에 소실 없음 그리고 트로트로 소질 없음",
+      title: "쇼미더머니 지원 영상 올리기 vs 미스터트롯 출연",
+      content: "랩에 소질 없음 트로트도 소질 없음",
       optionA: "쇼미더머니",
       optionB: "미스터트롯",
       tag: ["밸런스"],
