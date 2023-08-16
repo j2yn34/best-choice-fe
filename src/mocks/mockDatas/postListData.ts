@@ -3,7 +3,7 @@ type Member = {
   nickname: string;
 };
 
-type Post = {
+export type Post = {
   postId: number;
   member: Member;
   title: string;
@@ -220,7 +220,7 @@ export const postListData: PostListData = {
       heartCount: 0,
       choiceCount: 0,
       commentCount: 0,
-      chattingActive: false,
+      chattingActive: true,
     },
   ],
   pageable: {
