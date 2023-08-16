@@ -68,9 +68,9 @@ export const postListData: PostListData = {
       tag: ["데이트", "소개팅"],
       createdDate: "2023.08.10",
       popoularityDate: null,
-      heartCount: 0,
-      choiceCount: 0,
-      commentCount: 0,
+      heartCount: 12,
+      choiceCount: 10,
+      commentCount: 5,
       chattingActive: true,
     },
     {
@@ -100,7 +100,7 @@ export const postListData: PostListData = {
       popoularityDate: "2023.8.15",
       heartCount: 50,
       choiceCount: 100,
-      commentCount: 20,
+      commentCount: 12,
       chattingActive: false,
     },
     {
@@ -130,7 +130,7 @@ export const postListData: PostListData = {
       popoularityDate: null,
       heartCount: 20,
       choiceCount: 30,
-      commentCount: 15,
+      commentCount: 12,
       chattingActive: false,
     },
     {
@@ -190,7 +190,7 @@ export const postListData: PostListData = {
       popoularityDate: "2023.08.22",
       heartCount: 60,
       choiceCount: 120,
-      commentCount: 15,
+      commentCount: 12,
       chattingActive: false,
     },
     {

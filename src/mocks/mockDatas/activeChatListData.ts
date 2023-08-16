@@ -53,9 +53,9 @@ export const activeChatListData: ActiveChatListData = {
       tag: ["데이트", "소개팅"],
       createdDate: "2023.08.10",
       popoularityDate: null,
-      heartCount: 0,
-      choiceCount: 0,
-      commentCount: 0,
+      heartCount: 12,
+      choiceCount: 10,
+      commentCount: 5,
       liveChatUserCount: 9,
     },
     {
