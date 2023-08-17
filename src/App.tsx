@@ -7,7 +7,7 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
-      <section className="main py-20 px-12 mx-auto xl:container">
+      <section className="main pt-20 pb-24 px-4 md:px-12 mx-auto xl:container">
         <Router />
       </section>
       <Footer />
