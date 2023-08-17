@@ -1,7 +1,26 @@
-import React from "react";
+import PostCardList from "../components/contents/PostCardList";
+import useFetchData from "../hooks/useFetchData";
 
 const ChatListPage = (): JSX.Element => {
-  return <div>ChatListPage!</div>;
+  const {
+    isLoading,
+    data: chatData,
+    isError,
+  } = useFetchData("/activeChatListData", ["chatData"]);
+
+  if (isError) {
+    console.log("데이터 불러오기 실패");
+  }
+
+  return (
+    <>
+      {isLoading ? (
+        "Loading..."
+      ) : (
+        <PostCardList postData={chatData} title="채팅방" />
+      )}
+    </>
+  );
 };
 
 export default ChatListPage;
