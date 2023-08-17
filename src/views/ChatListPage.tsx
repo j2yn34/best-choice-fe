@@ -17,7 +17,7 @@ const ChatListPage = (): JSX.Element => {
       {isLoading ? (
         "Loading..."
       ) : (
-        <PostCardList postData={chatData} title="채팅방" />
+        <PostCardList postData={chatData} title="채팅방" sort={false} />
       )}
     </>
   );

@@ -17,7 +17,7 @@ const HotListPage = (): JSX.Element => {
       {isLoading ? (
         "Loading..."
       ) : (
-        <PostCardList postData={postData} title="HOT 투표글" />
+        <PostCardList postData={postData} title="HOT 투표글" sort={false} />
       )}
     </>
   );
