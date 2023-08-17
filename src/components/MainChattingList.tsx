@@ -1,23 +1,18 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
+import useFetchData from "../hooks/useFetchData";
 import ChatUserBadge from "./common/ChatUserBadge";
-import { Post } from "../mocks/mockDatas/activeChatListData";
 import EnterChatRoom from "./modal/EnterChatRoom";
+import { Post } from "../mocks/mockDatas/activeChatListData";
 
 const MainChattingList = (): JSX.Element => {
-  const [chatRoomData, setChatRoomData] = useState<Post[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedChatData, setSelectedChatData] = useState<Post | null>(null);
 
-  const getData = async () => {
-    try {
-      const response = await axios.get("/activeChatListData");
-      const data = response.data["content"];
-      setChatRoomData(data);
-    } catch (error) {
-      console.error("채팅방 리스트 가져오는 중 오류 발생:", error);
-    }
-  };
+  const {
+    isLoading,
+    data: chatData,
+    isError,
+  } = useFetchData("/activeChatListData", ["chatData"]);
 
   const openModal = (data: Post) => {
     setModalOpen(true);
@@ -29,9 +24,9 @@ const MainChattingList = (): JSX.Element => {
     setSelectedChatData(null);
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
+  if (isError) {
+    console.log("데이터 불러오기 실패");
+  }
 
   return (
     <>
@@ -39,20 +34,26 @@ const MainChattingList = (): JSX.Element => {
         data-scroll={true}
         className="grid sm:grid-cols-4 md:grid-cols-2 xl:grid-cols-4 gap-6 main_chat"
       >
-        {chatRoomData.slice(0, 4).map((data) => (
-          <div
-            key={data.postId}
-            onClick={() => openModal(data)}
-            className="flex flex-col border border-blue border-2 rounded-xl bg-white w-full h-[180px] shrink-0 p-2.5 cursor-pointer"
-          >
-            <div className="flex justify-end mb-2">
-              <ChatUserBadge ChatUserCount={data.liveChatUserCount} />
-            </div>
-            <p className="text-lg text-center font-semibold p-4">
-              {data.title}
-            </p>
-          </div>
-        ))}
+        {isLoading ? (
+          "Loading..."
+        ) : (
+          <>
+            {chatData.slice(0, 4).map((data: Post) => (
+              <div
+                key={data.postId}
+                onClick={() => openModal(data)}
+                className="flex flex-col border border-blue border-2 rounded-xl bg-white w-full h-[180px] shrink-0 p-2.5 cursor-pointer"
+              >
+                <div className="flex justify-end mb-2">
+                  <ChatUserBadge ChatUserCount={data.liveChatUserCount} />
+                </div>
+                <p className="text-lg text-center font-semibold p-4">
+                  {data.title}
+                </p>
+              </div>
+            ))}
+          </>
+        )}
       </div>
       {modalOpen ? (
         <EnterChatRoom data={selectedChatData} closeModal={closeModal} />
