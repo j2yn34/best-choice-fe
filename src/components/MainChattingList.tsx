@@ -17,11 +17,13 @@ const MainChattingList = (): JSX.Element => {
   const openModal = (data: Post) => {
     setModalOpen(true);
     setSelectedChatData(data);
+    document.body.style.overflow = "hidden";
   };
 
   const closeModal = () => {
     setModalOpen(false);
     setSelectedChatData(null);
+    document.body.style.overflow = "auto";
   };
 
   if (isError) {
