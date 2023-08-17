@@ -1,24 +1,26 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Post } from "../mocks/mockDatas/postListData";
+import useFetchData from "../hooks/useFetchData";
 import PostCardList from "../components/contents/PostCardList";
 
-// postListData로 HOT 게시글 불러오기 -> 임의로
-
 const HotListPage = (): JSX.Element => {
-  const [postData, setPostData] = useState<Post[]>([]);
+  const {
+    isLoading,
+    data: postData,
+    isError,
+  } = useFetchData("/postListData", ["postData"]);
 
-  const getData = async () => {
-    const response = await axios.get("/postListData");
-    const data = response.data["content"];
-    setPostData(data);
-  };
+  if (isError) {
+    console.log("데이터 불러오기 실패");
+  }
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  return <PostCardList postData={postData} title="HOT 투표글" />;
+  return (
+    <>
+      {isLoading ? (
+        "Loading..."
+      ) : (
+        <PostCardList postData={postData} title="HOT 투표글" />
+      )}
+    </>
+  );
 };
 
 export default HotListPage;
