@@ -41,10 +41,14 @@ const EnterChatRoom = ({
             <Link
               to={`/posts/${data ? data.postId : null}`}
               className="btn bg-white mr-4"
+              onClick={closeModal}
             >
               투표글 보러가기
             </Link>
-            <button className="btn bg-black-primary text-white hover:bg-black">
+            <button
+              className="btn bg-black-primary text-white hover:bg-black"
+              onClick={closeModal}
+            >
               채팅방 입장하기
             </button>
           </div>

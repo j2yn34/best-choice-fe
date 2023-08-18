@@ -1,3 +1,4 @@
+import ScrollTopBtn from "../components/common/ScrollTopBtn";
 import PostCardList from "../components/contents/PostCardList";
 import useFetchData from "../hooks/useFetchData";
 
@@ -19,6 +20,7 @@ const ChatListPage = (): JSX.Element => {
       ) : (
         <PostCardList postData={chatData} title="채팅방" sort={false} />
       )}
+      <ScrollTopBtn />
     </>
   );
 };
