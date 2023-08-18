@@ -1,43 +1,4 @@
-type Member = {
-  memberId: number;
-  nickname: string;
-};
-
-type Post = {
-  commentId: number;
-  member: Member;
-  option: string | null;
-  content: string;
-  createdDate: string;
-  deletedDate: string | null;
-};
-
-type Pageable = {
-  sort: { sorted: boolean; unsorted: boolean; empty: boolean };
-  pageNumber: number;
-  pageSize: number;
-  offset: number;
-  paged: boolean;
-  unpaged: boolean;
-};
-
-export type CommentListData = {
-  content: Post[];
-  pageable: Pageable;
-  totalPages: number;
-  totalElements: number;
-  last: boolean;
-  number: number;
-  sort: {
-    sorted: boolean;
-    unsorted: boolean;
-    empty: boolean;
-  };
-  size: number;
-  numberOfElements: number;
-  first: boolean;
-  empty: boolean;
-};
+import { CommentListData } from "../mockType";
 
 export const commentListData: CommentListData = {
   content: [

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Post } from "../../mocks/mockDatas/postListData";
+import { Post } from "../../mocks/mockType";
 import ChattingBadge from "../common/ChattingBadge";
 import ChatUserBadge from "../common/ChatUserBadge";
 import { AiOutlineComment } from "react-icons/ai";

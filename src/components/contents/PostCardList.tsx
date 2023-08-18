@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import PostCard from "./PostCard";
-import { Post } from "../../mocks/mockDatas/postListData";
+import { Post } from "../../mocks/mockType";
 
 // 실제 서버와 연결할 때는 message가 아닌 정렬 함수가 들어갈 예정!
 const sortNames = [

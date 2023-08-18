@@ -2,7 +2,7 @@ import { useState } from "react";
 import useFetchData from "../hooks/useFetchData";
 import ChatUserBadge from "./common/ChatUserBadge";
 import EnterChatRoom from "./modal/EnterChatRoom";
-import { Post } from "../mocks/mockDatas/activeChatListData";
+import { Post } from "../mocks/mockType";
 
 const MainChattingList = (): JSX.Element => {
   const [modalOpen, setModalOpen] = useState(false);
