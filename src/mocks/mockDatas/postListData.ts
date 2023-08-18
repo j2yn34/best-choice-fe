@@ -1,45 +1,4 @@
-type Member = {
-  memberId: number;
-  nickname: string;
-};
-
-export type Post = {
-  postId: number;
-  member: Member;
-  title: string;
-  content: string;
-  optionA: string;
-  optionB: string;
-  tag: string[];
-  createdDate: string;
-  popoularityDate: string | null;
-  likeCount: number;
-  choiceCount: number;
-  commentCount: number;
-  chattingActive?: boolean;
-  liveChatUserCount?: number;
-};
-
-type Pageable = {
-  sort: { sorted: boolean; unsorted: boolean; empty: boolean };
-  pageNumber: number;
-  pageSize: number;
-  offset: number;
-  paged: boolean;
-  unpaged: boolean;
-};
-
-export type PostListData = {
-  content: Post[];
-  pageable: Pageable;
-  number: number;
-  numberOfElements: number;
-  first: boolean;
-  last: boolean;
-  size: number;
-  sort: { sorted: boolean; unsorted: boolean; empty: boolean };
-  empty: boolean;
-};
+import { PostListData } from "../mockType";
 
 export const postListData: PostListData = {
   content: [
