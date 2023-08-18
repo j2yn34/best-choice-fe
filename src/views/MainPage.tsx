@@ -29,11 +29,8 @@ const MainPage = (): JSX.Element => {
           "Loading..."
         ) : (
           <>
-            <PostCardList
-              postData={postData.slice(0, 4)}
-              title="HOT 투표글"
-              sort={false}
-            />
+            <p className="text-2xl font-semibold">HOT한 투표글</p>
+            <PostCardList postData={postData.slice(0, 4)} />
             <div className="mt-10 text-end">
               <Link to="/hot">HOT글 더 보러가기 &gt;</Link>
             </div>
@@ -46,11 +43,8 @@ const MainPage = (): JSX.Element => {
           "Loading..."
         ) : (
           <>
-            <PostCardList
-              postData={postData.slice(4, 8)}
-              title="새로 올라온 투표글"
-              sort={false}
-            />
+            <p className="text-2xl font-semibold">새로 올라온 투표글</p>
+            <PostCardList postData={postData.slice(4, 8)} />
             <div className="mt-10 text-end">
               <Link to="/posts">투표글 더 보러가기 &gt;</Link>
             </div>
