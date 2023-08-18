@@ -1,5 +1,5 @@
 import ScrollTopBtn from "../components/common/ScrollTopBtn";
-import PostCardList from "../components/contents/PostCardList";
+import ChatCardList from "../components/contents/ChatCardList";
 import useFetchData from "../hooks/useFetchData";
 
 const ChatListPage = (): JSX.Element => {
@@ -20,7 +20,7 @@ const ChatListPage = (): JSX.Element => {
       ) : (
         <>
           <p className="text-2xl font-semibold">채팅방</p>
-          <PostCardList postData={chatData} />
+          <ChatCardList Data={chatData} />
         </>
       )}
       <ScrollTopBtn />

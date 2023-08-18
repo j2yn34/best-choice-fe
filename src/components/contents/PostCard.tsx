@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Post } from "../../mocks/mockType";
 import ChattingBadge from "../common/ChattingBadge";
-import ChatUserBadge from "../common/ChatUserBadge";
 import { AiOutlineComment } from "react-icons/ai";
 import { FiThumbsUp } from "react-icons/fi";
 
@@ -12,15 +11,8 @@ const PostCard = ({ Data }: { Data: Post }): JSX.Element => {
       className="w-full bg-white rounded-xl p-5 shadow-md"
     >
       <div className="flex justify-between items-center">
-        <div key={Data.postId} className="font-semibold text-lg truncate">
-          {Data.title}
-        </div>
+        <div className="font-semibold text-lg truncate">{Data.title}</div>
         {Data.chattingActive ? <ChattingBadge /> : ""}
-        {Data.liveChatUserCount ? (
-          <ChatUserBadge ChatUserCount={Data.liveChatUserCount} />
-        ) : (
-          ""
-        )}
       </div>
 
       <div className="mt-5 flex flex-col md:flex-row items-center justify-between">
