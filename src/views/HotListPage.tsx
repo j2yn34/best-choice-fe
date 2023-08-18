@@ -18,7 +18,10 @@ const HotListPage = (): JSX.Element => {
       {isLoading ? (
         "Loading..."
       ) : (
-        <PostCardList postData={postData} title="HOT 투표글" sort={false} />
+        <>
+          <p className="text-2xl font-semibold">HOT 투표글</p>
+          <PostCardList postData={postData} />
+        </>
       )}
       <ScrollTopBtn />
     </>
