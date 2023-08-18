@@ -72,7 +72,7 @@ const Header = (): JSX.Element => {
             className="fixed inset-0 w-full h-full bg-black/[0.8] z-50"
             onClick={handleMenuToggle}
           ></div>
-          <div className="absolute inset-0 flex flex-col w-64 h-full bg-white z-50">
+          <div className="fixed inset-0 flex flex-col w-64 h-full bg-white z-50">
             {leftMenus.map((menu) => (
               <Link
                 to={`/${menu.name}`}
