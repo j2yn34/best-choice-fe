@@ -18,7 +18,10 @@ const ChatListPage = (): JSX.Element => {
       {isLoading ? (
         "Loading..."
       ) : (
-        <PostCardList postData={chatData} title="채팅방" sort={false} />
+        <>
+          <p className="text-2xl font-semibold">채팅방</p>
+          <PostCardList postData={chatData} />
+        </>
       )}
       <ScrollTopBtn />
     </>
