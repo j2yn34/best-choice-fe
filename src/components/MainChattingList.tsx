@@ -44,7 +44,8 @@ const MainChattingList = (): JSX.Element => {
               <div
                 key={data.postId}
                 onClick={() => openModal(data)}
-                className="flex flex-col border border-blue border-2 rounded-xl bg-white w-full h-[180px] shrink-0 p-2.5 cursor-pointer"
+                className="border border-blue border-2 rounded-xl bg-white w-full h-[180px] shrink-0 p-2.5 cursor-pointer"
+                tabIndex={0}
               >
                 <div className="flex justify-end mb-2">
                   <ChatUserBadge ChatUserCount={data.liveChatUserCount} />

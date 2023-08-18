@@ -34,13 +34,16 @@ const PostCardList = ({
                 key={sortName.name}
                 className="cursor-pointer"
                 onClick={() => clickSort(sortName.message)}
+                tabIndex={0}
               >
                 {sortName.name}
               </li>
             ))}
           </ul>
 
-          <Link to="/create">글쓰기</Link>
+          <Link to="/create" className="font-bold">
+            글쓰기
+          </Link>
         </div>
       ) : (
         ""
