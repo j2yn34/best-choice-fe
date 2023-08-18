@@ -3,7 +3,7 @@ type Member = {
   nickname: string;
 };
 
-type Post = {
+export type Post = {
   postId: number;
   member: Member;
   title: string;

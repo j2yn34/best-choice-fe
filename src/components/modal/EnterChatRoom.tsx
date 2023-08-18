@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Post } from "../../mocks/mockDatas/activeChatListData";
+import { Post } from "../../mocks/mockType";
 import { MdOutlineClose } from "react-icons/md";
 
 const EnterChatRoom = ({
