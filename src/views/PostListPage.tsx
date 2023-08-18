@@ -1,5 +1,6 @@
 import useFetchData from "../hooks/useFetchData";
 import PostCardList from "../components/contents/PostCardList";
+import ScrollTopBtn from "../components/common/ScrollTopBtn";
 
 const PostListPage = (): JSX.Element => {
   const {
@@ -19,6 +20,7 @@ const PostListPage = (): JSX.Element => {
       ) : (
         <PostCardList postData={postData} title="투표글" sort={true} />
       )}
+      <ScrollTopBtn />
     </>
   );
 };

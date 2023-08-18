@@ -1,5 +1,6 @@
 import useFetchData from "../hooks/useFetchData";
 import PostCardList from "../components/contents/PostCardList";
+import ScrollTopBtn from "../components/common/ScrollTopBtn";
 
 const HotListPage = (): JSX.Element => {
   const {
@@ -19,6 +20,7 @@ const HotListPage = (): JSX.Element => {
       ) : (
         <PostCardList postData={postData} title="HOT 투표글" sort={false} />
       )}
+      <ScrollTopBtn />
     </>
   );
 };
