@@ -1,7 +1,8 @@
 import { rest } from "msw";
-import { postListData, PostListData } from "./mockDatas/postListData";
-import { commentListData, CommentListData } from "./mockDatas/commentListData";
+import { postListData } from "./mockDatas/postListData";
+import { commentListData } from "./mockDatas/commentListData";
 import { activeChatListData } from "./mockDatas/activeChatListData";
+import { PostListData, CommentListData } from "./mockType";
 
 export const handlers = [
   // postListData 조회
