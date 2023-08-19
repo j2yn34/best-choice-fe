@@ -13,7 +13,7 @@ const EnterChatRoom = ({
     <>
       <div className="fixed inset-0 flex items-center justify-center z-50">
         <div className="absolute inset-0 bg-black/[0.8]"></div>
-        <div className="flex flex-col absolute max-w-[340px] mx-2 md:min-w-[560px] md:min-h-[340px] rounded-xl bg-white z-20 p-6 pt-4">
+        <div className="flex flex-col max-w-[340px] mx-2 md:min-w-[560px] md:min-h-[340px] rounded-xl bg-white z-20 p-6 pt-4">
           <button
             className="flex justify-end mb-3 text-2xl"
             onClick={closeModal}

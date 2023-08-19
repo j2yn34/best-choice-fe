@@ -17,7 +17,7 @@ const MainPage = (): JSX.Element => {
   return (
     <>
       <div>
-        <div className="text-2xl font-semibold mb-8">진행 중인 채팅방</div>
+        <h1 className="text-2xl font-semibold mb-8">진행 중인 채팅방</h1>
         <MainChattingList />
         <div className="mt-10 text-end">
           <Link to="/chat">채팅방 더 보러가기 &gt;</Link>
@@ -29,7 +29,7 @@ const MainPage = (): JSX.Element => {
           "Loading..."
         ) : (
           <>
-            <p className="text-2xl font-semibold">HOT한 투표글</p>
+            <h1 className="text-2xl font-semibold">HOT한 투표글</h1>
             <PostCardList postData={postData.slice(0, 4)} />
             <div className="mt-10 text-end">
               <Link to="/hot">HOT글 더 보러가기 &gt;</Link>
@@ -43,7 +43,7 @@ const MainPage = (): JSX.Element => {
           "Loading..."
         ) : (
           <>
-            <p className="text-2xl font-semibold">새로 올라온 투표글</p>
+            <h1 className="text-2xl font-semibold">새로 올라온 투표글</h1>
             <PostCardList postData={postData.slice(4, 8)} />
             <div className="mt-10 text-end">
               <Link to="/posts">투표글 더 보러가기 &gt;</Link>
