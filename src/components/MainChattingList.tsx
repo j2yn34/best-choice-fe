@@ -5,7 +5,7 @@ import EnterChatRoom from "./modal/EnterChatRoom";
 import { Post } from "../mocks/mockType";
 
 const MainChattingList = (): JSX.Element => {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [selectedChatData, setSelectedChatData] = useState<Post | null>(null);
 
   const {
@@ -15,13 +15,13 @@ const MainChattingList = (): JSX.Element => {
   } = useFetchData("/activeChatListData", ["chatData"]);
 
   const openModal = (data: Post) => {
-    setModalOpen(true);
+    setShowModal(true);
     setSelectedChatData(data);
     document.body.style.overflow = "hidden";
   };
 
   const closeModal = () => {
-    setModalOpen(false);
+    setShowModal(false);
     setSelectedChatData(null);
     document.body.style.overflow = "auto";
   };
@@ -58,7 +58,7 @@ const MainChattingList = (): JSX.Element => {
           </>
         )}
       </div>
-      {modalOpen ? (
+      {showModal ? (
         <EnterChatRoom data={selectedChatData} closeModal={closeModal} />
       ) : null}
     </>
