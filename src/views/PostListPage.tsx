@@ -46,7 +46,9 @@ const PostListPage = (): JSX.Element => {
               ))}
             </ul>
 
-            <Link to="/create">글쓰기</Link>
+            <Link to="/create" className="font-bold">
+              글쓰기
+            </Link>
           </div>
           <PostCardList postData={postData}></PostCardList>
         </>
