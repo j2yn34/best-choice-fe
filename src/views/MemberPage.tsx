@@ -1,5 +1,7 @@
+import { useState } from "react";
 import useFetchData from "../hooks/useFetchData";
 import PostCardList from "../components/contents/PostCardList";
+import ChangeNickname from "../components/modal/ChangeNickname";
 
 const sortNames = [
   { name: "작성한 투표글", message: "작성한 투표글 클릭" },
@@ -14,6 +16,18 @@ const clickSort = (message: string) => {
 };
 
 const MemberPage = (): JSX.Element => {
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    document.body.style.overflow = "auto";
+  };
+
   const {
     isLoading,
     data: postData,
@@ -31,7 +45,10 @@ const MemberPage = (): JSX.Element => {
           <p className="text-2xl mr-6">
             안녕하세요, <span className="font-semibold">닉네임 </span>님!
           </p>
-          <button className="btn btn-sm bg-white rounded-md">
+          <button
+            onClick={() => openModal()}
+            className="btn btn-sm bg-white rounded-md"
+          >
             닉네임 변경
           </button>
         </div>
@@ -60,6 +77,7 @@ const MemberPage = (): JSX.Element => {
           <PostCardList postData={postData.slice(0, 3)} />
         </div>
       )}
+      {showModal ? <ChangeNickname closeModal={closeModal} /> : null}
     </>
   );
 };
