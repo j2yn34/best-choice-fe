@@ -24,7 +24,7 @@ const Header = (): JSX.Element => {
 
   return (
     <>
-      <header className="sticky top-0 w-full bg-white flex items-center h-[70px] shadow-md">
+      <header className="sticky top-0 w-full bg-white flex items-center h-[70px] shadow-md z-40">
         <div className="w-full xl:container px-4 md:px-12 md:mx-auto flex flex-row justify-between">
           <nav>
             <div className="md:hidden flex items-center">
