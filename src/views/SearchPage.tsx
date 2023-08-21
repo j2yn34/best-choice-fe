@@ -23,16 +23,20 @@ const SearchPage = (): JSX.Element => {
           value={inputValue}
           type="text"
           className="rounded-lg h-[50px] w-4/5 md:w-3/5 pl-3 focus:outline-none shadow-sm"
+          placeholder="검색할 태그를 입력해 주세요."
           onChange={handleChange}
           onFocus={() => {
             setInputValue("");
           }}
         />
-        <button className="btn bg-black-primary px-6 text-white text-base md:text-lg ml-3.5 hover:bg-black">
+        <button className="btn bg-black-primary sm:px-6 text-white text-base md:text-lg ml-3.5 hover:bg-black">
           검색
         </button>
       </form>
-      <p className="text-lg mt-8">#{submitValue} 검색 결과 (0)</p>
+      <p className="text-xl mt-8">
+        <span className="font-semibold">#{submitValue} </span>
+        검색 결과 (0)
+      </p>
     </>
   );
 };
