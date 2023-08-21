@@ -1,5 +1,11 @@
+import CreatePost from "../components/contents/CreatePost";
+
 const CreatePostPage = (): JSX.Element => {
-  return <div>CreatePostPage!</div>;
+  return (
+    <>
+      <CreatePost />
+    </>
+  );
 };
 
 export default CreatePostPage;
