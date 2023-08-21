@@ -38,7 +38,11 @@ const PostListPage = (): JSX.Element => {
               {sortNames.map((sortName) => (
                 <li
                   key={sortName.name}
-                  className="cursor-pointer"
+                  className={`cursor-pointer ${
+                    sortName.name === "최신순"
+                      ? "text-blue-dark font-semibold"
+                      : ""
+                  }`}
                   onClick={() => clickSort(sortName.message)}
                 >
                   {sortName.name}
