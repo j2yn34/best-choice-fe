@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import { KeyboardEvent, useState } from "react";
 import { useRecoilState, RecoilState } from "recoil";
 import { inputValueState } from "../../states/recoil";
 import { InputValue } from "../../states/recoilType";
+import { TiDelete } from "react-icons/ti";
 
 const TagInput = () => {
   const [tagItem, setTagItem] = useState<string>("");
   const [tagList, setTagList] = useState<string[]>([]);
+  const [check, setCheck] = useState<boolean>(false);
 
   const [inputValue, setInputValue] = useRecoilState(
     inputValueState as RecoilState<InputValue>
   );
 
-  const onKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDown = async (e: KeyboardEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
     if (target.value.length !== 0 && e.key === "Enter") {
       submitTagItem();
@@ -19,11 +21,20 @@ const TagInput = () => {
   };
 
   const submitTagItem = () => {
+    setCheck(false);
+
+    if (tagItem.includes(" ")) {
+      setCheck(true);
+      setTagItem("");
+      return;
+    }
+
     setTagList((prevTagList) => {
       const updatedTagList = [...prevTagList];
       updatedTagList.unshift(tagItem);
       return updatedTagList;
     });
+
     setTagItem("");
 
     setInputValue((prevInputValues) => ({
@@ -55,20 +66,25 @@ const TagInput = () => {
         onKeyDown={onKeyDown}
         className="w-full bg-color-bg focus:outline-none p-3"
       ></input>
-      <div className="flex gap-4 mt-5">
+      {check ? (
+        <p className="text-sm mt-1 text-red-dark">
+          * 공백 문자를 포함할 수 없습니다.
+        </p>
+      ) : (
+        ""
+      )}
+      <div className="flex md:gap-4 mt-5 gap-2 overflow-x-auto">
         {tagList.map((tagItem, index) => {
           return (
             <div
               key={index}
-              className="flex items-center bg-blue-100 p-2 rounded-lg"
+              className="flex items-center bg-blue-100 py-2 px-3 rounded-lg whitespace-nowrap"
             >
-              <p>#{tagItem}</p>
-              <button
+              <p className="h-6">#{tagItem}</p>
+              <TiDelete
+                className="text-2xl ml-1 cursor-pointer text-gray"
                 onClick={() => deleteTagItem(tagItem)}
-                className="py-0.5 px-1.5 text-sm ml-1 bg-white rounded-full"
-              >
-                X
-              </button>
+              />
             </div>
           );
         })}
