@@ -1,4 +1,5 @@
-import React from "react";
+import { ChangeEvent, FormEvent } from "react";
+import axios from "axios";
 import { useRecoilState, RecoilState } from "recoil";
 import { inputValueState } from "../../states/recoil";
 import { InputValue } from "../../states/recoilType";
@@ -11,10 +12,7 @@ const CreatePost = (): JSX.Element => {
     inputValueState as RecoilState<InputValue>
   );
 
-  const onchangeInput = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    key: string
-  ) => {
+  const onchangeInput = (e: ChangeEvent<HTMLInputElement>, key: string) => {
     const { value } = e.target;
 
     setInputValue((prevInputValues) => ({
@@ -23,27 +21,46 @@ const CreatePost = (): JSX.Element => {
     }));
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    // 서버 post 보내기
-    console.log(inputValue);
-    // console.log("서버 요청");
-    // window.location.href = "/posts";
+    const formData = new FormData();
+
+    formData.append("title", inputValue.title);
+    formData.append("optionA", inputValue.optionA);
+    formData.append("optionB", inputValue.optionB);
+    formData.append("content", inputValue.content);
+
+    if (inputValue.tags) {
+      for (let i = 0; i < inputValue.tags.length; i++) {
+        formData.append(`tags[${i}]`, inputValue.tags[i]);
+      }
+    }
+
+    if (inputValue.files) {
+      for (let i = 0; i < inputValue.files.length; i++) {
+        formData.append(`files[${i}]`, inputValue.files[i]);
+      }
+    }
+
+    // 임시 post
+    try {
+      await axios.post("/postListData", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("전송 완료");
+      // window.location.href = "/posts";
+    } catch (error) {
+      console.error("Error sending data: ", error);
+    }
   };
 
-  const onDelete = (e: React.FormEvent) => {
+  const onDelete = (e: FormEvent) => {
     e.preventDefault();
-
     alert("작성 취소");
-    setInputValue({
-      title: "",
-      content: "",
-      optionA: "",
-      optionB: "",
-      tags: null,
-      files: null,
-    });
+    window.location.href = "/posts";
   };
 
   return (
