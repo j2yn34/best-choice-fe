@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import useFetchData from "../hooks/useFetchData";
-import MainChattingList from "../components/MainChattingList";
+import MainChattingList from "../components/contents/MainChattingList";
 import PostCardList from "../components/contents/PostCardList";
 
 const MainPage = (): JSX.Element => {

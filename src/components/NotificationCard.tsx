@@ -3,7 +3,7 @@ import useFetchData from "../hooks/useFetchData";
 import EnterChatRoom from "./modal/EnterChatRoom";
 import { Notification } from "../mocks/mockType";
 
-const NotificationMessage = (): JSX.Element => {
+const NotificationCard = (): JSX.Element => {
   const [showModal, setShowModal] = useState(false);
   const [clickedData, setClickedData] = useState<number | null>(null);
 
@@ -68,4 +68,4 @@ const NotificationMessage = (): JSX.Element => {
   );
 };
 
-export default NotificationMessage;
+export default NotificationCard;
