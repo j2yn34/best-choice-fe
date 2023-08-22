@@ -19,6 +19,16 @@
   min-height: calc(100vh - 70px - 96px);
 }
 
+.ql-toolbar.ql-snow {
+  background-color: #c9ddf4;
+  border: none;
+}
+
+.ql-container.ql-snow {
+  background-color: #f5f6f8;
+  border: none;
+}
+
 @media (max-width: 767px) {
   .main_chat[data-scroll="true"] {
     overflow-x: scroll;
