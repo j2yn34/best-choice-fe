@@ -29,6 +29,14 @@ type Comment = {
   deletedDate: string | null;
 };
 
+export type Notification = {
+  notificationId: number;
+  checked: boolean;
+  createdDate: string;
+  postId: number;
+  postTitle: string;
+};
+
 type Pageable = {
   sort: { sorted: boolean; unsorted: boolean; empty: boolean };
   pageNumber: number;
@@ -66,4 +74,8 @@ export type CommentListData = {
   numberOfElements: number;
   first: boolean;
   empty: boolean;
+};
+
+export type NotificationData = {
+  content: Notification[];
 };

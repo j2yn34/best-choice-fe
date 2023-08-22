@@ -2,6 +2,7 @@ import { rest } from "msw";
 import { postListData } from "./mockDatas/postListData";
 import { commentListData } from "./mockDatas/commentListData";
 import { activeChatListData } from "./mockDatas/activeChatListData";
+import { notificationData } from "./mockDatas/notificationData";
 import { PostListData, CommentListData } from "./mockType";
 
 export const handlers = [
@@ -32,5 +33,10 @@ export const handlers = [
   // activeChatListData 조회
   rest.get("/activeChatListData", (_req, res, ctx) => {
     return res(ctx.status(200), ctx.json(activeChatListData));
+  }),
+
+  // NotificationData 조회
+  rest.get("/notificationData", (_req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(notificationData));
   }),
 ];
