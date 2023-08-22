@@ -7,17 +7,17 @@ import { FiThumbsUp } from "react-icons/fi";
 
 const ChatCardList = ({ Data }: { Data: Post[] }) => {
   const [showModal, setShowModal] = useState(false);
-  const [selectedChatData, setSelectedChatData] = useState<Post | null>(null);
+  const [clickedChatData, setClickedChatData] = useState<number | null>(null);
 
   const openModal = (data: Post) => {
     setShowModal(true);
-    setSelectedChatData(data);
+    setClickedChatData(data.postId);
     document.body.style.overflow = "hidden";
   };
 
   const closeModal = () => {
     setShowModal(false);
-    setSelectedChatData(null);
+    setClickedChatData(null);
     document.body.style.overflow = "auto";
   };
 
@@ -76,7 +76,7 @@ const ChatCardList = ({ Data }: { Data: Post[] }) => {
         </div>
       </div>
       {showModal ? (
-        <EnterChatRoom data={selectedChatData} closeModal={closeModal} />
+        <EnterChatRoom postId={clickedChatData} closeModal={closeModal} />
       ) : null}
     </>
   );
