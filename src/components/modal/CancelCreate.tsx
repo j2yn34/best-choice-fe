@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { MdOutlineClose } from "react-icons/md";
 
 const CancelCreate = ({ closeModal }: { closeModal: () => void }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="absolute inset-0 bg-black/[0.8]"></div>
@@ -19,7 +22,7 @@ const CancelCreate = ({ closeModal }: { closeModal: () => void }) => {
               className="btn bg-black-primary text-white hover:bg-black mt-10 mb-4"
               onClick={() => {
                 closeModal();
-                window.location.href = "/posts";
+                navigate("/posts");
               }}
             >
               확인

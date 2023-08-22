@@ -1,10 +1,13 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState, RecoilState } from "recoil";
 import { inputValueState } from "../../states/recoil";
 import { InputValue } from "../../states/recoilType";
 import { MdOutlineClose } from "react-icons/md";
 
 const UploadPost = ({ closeModal }: { closeModal: () => void }) => {
+  const navigate = useNavigate();
+
   const [inputValue] = useRecoilState(
     inputValueState as RecoilState<InputValue>
   );
@@ -37,7 +40,7 @@ const UploadPost = ({ closeModal }: { closeModal: () => void }) => {
         },
       });
       console.log("전송 완료");
-      window.location.href = "/posts";
+      navigate("/posts");
     } catch (error) {
       console.error("Error sending data: ", error);
     }
