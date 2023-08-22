@@ -1,16 +1,36 @@
-import { ChangeEvent, FormEvent } from "react";
-import axios from "axios";
+import {
+  ChangeEvent,
+  FormEvent,
+  SetStateAction,
+  Dispatch,
+  useState,
+} from "react";
 import { useRecoilState, RecoilState } from "recoil";
 import { inputValueState } from "../../states/recoil";
 import { InputValue } from "../../states/recoilType";
 import TagInput from "../common/TagInput";
 import FileInput from "../common/FileInput";
 import TextEditor from "../common/TextEditor";
+import CancelCreate from "../modal/CancelCreate";
+import UploadPost from "../modal/UploadPost";
 
 const CreatePost = (): JSX.Element => {
   const [inputValue, setInputValue] = useRecoilState(
     inputValueState as RecoilState<InputValue>
   );
+
+  const [showCancelModal, setShowCancelModal] = useState<boolean>(false);
+  const [showUploadModal, setShowUploadModal] = useState<boolean>(false);
+
+  const openModal = (setFun: Dispatch<SetStateAction<boolean>>) => {
+    setFun(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeModal = (setFun: Dispatch<SetStateAction<boolean>>) => {
+    setFun(false);
+    document.body.style.overflow = "auto";
+  };
 
   const onchangeInput = (e: ChangeEvent<HTMLInputElement>, key: string) => {
     const { value } = e.target;
@@ -23,44 +43,12 @@ const CreatePost = (): JSX.Element => {
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
-    const formData = new FormData();
-
-    formData.append("title", inputValue.title);
-    formData.append("optionA", inputValue.optionA);
-    formData.append("optionB", inputValue.optionB);
-    formData.append("content", inputValue.content);
-
-    if (inputValue.tags) {
-      for (let i = 0; i < inputValue.tags.length; i++) {
-        formData.append(`tags[${i}]`, inputValue.tags[i]);
-      }
-    }
-
-    if (inputValue.files) {
-      for (let i = 0; i < inputValue.files.length; i++) {
-        formData.append(`files[${i}]`, inputValue.files[i]);
-      }
-    }
-
-    // 임시 post
-    try {
-      await axios.post("/postListData", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log("전송 완료");
-      // window.location.href = "/posts";
-    } catch (error) {
-      console.error("Error sending data: ", error);
-    }
+    openModal(setShowUploadModal);
   };
 
   const onDelete = (e: FormEvent) => {
     e.preventDefault();
-    alert("작성 취소");
-    window.location.href = "/posts";
+    openModal(setShowCancelModal);
   };
 
   return (
@@ -111,6 +99,12 @@ const CreatePost = (): JSX.Element => {
           작성 완료
         </button>
       </div>
+      {showCancelModal ? (
+        <CancelCreate closeModal={() => closeModal(setShowCancelModal)} />
+      ) : null}
+      {showUploadModal ? (
+        <UploadPost closeModal={() => closeModal(setShowUploadModal)} />
+      ) : null}
     </>
   );
 };
