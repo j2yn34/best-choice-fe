@@ -6,7 +6,7 @@ import { Post } from "../mocks/mockType";
 
 const MainChattingList = (): JSX.Element => {
   const [showModal, setShowModal] = useState(false);
-  const [selectedChatData, setSelectedChatData] = useState<Post | null>(null);
+  const [clickedChatData, setClickedChatData] = useState<number | null>(null);
 
   const {
     isLoading,
@@ -16,13 +16,13 @@ const MainChattingList = (): JSX.Element => {
 
   const openModal = (data: Post) => {
     setShowModal(true);
-    setSelectedChatData(data);
+    setClickedChatData(data.postId);
     document.body.style.overflow = "hidden";
   };
 
   const closeModal = () => {
     setShowModal(false);
-    setSelectedChatData(null);
+    setClickedChatData(null);
     document.body.style.overflow = "auto";
   };
 
@@ -59,7 +59,7 @@ const MainChattingList = (): JSX.Element => {
         )}
       </div>
       {showModal ? (
-        <EnterChatRoom data={selectedChatData} closeModal={closeModal} />
+        <EnterChatRoom postId={clickedChatData} closeModal={closeModal} />
       ) : null}
     </>
   );
