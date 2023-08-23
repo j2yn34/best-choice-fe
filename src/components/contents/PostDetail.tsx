@@ -103,7 +103,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
           </div>
 
           <div className="w-full bg-color-bg/[0.6] rounded-xl my-4 px-4 pb-3">
-            <VoteGraph />
+            <VoteGraph ACount={viewData.ACount} BCount={viewData.BCount} />
           </div>
 
           <div className="flex flex-col items-center justify-center pt-4 mb-4">

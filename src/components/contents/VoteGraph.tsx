@@ -18,14 +18,24 @@ ChartJS.register(
   Legend
 );
 
-const VoteGraph: React.FC = () => {
+const VoteGraph = ({
+  ACount,
+  BCount,
+}: {
+  ACount: number;
+  BCount: number;
+}): JSX.Element => {
+  const totalVotes = ACount + BCount;
+  const optionAPercent = Math.round((ACount / totalVotes) * 100);
+  const optionBPercent = Math.round((BCount / totalVotes) * 100);
+
   const data = {
     labels: ["A", "B"],
     datasets: [
       {
         axis: "y",
         fill: false,
-        data: [4, 6],
+        data: [ACount, BCount],
         backgroundColor: ["#fecaca", "#B2D3F8"],
       },
     ],
@@ -63,12 +73,12 @@ const VoteGraph: React.FC = () => {
         B
       </span>
       <div className="absolute top-[38%] text-sm">
-        <span>40% </span>
-        <span>(4명)</span>
+        <span>{optionAPercent}% </span>
+        <span>({ACount}명)</span>
       </div>
       <div className="absolute top-[88%] text-sm">
-        <span>60% </span>
-        <span>(6명)</span>
+        <span>{optionBPercent}% </span>
+        <span>({BCount}명)</span>
       </div>
     </div>
   );
