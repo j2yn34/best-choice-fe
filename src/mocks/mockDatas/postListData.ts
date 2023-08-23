@@ -15,6 +15,8 @@ export const postListData: PostListData = {
       likeCount: 12,
       choiceCount: 50,
       commentCount: 10,
+      ACount: 22,
+      BCount: 28,
       chattingActive: false,
     },
     {
@@ -30,6 +32,8 @@ export const postListData: PostListData = {
       likeCount: 12,
       choiceCount: 10,
       commentCount: 5,
+      ACount: 4,
+      BCount: 6,
       chattingActive: true,
     },
     {
@@ -45,6 +49,8 @@ export const postListData: PostListData = {
       likeCount: 4,
       choiceCount: 10,
       commentCount: 2,
+      ACount: 7,
+      BCount: 3,
       chattingActive: false,
     },
     {
@@ -60,6 +66,8 @@ export const postListData: PostListData = {
       likeCount: 50,
       choiceCount: 100,
       commentCount: 12,
+      ACount: 26,
+      BCount: 74,
       chattingActive: false,
     },
     {
@@ -75,6 +83,8 @@ export const postListData: PostListData = {
       likeCount: 10,
       choiceCount: 10,
       commentCount: 5,
+      ACount: 6,
+      BCount: 4,
       chattingActive: true,
     },
     {
@@ -90,6 +100,8 @@ export const postListData: PostListData = {
       likeCount: 20,
       choiceCount: 30,
       commentCount: 12,
+      ACount: 20,
+      BCount: 10,
       chattingActive: false,
     },
     {
@@ -105,6 +117,8 @@ export const postListData: PostListData = {
       likeCount: 2,
       choiceCount: 5,
       commentCount: 0,
+      ACount: 4,
+      BCount: 1,
       chattingActive: true,
     },
     {
@@ -120,6 +134,8 @@ export const postListData: PostListData = {
       likeCount: 12,
       choiceCount: 20,
       commentCount: 2,
+      ACount: 10,
+      BCount: 10,
       chattingActive: true,
     },
     {
@@ -135,6 +151,8 @@ export const postListData: PostListData = {
       likeCount: 13,
       choiceCount: 20,
       commentCount: 4,
+      ACount: 8,
+      BCount: 12,
       chattingActive: false,
     },
     {
@@ -150,6 +168,8 @@ export const postListData: PostListData = {
       likeCount: 60,
       choiceCount: 120,
       commentCount: 12,
+      ACount: 45,
+      BCount: 75,
       chattingActive: false,
     },
     {
@@ -165,6 +185,8 @@ export const postListData: PostListData = {
       likeCount: 22,
       choiceCount: 50,
       commentCount: 10,
+      ACount: 22,
+      BCount: 28,
       chattingActive: true,
     },
     {
@@ -180,6 +202,8 @@ export const postListData: PostListData = {
       likeCount: 0,
       choiceCount: 0,
       commentCount: 0,
+      ACount: 0,
+      BCount: 0,
       chattingActive: true,
     },
   ],

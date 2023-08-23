@@ -16,6 +16,8 @@ export type Post = {
   likeCount: number;
   choiceCount: number;
   commentCount: number;
+  ACount: number;
+  BCount: number;
   chattingActive?: boolean;
   liveChatUserCount?: number;
 };
