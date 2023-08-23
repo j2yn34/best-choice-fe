@@ -13,6 +13,15 @@ const UploadPost = ({ closeModal }: { closeModal: () => void }) => {
   );
 
   const upload = async () => {
+    if (
+      inputValue.title === "" ||
+      inputValue.optionA === "" ||
+      inputValue.optionB === ""
+    ) {
+      alert("제목과 투표 항목은 필수 입력입니다.");
+      return;
+    }
+
     const formData = new FormData();
 
     formData.append("title", inputValue.title);
