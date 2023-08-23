@@ -12,15 +12,15 @@ const EnterChatRoom = ({
 }) => {
   const {
     isLoading,
-    data: postData,
+    data: chatData,
     isError,
-  } = useFetchData("/postListData", ["postData"]);
+  } = useFetchData("/activeChatListData", ["chatData"]);
 
   if (isError) {
     console.log("데이터 불러오기 실패");
   }
 
-  const filteredPostData = postData.filter(
+  const filteredPostData = chatData.filter(
     (data: Post) => data.postId === postId
   );
 
