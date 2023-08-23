@@ -13,7 +13,7 @@ const TagInput = () => {
     inputValueState as RecoilState<InputValue>
   );
 
-  const onKeyDown = async (e: KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
     if (target.value.length !== 0 && e.key === "Enter") {
       submitTagItem();
@@ -29,19 +29,15 @@ const TagInput = () => {
       return;
     }
 
-    setTagList((prevTagList) => {
-      const updatedTagList = [...prevTagList];
-      updatedTagList.unshift(tagItem);
-      return updatedTagList;
-    });
+    const updatedTagList = [...tagList];
+    updatedTagList.unshift(tagItem);
+    setTagList(updatedTagList);
 
     setTagItem("");
 
     setInputValue((prevInputValues) => ({
       ...prevInputValues,
-      tags: prevInputValues.tags
-        ? [...prevInputValues.tags, tagItem]
-        : [tagItem],
+      tags: [...updatedTagList],
     }));
   };
 
@@ -51,7 +47,7 @@ const TagInput = () => {
 
     setInputValue((prevInputValues) => ({
       ...prevInputValues,
-      tags: tagList.slice(1),
+      tags: [...filteredTagList],
     }));
   };
 
