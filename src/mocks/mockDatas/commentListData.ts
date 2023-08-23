@@ -9,6 +9,7 @@ export const commentListData: CommentListData = {
       content: "너무 재밌다!",
       createdDate: "2023.08.12",
       deletedDate: null,
+      likeCount: 5,
     },
     {
       commentId: 2,
@@ -17,6 +18,7 @@ export const commentListData: CommentListData = {
       content: "당연히 B지~",
       createdDate: "2023.08.12",
       deletedDate: null,
+      likeCount: 2,
     },
     {
       commentId: 3,
@@ -25,6 +27,7 @@ export const commentListData: CommentListData = {
       content: "😀",
       createdDate: "2023.08.11",
       deletedDate: null,
+      likeCount: 0,
     },
     {
       commentId: 4,
@@ -33,6 +36,7 @@ export const commentListData: CommentListData = {
       content: "완전 A같은데?",
       createdDate: "2023.08.11",
       deletedDate: null,
+      likeCount: 10,
     },
     {
       commentId: 5,
@@ -41,6 +45,7 @@ export const commentListData: CommentListData = {
       content: "재밌네 재밌어",
       createdDate: "2023.08.10",
       deletedDate: null,
+      likeCount: 2,
     },
     {
       commentId: 6,
@@ -49,6 +54,7 @@ export const commentListData: CommentListData = {
       content: "이건 진짜 모르겠다...",
       createdDate: "2023.08.10",
       deletedDate: null,
+      likeCount: 12,
     },
     {
       commentId: 7,
@@ -57,6 +63,7 @@ export const commentListData: CommentListData = {
       content: "너무 B구만",
       createdDate: "2023.08.10",
       deletedDate: null,
+      likeCount: 1,
     },
     {
       commentId: 8,
@@ -65,6 +72,7 @@ export const commentListData: CommentListData = {
       content: "좀 어려움 이거..",
       createdDate: "2023.08.10",
       deletedDate: null,
+      likeCount: 0,
     },
     {
       commentId: 9,
@@ -73,6 +81,7 @@ export const commentListData: CommentListData = {
       content: "재밌군",
       createdDate: "2023.08.09",
       deletedDate: null,
+      likeCount: 1,
     },
     {
       commentId: 10,
@@ -81,6 +90,7 @@ export const commentListData: CommentListData = {
       content: "고민도 안함.. 바로 A",
       createdDate: "2023.08.09",
       deletedDate: null,
+      likeCount: 21,
     },
     {
       commentId: 11,
@@ -89,6 +99,7 @@ export const commentListData: CommentListData = {
       content: "ㅋㅋㅋㅋㅋㅋㅋ",
       createdDate: "2023.08.09",
       deletedDate: null,
+      likeCount: 0,
     },
     {
       commentId: 12,
@@ -97,6 +108,7 @@ export const commentListData: CommentListData = {
       content: "ㅋㅋㅋㅋ",
       createdDate: "2023.08.09",
       deletedDate: null,
+      likeCount: 0,
     },
   ],
   pageable: {

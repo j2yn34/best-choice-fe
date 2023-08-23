@@ -20,13 +20,14 @@ export type Post = {
   liveChatUserCount?: number;
 };
 
-type Comment = {
+export type Comment = {
   commentId: number;
   member: Member;
   option: string | null;
   content: string;
   createdDate: string;
   deletedDate: string | null;
+  likeCount: number;
 };
 
 export type Notification = {
