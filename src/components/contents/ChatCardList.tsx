@@ -3,7 +3,7 @@ import { Post } from "../../mocks/mockType";
 import EnterChatRoom from "../modal/EnterChatRoom";
 import ChatUserBadge from "../common/ChatUserBadge";
 import { AiOutlineComment } from "react-icons/ai";
-import { FiThumbsUp } from "react-icons/fi";
+import { RiThumbUpLine } from "react-icons/ri";
 
 const ChatCardList = ({ Data }: { Data: Post[] }) => {
   const [showModal, setShowModal] = useState(false);
@@ -57,7 +57,7 @@ const ChatCardList = ({ Data }: { Data: Post[] }) => {
               <div className="flex justify-between items-baseline mt-5">
                 <div className="flex items-center">
                   <div className="flex items-center">
-                    <FiThumbsUp />
+                    <RiThumbUpLine />
                     <p className="ml-1 text-sm"> {chat.likeCount}</p>
                   </div>
                   <div className="flex items-center ml-3.5">
