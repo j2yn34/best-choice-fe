@@ -62,7 +62,7 @@ const CommentInput = () => {
     <>
       <form
         onSubmit={(e) => onSubmit(e)}
-        className="flex items-center justify-between gap-2 md:gap-5 w-full bg-color-bg p-3 md:p-5 h-[120px] rounded-lg mt-16"
+        className="flex items-center justify-between gap-2 md:gap-4 w-full bg-color-bg p-3 md:p-5 h-[120px] rounded-lg mt-16"
       >
         <textarea
           value={commentValue.content}
@@ -71,7 +71,7 @@ const CommentInput = () => {
           onChange={(e) => onchangeComment(e)}
           required
         ></textarea>
-        <button className="btn bg-black-primary hover:bg-black text-white">
+        <button className="btn md:px-5 bg-black-primary hover:bg-black text-white">
           확인
         </button>
       </form>
