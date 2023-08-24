@@ -19,7 +19,7 @@ const HotListPage = (): JSX.Element => {
         "Loading..."
       ) : (
         <>
-          <p className="text-2xl font-semibold">HOT 투표글</p>
+          <h1 className="text-2xl font-semibold">HOT 투표글</h1>
           <PostCardList postData={postData} />
         </>
       )}

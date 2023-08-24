@@ -54,7 +54,7 @@ const MemberPage = (): JSX.Element => {
         </div>
         <button className="font-bold">로그아웃</button>
       </div>
-      <ul className="flex items-center gap-5 mt-8">
+      <ul className="flex items-center gap-4 mt-8">
         {sortNames.map((sortName) => (
           <li
             key={sortName.name}
