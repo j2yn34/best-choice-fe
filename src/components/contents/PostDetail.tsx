@@ -90,7 +90,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
             신고
           </button>
         </div>
-        <div className="flex flex-wrap justify-between items-center py-3 px-2 border-b border-blue-200">
+        <div className="flex flex-wrap justify-between items-center pb-2 sm:py-2 px-2 border-b border-blue-200">
           <h2 className="text-lg sm:text-xl mr-2 sm:mr-4">{viewData.title}</h2>
           <div className="text-sm text-gray">
             <span className="mr-4">{viewData.member.nickname}</span>
@@ -108,7 +108,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
             </div>
 
             <div className="flex items-center justify-between mb-6">
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex gap-2 flex-wrap mr-1">
                 {viewData.tag.map((tag: string, index: number) => (
                   <div
                     key={index}
@@ -118,7 +118,10 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
                   </div>
                 ))}
               </div>
-              <LikeBtn initialLikeCount={viewData.likeCount} />
+              <LikeBtn
+                isComment={false}
+                initialLikeCount={viewData.likeCount}
+              />
             </div>
           </div>
 

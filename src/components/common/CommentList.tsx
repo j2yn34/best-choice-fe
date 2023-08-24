@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Comment } from "../../mocks/mockType";
-import { FiThumbsUp } from "react-icons/fi";
+import LikeBtn from "../common/LikeBtn";
 import BasicModal from "../modal/BasicModal";
 
 const list = [1, 2, 3];
@@ -45,12 +45,7 @@ const CommentList = ({ commentData }: { commentData: Comment[] }) => {
 
               <li className="text-sm">{comment.member.nickname}</li>
               <li className="text-sm text-gray">{comment.createdDate}</li>
-              <li className="flex items-center gap-1 cursor-pointer text-sm md:text-base">
-                <p>
-                  <FiThumbsUp />{" "}
-                </p>
-                <p>{comment.likeCount}</p>
-              </li>
+              <LikeBtn isComment={true} initialLikeCount={comment.likeCount} />
             </ul>
             {comment.commentId === 1 ? (
               <button className="text-red-dark text-sm" onClick={openModal}>
