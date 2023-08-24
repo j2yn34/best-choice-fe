@@ -29,6 +29,11 @@
   border: none;
 }
 
+.disabled-btn {
+  cursor: not-allowed !important;
+  opacity: 0.4;
+}
+
 @media (max-width: 767px) {
   .main_chat[data-scroll="true"] {
     overflow-x: scroll;
