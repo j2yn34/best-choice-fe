@@ -1,15 +1,24 @@
 import { useState } from "react";
 import { Comment } from "../../mocks/mockType";
 import { FiThumbsUp } from "react-icons/fi";
+import BasicModal from "../modal/BasicModal";
 
 const list = [1, 2, 3];
 
-const clickDelete = () => {
-  alert("댓글 삭제");
-};
-
 const CommentList = ({ commentData }: { commentData: Comment[] }) => {
   const [click, setClick] = useState<number>(1);
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  const openModal = () => {
+    setShowModal(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    document.body.style.overflow = "auto";
+    console.log("댓글 삭제");
+  };
 
   return (
     <>
@@ -48,7 +57,7 @@ const CommentList = ({ commentData }: { commentData: Comment[] }) => {
             {comment.commentId === 1 ? (
               <button
                 className="text-red-dark text-sm md:text-base"
-                onClick={clickDelete}
+                onClick={openModal}
               >
                 삭제
               </button>
@@ -72,6 +81,11 @@ const CommentList = ({ commentData }: { commentData: Comment[] }) => {
           </li>
         ))}
       </ul>
+      {showModal ? (
+        <BasicModal message="댓글을 삭제할까요?" closeModal={closeModal} />
+      ) : (
+        ""
+      )}
     </>
   );
 };

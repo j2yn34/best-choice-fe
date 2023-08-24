@@ -3,9 +3,22 @@ import useFetchData from "../../hooks/useFetchData";
 import { Post } from "../../mocks/mockType";
 import LikeBtn from "../common/LikeBtn";
 import VoteGraph from "./VoteGraph";
+import BasicModal from "../modal/BasicModal";
 
 const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
   const [selectedOption, setSelectedOption] = useState<"A" | "B" | null>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  const openModal = () => {
+    setShowModal(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    document.body.style.overflow = "auto";
+    console.log("게시글 신고 삭제");
+  };
 
   const {
     isLoading,
@@ -37,7 +50,9 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
       <h1 className="text-2xl font-semibold mb-8">투표글</h1>
       <div className="w-full bg-white rounded-xl px-4 sm:px-6 md:px-[70px] py-4">
         <div className="flex justify-end">
-          <button className="text-red-dark text-sm">신고</button>
+          <button className="text-red-dark text-sm" onClick={openModal}>
+            신고
+          </button>
         </div>
         <div className="flex flex-wrap justify-between items-center py-3 px-2 border-b border-blue-200">
           <h2 className="text-lg sm:text-xl mr-2 sm:mr-4">{viewData.title}</h2>
@@ -119,6 +134,14 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
           </div>
         </div>
       </div>
+      {showModal ? (
+        <BasicModal
+          message="해당 투표글을 신고 할까요?"
+          closeModal={closeModal}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 };
