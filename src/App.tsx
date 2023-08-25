@@ -13,11 +13,11 @@ function App() {
       <RecoilRoot>
         <ScrollToTop />
         <Header />
-        <ErrorBoundary FallbackComponent={ErrorPage}>
-          <section className="main pt-12 md:pt-20 pb-24 px-4 md:px-12 mx-auto xl:container">
+        <main className="main pt-12 md:pt-20 pb-24 px-4 md:px-12 mx-auto xl:container">
+          <ErrorBoundary FallbackComponent={ErrorPage}>
             <Router />
-          </section>
-        </ErrorBoundary>
+          </ErrorBoundary>
+        </main>
         <Footer />
       </RecoilRoot>
     </BrowserRouter>
