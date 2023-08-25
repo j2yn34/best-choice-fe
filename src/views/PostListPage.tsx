@@ -32,9 +32,9 @@ const PostListPage = (): JSX.Element => {
         "Loading..."
       ) : (
         <>
-          <p className="text-2xl font-semibold">투표글</p>
+          <h1 className="text-2xl font-semibold">투표글</h1>
           <div className="flex justify-between items-center mt-8">
-            <ul className="flex items-center gap-5">
+            <ul className="flex items-center gap-4">
               {sortNames.map((sortName) => (
                 <li
                   key={sortName.name}

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Post } from "../../mocks/mockType";
 import ChattingBadge from "../common/ChattingBadge";
 import { AiOutlineComment } from "react-icons/ai";
-import { FiThumbsUp } from "react-icons/fi";
+import { RiThumbUpLine } from "react-icons/ri";
 
 const PostCard = ({ Data }: { Data: Post }): JSX.Element => {
   return (
@@ -29,7 +29,7 @@ const PostCard = ({ Data }: { Data: Post }): JSX.Element => {
       <div className="flex justify-between items-baseline mt-5">
         <div className="flex items-center">
           <div className="flex items-center">
-            <FiThumbsUp />
+            <RiThumbUpLine />
             <p className="ml-1 text-sm"> {Data.likeCount}</p>
           </div>
           <div className="flex items-center ml-3.5">

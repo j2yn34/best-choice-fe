@@ -74,7 +74,7 @@ const TagInput = () => {
           return (
             <div
               key={index}
-              className="flex items-center bg-blue-100 py-2 px-3 rounded-lg whitespace-nowrap"
+              className="flex items-center badge badge-lg py-3.5 bg-blue-100/[0.2] border-blue-300 text-blue shrink-0 whitespace-nowrap"
             >
               <p className="h-6">#{tagItem}</p>
               <TiDelete
