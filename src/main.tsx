@@ -10,7 +10,13 @@ if (import.meta.env.VITE_MSW_ENABLED === "true") {
   worker.start();
 }
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      suspense: true,
+    },
+  },
+});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
