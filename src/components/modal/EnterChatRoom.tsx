@@ -35,15 +35,14 @@ const EnterChatRoom = ({
   const viewData = filteredPostData[0];
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="absolute inset-0 bg-black/[0.8]"></div>
+    <div className="fixed inset-0 flex items-center justify-center bg-black/[0.8] z-50">
       <div className="flex flex-col max-w-[360px] md:min-w-[540px] rounded-xl bg-white z-20 p-4 mx-2">
         <button className="flex justify-end text-2xl" onClick={closeModal}>
           <MdOutlineClose />
         </button>
         <div className="p-2 md:p-4">
           <div className="text-center">
-            <p className="font-bold text-xl">
+            <p className="font-semibold text-xl">
               "{viewData ? viewData.title : null}"
             </p>
             <p className="pt-1">투표글의 채팅방이 개설되었어요.</p>
