@@ -9,12 +9,12 @@ import CreatePostPage from "../views/CreatePostPage";
 import MemberPage from "../views/MemberPage";
 import NotificationPage from "../views/NotificationPage";
 import LoginPage from "../views/LoginPage";
-import ErrorPage from "../views/ErrorPage";
+import NotFoundPage from "../views/NotFoundPage";
 
 const Router = (): JSX.Element => {
   return (
     <Routes>
-      <Route path="*" element={<ErrorPage />} />
+      <Route path="*" element={<NotFoundPage />} />
       <Route path="/" element={<MainPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/posts" element={<PostListPage />} />
