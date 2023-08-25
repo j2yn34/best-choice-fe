@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import { FiThumbsUp } from "react-icons/fi";
 import { RiThumbUpLine, RiThumbUpFill } from "react-icons/ri";
 
 const LikeBtn = ({
@@ -35,7 +34,7 @@ const LikeBtn = ({
           추천
         </span>
         <span className={`${isComment ? "" : "text-lg"}`}>
-          {!isLiked ? <RiThumbUpLine /> : <RiThumbUpFill />}
+          {isLiked ? <RiThumbUpFill /> : <RiThumbUpLine />}
         </span>
       </button>
       <span className={`${isComment ? "" : "font-semibold"}`}>
