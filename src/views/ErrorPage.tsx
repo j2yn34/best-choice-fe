@@ -1,12 +1,13 @@
+import { FunctionComponent } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const ErrorPage = () => {
+  const { pathname } = useLocation();
+  const isNotFound = pathname === "*";
+  
   const onReloadClick = () => {
     location.reload();
   };
-
-  const { pathname } = useLocation();
-  const isNotFound = pathname === "*";
 
   return (
     <div className="flex flex-col items-center justify-center pt-8">
