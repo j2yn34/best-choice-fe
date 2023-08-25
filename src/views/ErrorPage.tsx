@@ -1,7 +1,15 @@
-const ErrorPage = () => {
+import { FunctionComponent } from "react";
+
+type FallbackProps = {
+  error: Error;
+};
+
+const ErrorPage: FunctionComponent<FallbackProps> = ({ error }) => {
   const onReloadClick = () => {
     location.reload();
   };
+
+  console.log(`${error.name} : ${error.message}`);
 
   return (
     <div className="flex flex-col items-center justify-center pt-8">
