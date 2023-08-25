@@ -4,6 +4,7 @@ import { useRecoilState, RecoilState } from "recoil";
 import { inputValueState } from "../../states/recoil";
 import { InputValue } from "../../states/recoilType";
 import { MdOutlineClose } from "react-icons/md";
+import { AiFillNotification } from "react-icons/ai";
 
 const UploadPost = ({ closeModal }: { closeModal: () => void }) => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const UploadPost = ({ closeModal }: { closeModal: () => void }) => {
       inputValue.optionA === "" ||
       inputValue.optionB === ""
     ) {
-      alert("제목과 투표 항목은 필수 입력입니다.");
+      alert("제목과 투표 항목을 입력해 주세요.");
       return;
     }
 
@@ -56,21 +57,22 @@ const UploadPost = ({ closeModal }: { closeModal: () => void }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="absolute inset-0 bg-black/[0.8]"></div>
+    <div className="fixed inset-0 flex items-center justify-center bg-black/[0.8] z-50">
       <>
-        <div className="flex flex-col max-w-[360px] md:min-w-[540px] rounded-xl bg-white z-20 py-3 px-8 mx-2">
+        <div className="flex flex-col max-w-fit md:min-w-[450px] h-fit rounded-xl bg-white z-20 py-4 px-3 mx-2">
           <button className="flex justify-end text-2xl" onClick={closeModal}>
             <MdOutlineClose />
           </button>
-          <div className="flex flex-col justify-center items-center">
-            <p className="text-xl mt-5">투표글을 업로드 할까요?</p>
-            <p className="text-lg mt-8">📣</p>
-            <p className="text-lg text-center">
+          <div className="flex flex-col justify-center items-center py-2 px-4 md:px-8">
+            <p className="text-lg font-semibold">투표글을 업로드 할까요?</p>
+            <p className="text-xl mt-6 mb-2 text-[#FECB2D]">
+              <AiFillNotification />
+            </p>
+            <p className="text-center">
               투표글을 업로드 한 뒤에는 내용을 수정할 수 없어요.
             </p>
             <button
-              className="btn bg-black-primary text-white hover:bg-black mt-10 mb-4"
+              className="btn bg-black-primary text-white hover:bg-black mt-10 px-8"
               onClick={() => {
                 upload();
                 closeModal();

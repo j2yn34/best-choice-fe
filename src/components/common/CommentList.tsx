@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Comment } from "../../mocks/mockType";
-import { FiThumbsUp } from "react-icons/fi";
+import LikeBtn from "../common/LikeBtn";
 import BasicModal from "../modal/BasicModal";
 
 const list = [1, 2, 3];
@@ -25,13 +25,13 @@ const CommentList = ({ commentData }: { commentData: Comment[] }) => {
       {commentData.map((comment) => (
         <div
           key={comment.commentId}
-          className="p-3 md:px-4 md:py-5 bg-color-bg border-b-2 border-blue-200"
+          className="p-3 md:px-4 md:pb-4 bg-color-bg border-b border-blue-200"
         >
           <div className="flex items-center justify-between">
-            <ul className="flex items-center gap-4">
+            <ul className="flex items-center gap-2.5">
               {comment.option ? (
                 <li
-                  className={`px-1.5 md:px-2.5 md:py-1 rounded-full text-sm md:text-base ${
+                  className={`min-w-[24px] min-h-[24px] pl-[7px] rounded-full text-sm md:text-base  ${
                     comment.option === "A"
                       ? "text-red-dark bg-red-100"
                       : "text-blue-dark bg-blue-100"
@@ -43,22 +43,12 @@ const CommentList = ({ commentData }: { commentData: Comment[] }) => {
                 ""
               )}
 
-              <li className="md:text-base text-sm">
-                {comment.member.nickname}
-              </li>
-              <li className="md:text-base text-sm">{comment.createdDate}</li>
-              <li className="flex items-center gap-1 cursor-pointer text-sm md:text-base">
-                <p>
-                  <FiThumbsUp />{" "}
-                </p>
-                <p>{comment.likeCount}</p>
-              </li>
+              <li className="text-sm">{comment.member.nickname}</li>
+              <li className="text-sm text-gray">{comment.createdDate}</li>
+              <LikeBtn isComment={true} initialLikeCount={comment.likeCount} />
             </ul>
             {comment.commentId === 1 ? (
-              <button
-                className="text-red-dark text-sm md:text-base"
-                onClick={openModal}
-              >
+              <button className="text-red-dark text-sm" onClick={openModal}>
                 삭제
               </button>
             ) : (
@@ -72,7 +62,7 @@ const CommentList = ({ commentData }: { commentData: Comment[] }) => {
         {list.map((num) => (
           <li
             key={num}
-            className={`text-xl px-3.5 py-1 ${
+            className={`text-base px-3 py-1 ${
               num === click ? "bg-blue-100" : ""
             } rounded-md cursor-pointer`}
             onClick={() => setClick(num)}

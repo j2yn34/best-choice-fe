@@ -1,11 +1,12 @@
 import { useState } from "react";
-// import { FiThumbsUp } from "react-icons/fi";
 import { RiThumbUpLine, RiThumbUpFill } from "react-icons/ri";
 
 const LikeBtn = ({
   initialLikeCount,
+  isComment,
 }: {
   initialLikeCount: number;
+  isComment: boolean;
 }): JSX.Element => {
   const [totalLikeCount, setTotalLikeCount] = useState(initialLikeCount);
   const [isLiked, setIsLiked] = useState(false);
@@ -22,19 +23,23 @@ const LikeBtn = ({
   };
 
   return (
-    <div className="flex items-center min-w-fit ml-1">
+    <div className="flex items-center min-w-fit">
       <button
         onClick={onLikeClick}
         className={`flex items-center mr-1 hover:text-blue shrink-0 ${
           isLiked ? "text-blue" : ""
         }`}
       >
-        <span className="text-sm mr-1">추천</span>
-        <span className="text-lg">
-          {!isLiked ? <RiThumbUpLine /> : <RiThumbUpFill />}
+        <span className={`text-sm mr-1 ${isComment ? "hidden" : ""}`}>
+          추천
+        </span>
+        <span className={`${isComment ? "" : "text-lg"}`}>
+          {isLiked ? <RiThumbUpFill /> : <RiThumbUpLine />}
         </span>
       </button>
-      <span className="font-semibold">{totalLikeCount}</span>
+      <span className={`${isComment ? "" : "font-semibold"}`}>
+        {totalLikeCount}
+      </span>
     </div>
   );
 };
