@@ -19,7 +19,7 @@ const ChatListPage = (): JSX.Element => {
         "Loading..."
       ) : (
         <>
-          <p className="text-2xl font-semibold">채팅방</p>
+          <h1 className="text-2xl font-semibold">채팅방</h1>
           <ChatCardList Data={chatData} />
         </>
       )}
