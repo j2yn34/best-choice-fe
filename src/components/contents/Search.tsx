@@ -5,7 +5,7 @@ const Search = (): JSX.Element => {
   const [inputValue, setInputValue] = useState<string>("");
   const [submitValue, setSubmitValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [TagPostData, setTagPostData] = useState(null);
+  const [, setTagPostData] = useState(null);
 
   const searchClick = async (e: FormEvent) => {
     e.preventDefault();

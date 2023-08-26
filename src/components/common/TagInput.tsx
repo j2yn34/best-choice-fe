@@ -9,7 +9,7 @@ const TagInput = () => {
   const [tagList, setTagList] = useState<string[]>([]);
   const [check, setCheck] = useState<boolean>(false);
 
-  const [inputValue, setInputValue] = useRecoilState(
+  const [, setInputValue] = useRecoilState(
     inputValueState as RecoilState<InputValue>
   );
 
