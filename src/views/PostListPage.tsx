@@ -45,7 +45,7 @@ const PostListPage = (): JSX.Element => {
             글쓰기
           </Link>
         </div>
-        <Suspense fallback={<LoadPostCard limit={PostCardList.length} />}>
+        <Suspense fallback={<LoadPostCard limit={10} />}>
           <PostCardList limit={PostCardList.length} />
         </Suspense>
       </>

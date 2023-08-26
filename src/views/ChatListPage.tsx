@@ -1,28 +1,20 @@
+import { Suspense, lazy } from "react";
 import ScrollTopBtn from "../components/common/ScrollTopBtn";
-import ChatCardList from "../components/contents/ChatCardList";
-import useFetchData from "../hooks/useFetchData";
+import LoadPostCard from "../components/skeletonUI/LoadPostCard";
 
 const ChatListPage = (): JSX.Element => {
-  const {
-    isLoading,
-    data: chatData,
-    isError,
-  } = useFetchData("/activeChatListData", ["chatData"]);
-
-  if (isError) {
-    console.log("데이터 불러오기 실패");
-  }
+  const ChatCardList = lazy(
+    () => import("../components/contents/ChatCardList")
+  );
 
   return (
     <>
-      {isLoading ? (
-        "Loading..."
-      ) : (
-        <>
-          <h1 className="text-2xl font-semibold">채팅방</h1>
-          <ChatCardList Data={chatData} />
-        </>
-      )}
+      <>
+        <h1 className="text-2xl font-semibold">채팅방</h1>
+        <Suspense fallback={<LoadPostCard limit={ChatCardList.length} />}>
+          <ChatCardList />
+        </Suspense>
+      </>
       <ScrollTopBtn />
     </>
   );
