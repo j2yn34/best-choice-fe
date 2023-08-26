@@ -1,13 +1,13 @@
-import React, { Suspense } from "react";
+import { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
 import LoadMainChat from "../components/skeletonUI/LoadMainChat";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
 
 const MainPage = (): JSX.Element => {
-  const MainChattingList = React.lazy(
+  const MainChattingList = lazy(
     () => import("../components/contents/MainChattingList")
   );
-  const PostCardList = React.lazy(
+  const PostCardList = lazy(
     () => import("../components/contents/PostCardList")
   );
 
@@ -25,8 +25,8 @@ const MainPage = (): JSX.Element => {
 
       <section className="mt-20">
         <h1 className="text-2xl font-semibold">HOT한 투표글</h1>
-        <Suspense fallback={<LoadPostCard />}>
-          <PostCardList />
+        <Suspense fallback={<LoadPostCard limit={4} />}>
+          <PostCardList limit={4} />
         </Suspense>
         <div className="mt-10 text-end">
           <Link to="/hot">HOT글 더 보러가기 &gt;</Link>
@@ -35,8 +35,8 @@ const MainPage = (): JSX.Element => {
 
       <section className="mt-20">
         <h1 className="text-2xl font-semibold">새로 올라온 투표글</h1>
-        <Suspense fallback={<LoadPostCard />}>
-          <PostCardList />
+        <Suspense fallback={<LoadPostCard limit={4} />}>
+          <PostCardList limit={4} />
         </Suspense>
         <div className="mt-10 text-end">
           <Link to="/posts">투표글 더 보러가기 &gt;</Link>

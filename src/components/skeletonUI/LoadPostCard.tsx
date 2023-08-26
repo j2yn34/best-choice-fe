@@ -1,9 +1,9 @@
-const LoadPostCard = () => {
+const LoadPostCard = ({ limit }: { limit: number }) => {
   return (
     <>
       <div className="mt-8">
         <div className="grid grid-cols-1 xl:grid-cols-2 xl:gap-x-6 gap-y-8">
-          {Array.from(Array(4)).map((_, index) => (
+          {Array.from(Array(limit)).map((_, index) => (
             <div key={index} className="animate-pulse">
               <div className="w-full bg-white rounded-xl p-5 shadow-md">
                 <div className="flex justify-between items-center">
