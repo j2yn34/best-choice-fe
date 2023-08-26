@@ -1,4 +1,4 @@
-import { useCallback, Suspense, lazy } from "react";
+import { Suspense, useCallback, lazy } from "react";
 import { Link } from "react-router-dom";
 import ScrollTopBtn from "../components/common/ScrollTopBtn";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
