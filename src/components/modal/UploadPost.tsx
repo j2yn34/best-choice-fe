@@ -14,21 +14,12 @@ const UploadPost = ({ closeModal }: { closeModal: () => void }) => {
   );
 
   const upload = async () => {
-    if (
-      inputValue.title === "" ||
-      inputValue.optionA === "" ||
-      inputValue.optionB === ""
-    ) {
-      alert("제목과 투표 항목을 입력해 주세요.");
-      return;
-    }
-
     const formData = new FormData();
 
-    formData.append("title", inputValue.title);
-    formData.append("optionA", inputValue.optionA);
-    formData.append("optionB", inputValue.optionB);
-    formData.append("content", inputValue.content);
+    formData.append("title", JSON.stringify(inputValue.title));
+    formData.append("optionA", JSON.stringify(inputValue.optionA));
+    formData.append("optionB", JSON.stringify(inputValue.optionB));
+    formData.append("content", JSON.stringify(inputValue.content));
 
     if (inputValue.tags) {
       for (let i = 0; i < inputValue.tags.length; i++) {
