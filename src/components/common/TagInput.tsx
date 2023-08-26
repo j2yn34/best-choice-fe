@@ -9,13 +9,17 @@ const TagInput = () => {
   const [tagList, setTagList] = useState<string[]>([]);
   const [check, setCheck] = useState<boolean>(false);
 
-  const [inputValue, setInputValue] = useRecoilState(
+  const [, setInputValue] = useRecoilState(
     inputValueState as RecoilState<InputValue>
   );
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
-    if (target.value.length !== 0 && e.key === "Enter") {
+    if (
+      target.value.length !== 0 &&
+      e.key === "Enter" &&
+      e.nativeEvent.isComposing === false
+    ) {
       submitTagItem();
     }
   };

@@ -1,4 +1,4 @@
-import { Suspense, lazy, useState } from "react";
+import { Suspense, lazy, useState, useCallback } from "react";
 import ChangeNickname from "../components/modal/ChangeNickname";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
 
@@ -9,17 +9,17 @@ const sortNames = [
   { name: "댓글 단 글", message: "댓글 단 글 클릭" },
 ];
 
-const clickSort = (message: string) => {
-  console.log("클릭 성공!");
-  alert(message);
-};
-
 const MemberPage = (): JSX.Element => {
   const [showModal, setShowModal] = useState(false);
 
   const PostCardList = lazy(
     () => import("../components/contents/PostCardList")
   );
+
+  const clickSort = useCallback((message: string) => {
+    console.log("클릭 성공!");
+    alert(message);
+  }, []);
 
   const openModal = () => {
     setShowModal(true);
