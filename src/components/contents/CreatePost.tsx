@@ -4,6 +4,7 @@ import {
   SetStateAction,
   Dispatch,
   useState,
+  useEffect,
 } from "react";
 import { useRecoilState, RecoilState } from "recoil";
 import { inputValueState } from "../../states/recoil";
@@ -21,6 +22,19 @@ const CreatePost = (): JSX.Element => {
 
   const [showCancelModal, setShowCancelModal] = useState<boolean>(false);
   const [showUploadModal, setShowUploadModal] = useState<boolean>(false);
+  const [disabledBtn, setDisabledBtn] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (
+      inputValue.title !== "" &&
+      inputValue.optionA !== "" &&
+      inputValue.optionB !== ""
+    ) {
+      setDisabledBtn(false);
+    } else {
+      setDisabledBtn(true);
+    }
+  }, [inputValue]);
 
   const openModal = (setFun: Dispatch<SetStateAction<boolean>>) => {
     setFun(true);
@@ -55,15 +69,22 @@ const CreatePost = (): JSX.Element => {
     <>
       <h1 className="text-2xl mb-8 font-semibold">투표글 작성하기</h1>
       <div className="w-full bg-white rounded-lg md:px-24 py-8 px-5">
-        <p className="text-lg mb-4">제목</p>
+        <div className="text-lg mb-4 flex items-center">
+          <p>제목</p>
+          <p className="ml-2 text-xs text-red-dark">* 필수 입력</p>
+        </div>
         <input
           className="w-full bg-color-bg px-4 py-3 mb-7 focus:outline-none"
           placeholder="투표글 제목을 입력해 주세요."
           value={inputValue.title}
           onChange={(e) => onchangeInput(e, "title")}
+          required
         />
         <TextEditor />
-        <p className="text-lg mb-4">투표 항목</p>
+        <div className="text-lg mb-4 flex items-center">
+          <p>투표 항목</p>
+          <p className="ml-2 text-xs text-red-dark">* 필수 입력</p>
+        </div>
         <div className="flex flex-col md:flex-row justify-between items-center mb-7 gap-3">
           <div className="flex items-center gap-4 w-full">
             <p className="text-lg font-semibold text-red-dark">A</p>
@@ -72,6 +93,7 @@ const CreatePost = (): JSX.Element => {
               placeholder="A 항목을 입력해 주세요."
               value={inputValue.optionA}
               onChange={(e) => onchangeInput(e, "optionA")}
+              required
             />
           </div>
           <p className="text-lg">vs</p>
@@ -82,6 +104,7 @@ const CreatePost = (): JSX.Element => {
               placeholder="B 항목을 입력해 주세요."
               value={inputValue.optionB}
               onChange={(e) => onchangeInput(e, "optionB")}
+              required
             />
           </div>
         </div>
@@ -92,12 +115,18 @@ const CreatePost = (): JSX.Element => {
         <button className="btn btn-outline" onClick={onDelete}>
           취소
         </button>
-        <button
-          className="btn bg-black-primary hover:bg-black text-white"
-          onClick={onSubmit}
-        >
-          작성 완료
-        </button>
+        {disabledBtn ? (
+          <button disabled className="btn opacity-30">
+            작성 완료
+          </button>
+        ) : (
+          <button
+            className="btn bg-black-primary hover:bg-black text-white"
+            onClick={onSubmit}
+          >
+            작성 완료
+          </button>
+        )}
       </div>
       {showCancelModal ? (
         <CancelCreate closeModal={() => closeModal(setShowCancelModal)} />

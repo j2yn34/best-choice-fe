@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import useFetchData from "../hooks/useFetchData";
 import PostCardList from "../components/contents/PostCardList";
 import ScrollTopBtn from "../components/common/ScrollTopBtn";
+import { useCallback } from "react";
 
 // 실제 서버와 연결할 때는 message가 아닌 정렬 함수가 들어갈 예정!
 const sortNames = [
@@ -10,12 +11,12 @@ const sortNames = [
   { name: "참여자순", message: "참여자순 클릭" },
 ];
 
-const clickSort = (message: string) => {
-  console.log("클릭 성공!");
-  alert(message);
-};
-
 const PostListPage = (): JSX.Element => {
+  const clickSort = useCallback((message: string) => {
+    console.log("클릭 성공!");
+    alert(message);
+  }, []);
+
   const {
     isLoading,
     data: postData,
