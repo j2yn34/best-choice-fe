@@ -1,13 +1,22 @@
 import { useState } from "react";
+import useFetchData from "../../hooks/useFetchData";
 import { Post } from "../../mocks/mockType";
 import EnterChatRoom from "../modal/EnterChatRoom";
 import ChatUserBadge from "../common/ChatUserBadge";
 import { AiOutlineComment } from "react-icons/ai";
 import { RiThumbUpLine } from "react-icons/ri";
 
-const ChatCardList = ({ Data }: { Data: Post[] }) => {
+const ChatCardList = () => {
   const [showModal, setShowModal] = useState(false);
   const [clickedChatData, setClickedChatData] = useState<number | null>(null);
+
+  const { data: chatData, isError } = useFetchData("/activeChatListData", [
+    "chatData",
+  ]);
+
+  if (isError) {
+    console.log("데이터 불러오기 실패");
+  }
 
   const openModal = (data: Post) => {
     setShowModal(true);
@@ -26,7 +35,7 @@ const ChatCardList = ({ Data }: { Data: Post[] }) => {
       <div className="mt-8">
         <div className="grid grid-cols-1 xl:grid-cols-2 xl:gap-x-6 gap-y-8">
           {/* card */}
-          {Data.map((chat) => (
+          {chatData.map((chat: Post) => (
             <div
               className="w-full bg-white rounded-xl p-5 shadow-md cursor-pointer"
               onClick={() => openModal(chat)}

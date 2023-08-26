@@ -1,7 +1,6 @@
-import { useCallback, useState } from "react";
-import useFetchData from "../hooks/useFetchData";
-import PostCardList from "../components/contents/PostCardList";
+import { Suspense, lazy, useState, useCallback } from "react";
 import ChangeNickname from "../components/modal/ChangeNickname";
+import LoadPostCard from "../components/skeletonUI/LoadPostCard";
 
 const sortNames = [
   { name: "작성한 투표글", message: "작성한 투표글 클릭" },
@@ -11,13 +10,17 @@ const sortNames = [
 ];
 
 const MemberPage = (): JSX.Element => {
+  const [showModal, setShowModal] = useState(false);
+
+  const PostCardList = lazy(
+    () => import("../components/contents/PostCardList")
+  );
+  
   const clickSort = useCallback((message: string) => {
     console.log("클릭 성공!");
     alert(message);
   }, []);
-
-  const [showModal, setShowModal] = useState(false);
-
+  
   const openModal = () => {
     setShowModal(true);
     document.body.style.overflow = "hidden";
@@ -27,16 +30,6 @@ const MemberPage = (): JSX.Element => {
     setShowModal(false);
     document.body.style.overflow = "auto";
   };
-
-  const {
-    isLoading,
-    data: postData,
-    isError,
-  } = useFetchData("/postListData", ["postData"]);
-
-  if (isError) {
-    console.log("데이터 불러오기 실패");
-  }
 
   return (
     <>
@@ -70,13 +63,11 @@ const MemberPage = (): JSX.Element => {
           </li>
         ))}
       </ul>
-      {isLoading ? (
-        "isLoading..."
-      ) : (
-        <div className="mt-8">
-          <PostCardList postData={postData.slice(0, 3)} />
-        </div>
-      )}
+      <div className="mt-8">
+        <Suspense fallback={<LoadPostCard limit={3} />}>
+          <PostCardList limit={3} />
+        </Suspense>
+      </div>
       {showModal ? <ChangeNickname closeModal={closeModal} /> : null}
     </>
   );
