@@ -1,30 +1,37 @@
+import React, { Suspense } from "react";
 import { Link } from "react-router-dom";
-import useFetchData from "../hooks/useFetchData";
-import MainChattingList from "../components/contents/MainChattingList";
-import PostCardList from "../components/contents/PostCardList";
+// import useFetchData from "../hooks/useFetchData";
+// import PostCardList from "../components/contents/PostCardList";
+import LoadMainChat from "../components/skeletonUI/LoadMainChat";
 
 const MainPage = (): JSX.Element => {
-  const {
-    isLoading,
-    data: postData,
-    isError,
-  } = useFetchData("/postListData", ["postData"]);
+  const MainChattingList = React.lazy(
+    () => import("../components/contents/MainChattingList")
+  );
 
-  if (isError) {
-    console.log("데이터 불러오기 실패");
-  }
+  // const {
+  //   isLoading,
+  //   data: postData,
+  //   isError,
+  // } = useFetchData("/postListData", ["postData"]);
+
+  // if (isError) {
+  //   console.log("데이터 불러오기 실패");
+  // }
 
   return (
     <>
       <section>
         <h1 className="text-2xl font-semibold mb-8">진행 중인 채팅방</h1>
-        <MainChattingList />
+        <Suspense fallback={<LoadMainChat />}>
+          <MainChattingList />
+        </Suspense>
         <div className="mt-10 text-end">
           <Link to="/chat">채팅방 더 보러가기 &gt;</Link>
         </div>
       </section>
 
-      {isLoading ? (
+      {/* {isLoading ? (
         "Loading..."
       ) : (
         <section className="mt-20">
@@ -46,7 +53,7 @@ const MainPage = (): JSX.Element => {
             <Link to="/posts">투표글 더 보러가기 &gt;</Link>
           </div>
         </section>
-      )}
+      )} */}
     </>
   );
 };
