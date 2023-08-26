@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useCallback } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { Comment } from "../../mocks/mockType";
 
@@ -15,14 +15,14 @@ const CommentInput = () => {
     likeCount: 0,
   });
 
-  const onchangeComment = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const onchangeComment = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target;
 
     setCommentValue((prevInputValues) => ({
       ...prevInputValues,
       content: value,
     }));
-  };
+  }, []);
 
   // 임시 post
   const queryClient = useQueryClient();

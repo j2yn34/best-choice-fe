@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import useFetchData from "../hooks/useFetchData";
 import PostCardList from "../components/contents/PostCardList";
 import ChangeNickname from "../components/modal/ChangeNickname";
@@ -10,12 +10,12 @@ const sortNames = [
   { name: "댓글 단 글", message: "댓글 단 글 클릭" },
 ];
 
-const clickSort = (message: string) => {
-  console.log("클릭 성공!");
-  alert(message);
-};
-
 const MemberPage = (): JSX.Element => {
+  const clickSort = useCallback((message: string) => {
+    console.log("클릭 성공!");
+    alert(message);
+  }, []);
+
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {

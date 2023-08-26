@@ -2,18 +2,19 @@
 import { Comment } from "../../mocks/mockType";
 import CommentList from "../common/CommentList";
 import CommentInput from "../common/CommentInput";
+import { useCallback } from "react";
 
 const sortNames = [
   { name: "최신순", message: "최신순 클릭" },
   { name: "추천순", message: "추천순 클릭" },
 ];
 
-const clickSort = (message: string) => {
-  console.log("클릭 성공!");
-  alert(message);
-};
-
 const Comment = ({ commentData }: { commentData: Comment[] }): JSX.Element => {
+  const clickSort = useCallback((message: string) => {
+    console.log("클릭 성공!");
+    alert(message);
+  }, []);
+
   return (
     <div className="w-full py-8 px-4 sm:px-6 md:pt-10 md:px-[70px] bg-white rounded-xl">
       <div className="flex items-center justify-between mb-6">
