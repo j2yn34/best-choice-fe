@@ -1,15 +1,23 @@
 // api/posts/{postId}/comments?page=1&sort=type -> 실제 서버 요청
-import { Comment } from "../../mocks/mockType";
 import CommentList from "../common/CommentList";
 import CommentInput from "../common/CommentInput";
 import { useCallback } from "react";
+import useFetchData from "../../hooks/useFetchData";
 
 const sortNames = [
   { name: "최신순", message: "최신순 클릭" },
   { name: "추천순", message: "추천순 클릭" },
 ];
 
-const Comment = ({ commentData }: { commentData: Comment[] }): JSX.Element => {
+const Comment = (): JSX.Element => {
+  const { data: commentData, isError } = useFetchData("/commentListData", [
+    "commentData",
+  ]);
+
+  if (isError) {
+    console.log("데이터 불러오기 실패");
+  }
+
   const clickSort = useCallback((message: string) => {
     console.log("클릭 성공!");
     alert(message);

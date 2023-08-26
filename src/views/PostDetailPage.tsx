@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
 import PostDetail from "../components/contents/PostDetail";
-import useFetchData from "../hooks/useFetchData";
 import Comment from "../components/contents/Comment";
 
 const PostDetailPage = (): JSX.Element => {
@@ -9,16 +8,6 @@ const PostDetailPage = (): JSX.Element => {
   const onClick = () => {
     navigate("/posts");
   };
-
-  const {
-    isLoading,
-    data: commentData,
-    isError,
-  } = useFetchData("/commentListData", ["commentData"]);
-
-  if (isError) {
-    console.log("데이터 불러오기 실패");
-  }
 
   const { postId } = useParams<{ postId?: string }>();
 
@@ -32,7 +21,7 @@ const PostDetailPage = (): JSX.Element => {
       <div className="flex justify-end my-8">
         <button onClick={onClick}>목록으로</button>
       </div>
-      {isLoading ? "isLoading..." : <Comment commentData={commentData} />}
+      <Comment />
     </>
   );
 };
