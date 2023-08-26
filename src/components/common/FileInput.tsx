@@ -8,7 +8,7 @@ const maxFileCnt = 5;
 const FileInput = () => {
   const [showImages, setShowImages] = useState<string[]>([]);
   const [showVideos, setShowVideos] = useState<string[]>([]);
-  const [inputValue, setInputValue] = useRecoilState(
+  const [, setInputValue] = useRecoilState(
     inputValueState as RecoilState<InputValue>
   );
 

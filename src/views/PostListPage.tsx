@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import { Suspense, useCallback, lazy } from "react";
 import { Link } from "react-router-dom";
 import ScrollTopBtn from "../components/common/ScrollTopBtn";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
@@ -10,15 +10,15 @@ const sortNames = [
   { name: "참여자순", message: "참여자순 클릭" },
 ];
 
-const clickSort = (message: string) => {
-  console.log("클릭 성공!");
-  alert(message);
-};
-
 const PostListPage = (): JSX.Element => {
-  const PostCardList = React.lazy(
+  const PostCardList = lazy(
     () => import("../components/contents/PostCardList")
   );
+
+  const clickSort = useCallback((message: string) => {
+    console.log("클릭 성공!");
+    alert(message);
+  }, []);
 
   return (
     <>
