@@ -13,19 +13,24 @@ const UploadPost = ({ closeModal }: { closeModal: () => void }) => {
     inputValueState as RecoilState<InputValue>
   );
 
+  const inputData = {
+    title: inputValue.title,
+    optionA: inputValue.optionA,
+    optionB: inputValue.optionB,
+    content: inputValue.content,
+    tags: inputValue.tags,
+  };
+
   const upload = async () => {
     const formData = new FormData();
 
-    formData.append("title", JSON.stringify(inputValue.title));
-    formData.append("optionA", JSON.stringify(inputValue.optionA));
-    formData.append("optionB", JSON.stringify(inputValue.optionB));
-    formData.append("content", JSON.stringify(inputValue.content));
+    // ----- 임시 : Blob로 감싸서 전송하는 경우
+    // formData.append(
+    //   "inputData",
+    //   new Blob([JSON.stringify(inputData)], { type: "application/json" })
+    // );
 
-    if (inputValue.tags) {
-      for (let i = 0; i < inputValue.tags.length; i++) {
-        formData.append(`tags[${i}]`, inputValue.tags[i]);
-      }
-    }
+    formData.append("inputData", JSON.stringify(inputData));
 
     if (inputValue.files) {
       for (let i = 0; i < inputValue.files.length; i++) {
