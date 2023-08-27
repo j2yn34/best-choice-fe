@@ -1,7 +1,7 @@
 import { useState } from "react";
-import useFetchData from "../hooks/useFetchData";
-import EnterChatRoom from "./modal/EnterChatRoom";
-import { Notification } from "../mocks/mockType";
+import useFetchData from "../../hooks/useFetchData";
+import EnterChatRoom from "../modal/EnterChatRoom";
+import { Notification } from "../../mocks/mockType";
 
 const NotificationCard = (): JSX.Element => {
   const [showModal, setShowModal] = useState(false);
