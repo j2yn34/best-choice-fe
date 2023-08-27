@@ -17,6 +17,7 @@ const PostDetailPage = (): JSX.Element => {
 
   return (
     <>
+      <h1 className="text-2xl font-semibold mb-8">투표글</h1>
       <PostDetail postId={postId} />
       <div className="flex justify-end my-8">
         <button onClick={onClick}>목록으로</button>

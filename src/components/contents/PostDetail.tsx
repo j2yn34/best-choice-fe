@@ -83,7 +83,6 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
 
   return (
     <>
-      <h1 className="text-2xl font-semibold mb-8">투표글</h1>
       <div className="w-full bg-white rounded-xl px-4 sm:px-6 md:px-[70px] py-4">
         <div className="flex justify-end">
           <button className="text-red-dark text-sm" onClick={openModal}>

@@ -67,7 +67,6 @@ const CreatePost = (): JSX.Element => {
 
   return (
     <>
-      <h1 className="text-2xl mb-8 font-semibold">투표글 작성하기</h1>
       <div className="w-full bg-white rounded-lg md:px-24 py-8 px-5">
         <div className="text-lg mb-4 flex items-center">
           <p>제목</p>
