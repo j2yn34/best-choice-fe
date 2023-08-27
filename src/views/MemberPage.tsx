@@ -64,7 +64,7 @@ const MemberPage = (): JSX.Element => {
         ))}
       </ul>
       <div className="mt-8">
-        <Suspense fallback={<LoadPostCard limit={3} />}>
+        <Suspense fallback={<LoadPostCard limit={2} />}>
           <PostCardList limit={3} />
         </Suspense>
       </div>
