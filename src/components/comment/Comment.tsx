@@ -10,13 +10,9 @@ const sortNames = [
 ];
 
 const Comment = (): JSX.Element => {
-  const { data: commentData, isError } = useFetchData("/commentListData", [
+  const { data: commentData } = useFetchData("/commentListData", [
     "commentData",
   ]);
-
-  if (isError) {
-    console.log("데이터 불러오기 실패");
-  }
 
   const clickSort = useCallback((message: string) => {
     console.log("클릭 성공!");

@@ -7,14 +7,9 @@ const NotificationCard = (): JSX.Element => {
   const [showModal, setShowModal] = useState(false);
   const [clickedData, setClickedData] = useState<number | null>(null);
 
-  const { data: notificationData, isError } = useFetchData(
-    "/notificationData",
-    ["notificationData"]
-  );
-
-  if (isError) {
-    console.log("데이터 불러오기 실패");
-  }
+  const { data: notificationData } = useFetchData("/notificationData", [
+    "notificationData",
+  ]);
 
   const openModal = (data: Notification) => {
     setShowModal(true);

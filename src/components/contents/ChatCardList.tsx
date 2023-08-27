@@ -10,13 +10,7 @@ const ChatCardList = () => {
   const [showModal, setShowModal] = useState(false);
   const [clickedChatData, setClickedChatData] = useState<number | null>(null);
 
-  const { data: chatData, isError } = useFetchData("/activeChatListData", [
-    "chatData",
-  ]);
-
-  if (isError) {
-    console.log("데이터 불러오기 실패");
-  }
+  const { data: chatData } = useFetchData("/activeChatListData", ["chatData"]);
 
   const openModal = (data: Post) => {
     setShowModal(true);

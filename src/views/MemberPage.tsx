@@ -1,6 +1,8 @@
 import { Suspense, lazy, useState, useCallback } from "react";
 import ChangeNickname from "../components/modal/ChangeNickname";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorMessage from "../components/common/ErrorMessage";
 
 const sortNames = [
   { name: "작성한 투표글", message: "작성한 투표글 클릭" },
@@ -64,9 +66,11 @@ const MemberPage = (): JSX.Element => {
         ))}
       </ul>
       <div className="mt-8">
-        <Suspense fallback={<LoadPostCard limit={2} />}>
-          <PostCardList limit={3} />
-        </Suspense>
+        <ErrorBoundary FallbackComponent={ErrorMessage}>
+          <Suspense fallback={<LoadPostCard limit={2} />}>
+            <PostCardList limit={3} />
+          </Suspense>
+        </ErrorBoundary>
       </div>
       {showModal ? <ChangeNickname closeModal={closeModal} /> : null}
     </>

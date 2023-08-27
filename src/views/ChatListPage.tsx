@@ -1,6 +1,8 @@
 import { Suspense, lazy } from "react";
 import ScrollTopBtn from "../components/common/ScrollTopBtn";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorMessage from "../components/common/ErrorMessage";
 
 const ChatListPage = (): JSX.Element => {
   const ChatCardList = lazy(
@@ -11,9 +13,11 @@ const ChatListPage = (): JSX.Element => {
     <>
       <>
         <h1 className="text-2xl font-semibold">채팅방</h1>
-        <Suspense fallback={<LoadPostCard limit={10} />}>
-          <ChatCardList />
-        </Suspense>
+        <ErrorBoundary FallbackComponent={ErrorMessage}>
+          <Suspense fallback={<LoadPostCard limit={10} />}>
+            <ChatCardList />
+          </Suspense>
+        </ErrorBoundary>
       </>
       <ScrollTopBtn />
     </>

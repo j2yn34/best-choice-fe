@@ -3,13 +3,7 @@ import PostCard from "./PostCard";
 import { Post } from "../../mocks/mockType";
 
 const PostCardList = ({ limit }: { limit: number }): JSX.Element => {
-  const { data: postData, isError } = useFetchData("/postListData", [
-    "postData",
-  ]);
-
-  if (isError) {
-    console.log("데이터 불러오기 실패");
-  }
+  const { data: postData } = useFetchData("/postListData", ["postData"]);
 
   return (
     <div className="mt-8">
