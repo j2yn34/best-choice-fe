@@ -2,7 +2,9 @@ import { Suspense, lazy } from "react";
 import LoadNotification from "../components/skeletonUI/LoadNotification";
 
 const NotificationPage = (): JSX.Element => {
-  const NotificationCard = lazy(() => import("../components/NotificationCard"));
+  const NotificationCard = lazy(
+    () => import("../components/contents/NotificationCard")
+  );
 
   return (
     <>

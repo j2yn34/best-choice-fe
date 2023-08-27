@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import PostDetail from "../components/contents/PostDetail";
-import Comment from "../components/contents/Comment";
+import Comment from "../components/comment/Comment";
 
 const PostDetailPage = (): JSX.Element => {
   const navigate = useNavigate();
