@@ -1,6 +1,8 @@
 import { Suspense, lazy } from "react";
 import ScrollTopBtn from "../components/common/ScrollTopBtn";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorMessage from "../components/common/ErrorMessage";
 
 const HotListPage = (): JSX.Element => {
   const PostCardList = lazy(
@@ -11,9 +13,11 @@ const HotListPage = (): JSX.Element => {
     <>
       <>
         <h1 className="text-2xl font-semibold">HOT 투표글</h1>
-        <Suspense fallback={<LoadPostCard limit={10} />}>
-          <PostCardList limit={PostCardList.length} />
-        </Suspense>
+        <ErrorBoundary FallbackComponent={ErrorMessage}>
+          <Suspense fallback={<LoadPostCard limit={10} />}>
+            <PostCardList limit={PostCardList.length} />
+          </Suspense>
+        </ErrorBoundary>
       </>
       <ScrollTopBtn />
     </>

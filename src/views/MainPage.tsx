@@ -2,6 +2,8 @@ import { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
 import LoadMainChat from "../components/skeletonUI/LoadMainChat";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorMessage from "../components/common/ErrorMessage";
 
 const MainPage = (): JSX.Element => {
   const MainChattingList = lazy(
@@ -15,9 +17,11 @@ const MainPage = (): JSX.Element => {
     <>
       <section>
         <h1 className="text-2xl font-semibold mb-8">진행 중인 채팅방</h1>
-        <Suspense fallback={<LoadMainChat />}>
-          <MainChattingList />
-        </Suspense>
+        <ErrorBoundary FallbackComponent={ErrorMessage}>
+          <Suspense fallback={<LoadMainChat />}>
+            <MainChattingList />
+          </Suspense>
+        </ErrorBoundary>
         <div className="mt-10 text-end">
           <Link to="/chat">채팅방 더 보러가기 &gt;</Link>
         </div>
@@ -25,9 +29,11 @@ const MainPage = (): JSX.Element => {
 
       <section className="mt-20">
         <h1 className="text-2xl font-semibold">HOT한 투표글</h1>
-        <Suspense fallback={<LoadPostCard limit={4} />}>
-          <PostCardList limit={4} />
-        </Suspense>
+        <ErrorBoundary FallbackComponent={ErrorMessage}>
+          <Suspense fallback={<LoadPostCard limit={4} />}>
+            <PostCardList limit={4} />
+          </Suspense>
+        </ErrorBoundary>
         <div className="mt-10 text-end">
           <Link to="/hot">HOT글 더 보러가기 &gt;</Link>
         </div>
@@ -35,9 +41,11 @@ const MainPage = (): JSX.Element => {
 
       <section className="mt-20">
         <h1 className="text-2xl font-semibold">새로 올라온 투표글</h1>
-        <Suspense fallback={<LoadPostCard limit={4} />}>
-          <PostCardList limit={4} />
-        </Suspense>
+        <ErrorBoundary FallbackComponent={ErrorMessage}>
+          <Suspense fallback={<LoadPostCard limit={4} />}>
+            <PostCardList limit={4} />
+          </Suspense>
+        </ErrorBoundary>
         <div className="mt-10 text-end">
           <Link to="/posts">투표글 더 보러가기 &gt;</Link>
         </div>

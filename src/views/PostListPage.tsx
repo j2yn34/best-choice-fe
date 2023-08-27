@@ -2,6 +2,8 @@ import { Suspense, useCallback, lazy } from "react";
 import { Link } from "react-router-dom";
 import ScrollTopBtn from "../components/common/ScrollTopBtn";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorMessage from "../components/common/ErrorMessage";
 
 // 실제 서버와 연결할 때는 message가 아닌 정렬 함수가 들어갈 예정!
 const sortNames = [
@@ -45,9 +47,11 @@ const PostListPage = (): JSX.Element => {
             글쓰기
           </Link>
         </div>
-        <Suspense fallback={<LoadPostCard limit={10} />}>
-          <PostCardList limit={PostCardList.length} />
-        </Suspense>
+        <ErrorBoundary FallbackComponent={ErrorMessage}>
+          <Suspense fallback={<LoadPostCard limit={10} />}>
+            <PostCardList limit={PostCardList.length} />
+          </Suspense>
+        </ErrorBoundary>
       </>
       <ScrollTopBtn />
     </>

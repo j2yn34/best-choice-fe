@@ -2,6 +2,8 @@ import { Suspense, lazy } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Comment from "../components/comment/Comment";
 import LoadPostDetail from "../components/skeletonUI/LoadPostDetail";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorMessage from "../components/common/ErrorMessage";
 
 const PostDetailPage = (): JSX.Element => {
   const PostDetail = lazy(() => import("../components/contents/PostDetail"));
@@ -21,9 +23,11 @@ const PostDetailPage = (): JSX.Element => {
   return (
     <>
       <h1 className="text-2xl font-semibold mb-8">투표글</h1>
-      <Suspense fallback={<LoadPostDetail />}>
-        <PostDetail postId={postId} />
-      </Suspense>
+      <ErrorBoundary FallbackComponent={ErrorMessage}>
+        <Suspense fallback={<LoadPostDetail />}>
+          <PostDetail postId={postId} />
+        </Suspense>
+      </ErrorBoundary>
       <div className="flex justify-end my-8">
         <button onClick={onClick}>목록으로</button>
       </div>
