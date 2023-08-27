@@ -35,7 +35,6 @@ const Search = (): JSX.Element => {
 
   return (
     <>
-      <h1 className="text-2xl mb-8 font-semibold">투표글 태그 검색</h1>
       <form onSubmit={searchClick} className="flex justify-center items-center">
         <input
           value={inputValue}

@@ -15,12 +15,12 @@ const MemberPage = (): JSX.Element => {
   const PostCardList = lazy(
     () => import("../components/contents/PostCardList")
   );
-  
+
   const clickSort = useCallback((message: string) => {
     console.log("클릭 성공!");
     alert(message);
   }, []);
-  
+
   const openModal = () => {
     setShowModal(true);
     document.body.style.overflow = "hidden";
@@ -64,7 +64,7 @@ const MemberPage = (): JSX.Element => {
         ))}
       </ul>
       <div className="mt-8">
-        <Suspense fallback={<LoadPostCard limit={3} />}>
+        <Suspense fallback={<LoadPostCard limit={2} />}>
           <PostCardList limit={3} />
         </Suspense>
       </div>

@@ -11,7 +11,7 @@ const ChatListPage = (): JSX.Element => {
     <>
       <>
         <h1 className="text-2xl font-semibold">채팅방</h1>
-        <Suspense fallback={<LoadPostCard limit={ChatCardList.length} />}>
+        <Suspense fallback={<LoadPostCard limit={10} />}>
           <ChatCardList />
         </Suspense>
       </>

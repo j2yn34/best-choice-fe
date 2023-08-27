@@ -26,17 +26,12 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
     console.log("게시글 신고 삭제");
   };
 
-  const {
-    isLoading,
-    data: postData,
-    isError,
-  } = useFetchData("/postListData", ["postData"]);
+  const { data: postData, isError } = useFetchData("/postListData", [
+    "postData",
+  ]);
 
   if (isError) {
     throw new Error("데이터 불러오기 실패");
-  }
-  if (isLoading) {
-    return <p>Loading...</p>;
   }
 
   const filteredPostData = postData.filter(
@@ -83,7 +78,6 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
 
   return (
     <>
-      <h1 className="text-2xl font-semibold mb-8">투표글</h1>
       <div className="w-full bg-white rounded-xl px-4 sm:px-6 md:px-[70px] py-4">
         <div className="flex justify-end">
           <button className="text-red-dark text-sm" onClick={openModal}>
