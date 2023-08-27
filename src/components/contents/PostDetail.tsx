@@ -26,17 +26,12 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
     console.log("게시글 신고 삭제");
   };
 
-  const {
-    isLoading,
-    data: postData,
-    isError,
-  } = useFetchData("/postListData", ["postData"]);
+  const { data: postData, isError } = useFetchData("/postListData", [
+    "postData",
+  ]);
 
   if (isError) {
     throw new Error("데이터 불러오기 실패");
-  }
-  if (isLoading) {
-    return <p>Loading...</p>;
   }
 
   const filteredPostData = postData.filter(
