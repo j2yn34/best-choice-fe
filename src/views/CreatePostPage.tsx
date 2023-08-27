@@ -1,4 +1,4 @@
-import CreatePost from "../components/contents/CreatePost";
+import CreatePost from "../components/create/CreatePost";
 
 const CreatePostPage = (): JSX.Element => {
   return (

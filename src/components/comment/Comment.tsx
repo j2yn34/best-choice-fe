@@ -1,6 +1,6 @@
 // api/posts/{postId}/comments?page=1&sort=type -> 실제 서버 요청
-import CommentList from "../common/CommentList";
-import CommentInput from "../common/CommentInput";
+import CommentList from "./CommentList";
+import CommentInput from "./CommentInput";
 import { useCallback } from "react";
 import useFetchData from "../../hooks/useFetchData";
 

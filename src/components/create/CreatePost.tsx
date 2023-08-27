@@ -9,9 +9,9 @@ import {
 import { useRecoilState, RecoilState } from "recoil";
 import { inputValueState } from "../../states/recoil";
 import { InputValue } from "../../states/recoilType";
-import TagInput from "../common/TagInput";
-import FileInput from "../common/FileInput";
-import TextEditor from "../common/TextEditor";
+import TagInput from "./TagInput";
+import FileInput from "./FileInput";
+import TextEditor from "./TextEditor";
 import CancelCreate from "../modal/CancelCreate";
 import UploadPost from "../modal/UploadPost";
 

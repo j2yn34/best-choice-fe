@@ -128,7 +128,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
           <form
             id="vote"
             onSubmit={handleVoteSubmit}
-            className="flex flex-col mb-4 p-2 border border-2 border-blue-200 rounded-xl"
+            className="flex flex-col mb-4 p-2 border-2 border-blue-200 rounded-xl"
           >
             <label
               className={`flex items-center p-4 mb-1 w-full rounded-xl ${
