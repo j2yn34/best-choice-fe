@@ -9,6 +9,7 @@ import {
 import { useRecoilState, RecoilState } from "recoil";
 import { inputValueState } from "../../states/recoil";
 import { InputValue } from "../../states/recoilType";
+import OptionInput from "../create/OptionInput";
 import TagInput from "./TagInput";
 import FileInput from "./FileInput";
 import TextEditor from "./TextEditor";
@@ -23,18 +24,6 @@ const CreatePost = (): JSX.Element => {
   const [showCancelModal, setShowCancelModal] = useState<boolean>(false);
   const [showUploadModal, setShowUploadModal] = useState<boolean>(false);
   const [disabledBtn, setDisabledBtn] = useState<boolean>(true);
-
-  useEffect(() => {
-    if (
-      inputValue.title !== "" &&
-      inputValue.optionA !== "" &&
-      inputValue.optionB !== ""
-    ) {
-      setDisabledBtn(false);
-    } else {
-      setDisabledBtn(true);
-    }
-  }, [inputValue]);
 
   const openModal = (setFun: Dispatch<SetStateAction<boolean>>) => {
     setFun(true);
@@ -65,6 +54,18 @@ const CreatePost = (): JSX.Element => {
     openModal(setShowCancelModal);
   };
 
+  useEffect(() => {
+    if (
+      inputValue.title !== "" &&
+      inputValue.optionA !== "" &&
+      inputValue.optionB !== ""
+    ) {
+      setDisabledBtn(false);
+    } else {
+      setDisabledBtn(true);
+    }
+  }, [inputValue]);
+
   return (
     <>
       <div className="w-full bg-white rounded-lg md:px-24 py-8 px-5">
@@ -85,27 +86,9 @@ const CreatePost = (): JSX.Element => {
           <p className="ml-2 text-xs text-red-dark">* 필수 입력</p>
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center mb-7 gap-3">
-          <div className="flex items-center gap-4 w-full">
-            <p className="text-lg font-semibold text-red-dark">A</p>
-            <input
-              className="bg-color-bg w-full p-3 focus:outline-none"
-              placeholder="A 항목을 입력해 주세요."
-              value={inputValue.optionA}
-              onChange={(e) => onchangeInput(e, "optionA")}
-              required
-            />
-          </div>
+          <OptionInput option="A" />
           <p className="text-lg">vs</p>
-          <div className="flex items-center gap-4 w-full">
-            <p className="text-lg font-semibold text-blue-dark">B</p>
-            <input
-              className="bg-color-bg w-full p-3 focus:outline-none"
-              placeholder="B 항목을 입력해 주세요."
-              value={inputValue.optionB}
-              onChange={(e) => onchangeInput(e, "optionB")}
-              required
-            />
-          </div>
+          <OptionInput option="B" />
         </div>
         <TagInput />
         <FileInput />

@@ -1,12 +1,15 @@
-import { KeyboardEvent, useState } from "react";
+import { KeyboardEvent, useState, useEffect } from "react";
 import { useRecoilState, RecoilState } from "recoil";
 import { inputValueState } from "../../states/recoil";
 import { InputValue } from "../../states/recoilType";
 import { TiDelete } from "react-icons/ti";
 
+const maxTagCnt = 5;
+
 const TagInput = () => {
   const [tagItem, setTagItem] = useState<string>("");
   const [tagList, setTagList] = useState<string[]>([]);
+  const [maxTag, setMaxTag] = useState<boolean>(false);
   const [check, setCheck] = useState<boolean>(false);
 
   const [, setInputValue] = useRecoilState(
@@ -55,16 +58,30 @@ const TagInput = () => {
     }));
   };
 
+  useEffect(() => {
+    if (tagList.length === maxTagCnt) {
+      setMaxTag(true);
+    } else {
+      setMaxTag(false);
+    }
+  }, [tagList]);
+
   return (
     <>
-      <p className="text-lg mb-4">해시태그</p>
+      <div className="flex items-center ext-lg mb-4">
+        <p>해시태그</p>
+        <p className="ml-2 text-xs text-gray">* 최대 5개 입력 가능</p>
+      </div>
       <input
         type="text"
         value={tagItem}
         onChange={(e) => setTagItem(e.target.value)}
         placeholder="엔터를 입력하시면 해시태그를 등록할 수 있어요."
         onKeyDown={onKeyDown}
-        className="w-full bg-color-bg focus:outline-none p-3"
+        className={`w-full bg-color-bg focus:outline-none p-3 ${
+          maxTag ? "opacity-30" : null
+        }`}
+        disabled={maxTag}
       ></input>
       {check ? (
         <p className="text-sm mt-1 text-red-dark">
