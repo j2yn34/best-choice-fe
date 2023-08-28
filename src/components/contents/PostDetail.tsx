@@ -4,6 +4,7 @@ import { Post } from "../../mocks/mockType";
 import LikeBtn from "../common/LikeBtn";
 import VoteGraph from "./VoteGraph";
 import BasicModal from "../modal/BasicModal";
+import NoDataMessage from "../common/NoDataMessage";
 
 const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
   const [selectedOption, setSelectedOption] = useState<"A" | "B" | null>(null);
@@ -17,7 +18,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
     (data: Post) => data.postId === parseInt(postId)
   );
   if (filteredPostData.length === 0) {
-    return <p>해당하는 투표글이 없습니다.</p>;
+    return <NoDataMessage message="해당하는 투표글이 없어요" />;
   }
   const viewData = filteredPostData[0];
 

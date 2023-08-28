@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { MdOutlineClose } from "react-icons/md";
 import useFetchData from "../../hooks/useFetchData";
 import { Post } from "../../mocks/mockType";
+import BasicModal from "./BasicModal";
 
 const EnterChatRoom = ({
   postId,
@@ -27,12 +28,13 @@ const EnterChatRoom = ({
     (data: Post) => data.postId === postId
   );
 
-  if (filteredPostData.length === 0) {
-    alert("해당하는 투표글이 없습니다.");
-    return;
-  }
-
   const viewData = filteredPostData[0];
+
+  if (!viewData) {
+    return (
+      <BasicModal message="해당하는 채팅방이 없어요" closeModal={closeModal} />
+    );
+  }
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/[0.8] z-50">

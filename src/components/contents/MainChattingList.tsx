@@ -3,12 +3,17 @@ import useFetchData from "../../hooks/useFetchData";
 import ChatUserBadge from "../common/ChatUserBadge";
 import EnterChatRoom from "../modal/EnterChatRoom";
 import { Post } from "../../mocks/mockType";
+import NoDataMessage from "../common/NoDataMessage";
 
 const MainChattingList = (): JSX.Element => {
   const [showModal, setShowModal] = useState(false);
   const [clickedChatData, setClickedChatData] = useState<number | null>(null);
 
   const { data: chatData } = useFetchData("/activeChatListData", ["chatData"]);
+
+  if (chatData.length === 0) {
+    return <NoDataMessage message="진행 중인 채팅방이 없어요" />;
+  }
 
   const openModal = (data: Post) => {
     setShowModal(true);
