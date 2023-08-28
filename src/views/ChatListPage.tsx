@@ -12,7 +12,7 @@ const ChatListPage = (): JSX.Element => {
   return (
     <>
       <>
-        <h1 className="text-2xl font-semibold">채팅방</h1>
+        <h1 className="text-2xl font-semibold mb-8">채팅방</h1>
         <ErrorBoundary FallbackComponent={ErrorMessage}>
           <Suspense fallback={<LoadPostCard limit={10} />}>
             <ChatCardList />

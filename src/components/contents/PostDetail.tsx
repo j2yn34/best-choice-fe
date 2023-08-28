@@ -4,16 +4,57 @@ import { Post } from "../../mocks/mockType";
 import LikeBtn from "../common/LikeBtn";
 import VoteGraph from "./VoteGraph";
 import BasicModal from "../modal/BasicModal";
+import NoDataMessage from "../common/NoDataMessage";
 
 const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
-  const [selectedOption, setSelectedOption] = useState<
-    "optionA" | "optionB" | null
-  >(null);
-  const [votedOption, setVotedOption] = useState<"optionA" | "optionB" | null>(
-    null
-  );
+  const [selectedOption, setSelectedOption] = useState<"A" | "B" | null>(null);
+  const [votedOption, setVotedOption] = useState<"A" | "B" | null>(null);
   const [isVoted, setIsVoted] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
+
+  const { data: postData } = useFetchData("/postListData", ["postData"]);
+
+  const filteredPostData = postData.filter(
+    (data: Post) => data.postId === parseInt(postId)
+  );
+  if (filteredPostData.length === 0) {
+    return <NoDataMessage message="해당하는 투표글이 없어요" />;
+  }
+  const viewData = filteredPostData[0];
+
+  const handleOptionChange = (option: "A" | "B") => {
+    setSelectedOption(option);
+  };
+
+  const handleVoteSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (selectedOption) {
+      // alret 띄우면 새로고침 돼서 카운트 반영 안 됨 -> 임시로 console.log로 작성
+      console.log(
+        `${
+          selectedOption === "A"
+            ? "A " + viewData.optionA
+            : "B " + viewData.optionB
+        }에 투표했어요!`
+      );
+      // 임시로 직접 카운트 증가시킴
+      if (selectedOption === "A") {
+        viewData.ACount++;
+      } else if (selectedOption === "B") {
+        viewData.BCount++;
+      }
+      setVotedOption(selectedOption);
+      setIsVoted(true);
+      // 실제로는 투표 데이터 post 전송 (`/api/posts/${postId}/`, {"option": selectedOption})
+    } else {
+      alert("투표할 항목을 선택해 주세요.");
+      return;
+    }
+  };
+
+  const handleVoteBtnClick = (e: FormEvent) => {
+    handleVoteSubmit(e);
+  };
 
   const openModal = () => {
     setShowModal(true);
@@ -24,56 +65,6 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
     setShowModal(false);
     document.body.style.overflow = "auto";
     console.log("게시글 신고 삭제");
-  };
-
-  const { data: postData, isError } = useFetchData("/postListData", [
-    "postData",
-  ]);
-
-  if (isError) {
-    throw new Error("데이터 불러오기 실패");
-  }
-
-  const filteredPostData = postData.filter(
-    (data: Post) => data.postId === parseInt(postId)
-  );
-  if (filteredPostData.length === 0) {
-    return <p>해당하는 투표글이 없습니다.</p>;
-  }
-  const viewData = filteredPostData[0];
-
-  const handleOptionChange = (option: "optionA" | "optionB") => {
-    setSelectedOption(option);
-  };
-
-  const handleVoteSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (selectedOption) {
-      // alret 띄우면 새로고침 돼서 카운트 반영 안 됨 -> 임시로 console.log로 작성
-      console.log(
-        `${
-          selectedOption === "optionA"
-            ? "A " + viewData.optionA
-            : "B " + viewData.optionB
-        }에 투표했어요!`
-      );
-      // 임시로 직접 카운트 증가시킴
-      if (selectedOption === "optionA") {
-        viewData.ACount++;
-      } else if (selectedOption === "optionB") {
-        viewData.BCount++;
-      }
-      setVotedOption(selectedOption);
-      setIsVoted(true);
-      // 실제로는 투표 데이터 post 전송 (`/api/posts/${postId}/`, {"choice": selectedOption})
-    } else {
-      alert("투표할 항목을 선택해 주세요.");
-      return;
-    }
-  };
-
-  const handleVoteBtnClick = (e: FormEvent) => {
-    handleVoteSubmit(e);
   };
 
   return (
@@ -126,44 +117,38 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
           >
             <label
               className={`flex items-center p-4 mb-1 w-full rounded-xl ${
-                selectedOption === "optionA"
-                  ? "text-red-dark bg-blue-100/[0.5]"
-                  : ""
+                selectedOption === "A" ? "text-red-dark bg-blue-100/[0.5]" : ""
               } ${
-                votedOption === "optionB"
-                  ? "hover:text-black"
-                  : "hover:text-red-dark"
+                votedOption === "B" ? "hover:text-black" : "hover:text-red-dark"
               } ${isVoted ? "cursor-auto" : "cursor-pointer"}`}
             >
               <input
                 type="radio"
-                name="choice"
-                value="optionA"
+                name="option"
+                value="A"
                 disabled={isVoted ? true : false}
-                checked={selectedOption === "optionA"}
-                onChange={() => handleOptionChange("optionA")}
+                checked={selectedOption === "A"}
+                onChange={() => handleOptionChange("A")}
               />
               <span className="font-semibold mx-3">A</span>
               <span>{viewData.optionA}</span>
             </label>
             <label
               className={`flex items-center p-4 mb-1 w-full rounded-xl ${
-                selectedOption === "optionB"
-                  ? "text-blue-dark bg-blue-100/[0.5]"
-                  : ""
+                selectedOption === "B" ? "text-blue-dark bg-blue-100/[0.5]" : ""
               } ${
-                votedOption === "optionA"
+                votedOption === "A"
                   ? "hover:text-black"
                   : "hover:text-blue-dark"
               } ${isVoted ? "cursor-auto" : "cursor-pointer"}`}
             >
               <input
                 type="radio"
-                name="choice"
-                value="optionB"
+                name="option"
+                value="B"
                 disabled={isVoted ? true : false}
-                checked={selectedOption === "optionB"}
-                onChange={() => handleOptionChange("optionB")}
+                checked={selectedOption === "B"}
+                onChange={() => handleOptionChange("B")}
               />
               <span className="font-semibold mx-3">B</span>
               <span>{viewData.optionB}</span>
@@ -200,9 +185,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
           message="해당 투표글을 신고 할까요?"
           closeModal={closeModal}
         />
-      ) : (
-        ""
-      )}
+      ) : null}
     </>
   );
 };

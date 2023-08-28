@@ -14,10 +14,10 @@ const BasicModal = ({
           <button className="flex justify-end text-2xl" onClick={closeModal}>
             <MdOutlineClose />
           </button>
-          <div className="flex flex-col justify-center items-center p-4 md:px-8">
+          <div className="flex flex-col justify-center items-center px-4 py-2 md:px-8">
             <p className="text-lg">{message}</p>
             <button
-              className="btn bg-black-primary text-white hover:bg-black mt-10 px-8"
+              className="btn bg-black-primary text-white hover:bg-black mt-12 px-8"
               onClick={() => {
                 closeModal();
               }}

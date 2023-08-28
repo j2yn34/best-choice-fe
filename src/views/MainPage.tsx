@@ -28,7 +28,7 @@ const MainPage = (): JSX.Element => {
       </section>
 
       <section className="mt-20">
-        <h1 className="text-2xl font-semibold">HOT한 투표글</h1>
+        <h1 className="text-2xl font-semibold mb-8">HOT한 투표글</h1>
         <ErrorBoundary FallbackComponent={ErrorMessage}>
           <Suspense fallback={<LoadPostCard limit={4} />}>
             <PostCardList limit={4} />
@@ -40,7 +40,7 @@ const MainPage = (): JSX.Element => {
       </section>
 
       <section className="mt-20">
-        <h1 className="text-2xl font-semibold">새로 올라온 투표글</h1>
+        <h1 className="text-2xl font-semibold mb-8">새로 올라온 투표글</h1>
         <ErrorBoundary FallbackComponent={ErrorMessage}>
           <Suspense fallback={<LoadPostCard limit={4} />}>
             <PostCardList limit={4} />

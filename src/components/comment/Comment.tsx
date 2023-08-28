@@ -3,6 +3,7 @@ import CommentList from "./CommentList";
 import CommentInput from "./CommentInput";
 import { useCallback } from "react";
 import useFetchData from "../../hooks/useFetchData";
+import NoDataMessage from "../common/NoDataMessage";
 
 const sortNames = [
   { name: "최신순", message: "최신순 클릭" },
@@ -39,7 +40,11 @@ const Comment = (): JSX.Element => {
           ))}
         </ul>
       </div>
-      <CommentList commentData={commentData} />
+      {commentData.length === 0 ? (
+        <NoDataMessage message="아직 작성된 댓글이 없어요" />
+      ) : (
+        <CommentList commentData={commentData} />
+      )}
       <CommentInput />
     </div>
   );

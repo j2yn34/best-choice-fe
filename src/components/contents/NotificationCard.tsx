@@ -2,6 +2,7 @@ import { useState } from "react";
 import useFetchData from "../../hooks/useFetchData";
 import EnterChatRoom from "../modal/EnterChatRoom";
 import { Notification } from "../../mocks/mockType";
+import NoDataMessage from "../common/NoDataMessage";
 
 const NotificationCard = (): JSX.Element => {
   const [showModal, setShowModal] = useState(false);
@@ -10,6 +11,10 @@ const NotificationCard = (): JSX.Element => {
   const { data: notificationData } = useFetchData("/notificationData", [
     "notificationData",
   ]);
+
+  if (notificationData.length === 0) {
+    return <NoDataMessage message="새로운 알림이 없어요" />;
+  }
 
   const openModal = (data: Notification) => {
     setShowModal(true);
@@ -28,7 +33,7 @@ const NotificationCard = (): JSX.Element => {
       <>
         {notificationData.map((data: Notification) => (
           <div key={data.notificationId}>
-            <div className="flex justify-between pt-8 mb-4">
+            <div className="flex justify-between mb-4">
               <div>{data.createdDate}</div>
               <div>
                 <button>삭제</button>
