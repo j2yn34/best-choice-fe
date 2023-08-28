@@ -1,8 +1,26 @@
+import { useRecoilState, RecoilState } from "recoil";
+import { inputValueState } from "../../states/recoil";
+import { InputValue } from "../../states/recoilType";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineClose } from "react-icons/md";
 import { AiFillNotification } from "react-icons/ai";
 
 const CancelCreate = ({ closeModal }: { closeModal: () => void }) => {
+  const [, setInputValue] = useRecoilState(
+    inputValueState as RecoilState<InputValue>
+  );
+
+  const inputValueClean = () => {
+    setInputValue({
+      title: "",
+      content: "",
+      optionA: "",
+      optionB: "",
+      tags: null,
+      files: null,
+    });
+  };
+
   const navigate = useNavigate();
 
   return (
@@ -24,6 +42,7 @@ const CancelCreate = ({ closeModal }: { closeModal: () => void }) => {
               className="btn bg-black-primary text-white hover:bg-black mt-10 px-8"
               onClick={() => {
                 closeModal();
+                inputValueClean();
                 navigate("/posts");
               }}
             >
