@@ -28,13 +28,13 @@ const EnterChatRoom = ({
     (data: Post) => data.postId === postId
   );
 
-  const viewData = filteredPostData[0];
-
-  if (!viewData) {
+  if (filteredPostData.length === 0) {
     return (
       <BasicModal message="해당하는 채팅방이 없어요" closeModal={closeModal} />
     );
   }
+
+  const viewData = filteredPostData[0];
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/[0.8] z-50">
