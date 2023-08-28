@@ -28,7 +28,7 @@ const NotificationCard = (): JSX.Element => {
       <>
         {notificationData.map((data: Notification) => (
           <div key={data.notificationId}>
-            <div className="flex justify-between pt-8 mb-4">
+            <div className="flex justify-between mb-4">
               <div>{data.createdDate}</div>
               <div>
                 <button>삭제</button>

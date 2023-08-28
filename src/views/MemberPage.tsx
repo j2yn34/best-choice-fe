@@ -35,7 +35,7 @@ const MemberPage = (): JSX.Element => {
 
   return (
     <>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mb-8">
         <div className="flex items-center">
           <p className="text-2xl mr-6">
             안녕하세요, <span className="font-semibold">닉네임 </span>님!
@@ -49,7 +49,7 @@ const MemberPage = (): JSX.Element => {
         </div>
         <button className="font-bold">로그아웃</button>
       </div>
-      <ul className="flex items-center gap-4 mt-8">
+      <ul className="flex items-center gap-4 mb-7">
         {sortNames.map((sortName) => (
           <li
             key={sortName.name}
@@ -65,13 +65,11 @@ const MemberPage = (): JSX.Element => {
           </li>
         ))}
       </ul>
-      <div className="mt-8">
-        <ErrorBoundary FallbackComponent={ErrorMessage}>
-          <Suspense fallback={<LoadPostCard limit={2} />}>
-            <PostCardList limit={3} />
-          </Suspense>
-        </ErrorBoundary>
-      </div>
+      <ErrorBoundary FallbackComponent={ErrorMessage}>
+        <Suspense fallback={<LoadPostCard limit={2} />}>
+          <PostCardList limit={3} />
+        </Suspense>
+      </ErrorBoundary>
       {showModal ? <ChangeNickname closeModal={closeModal} /> : null}
     </>
   );

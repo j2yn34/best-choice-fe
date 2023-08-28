@@ -25,9 +25,9 @@ const PostListPage = (): JSX.Element => {
   return (
     <>
       <>
-        <h1 className="text-2xl font-semibold">투표글</h1>
-        <div className="flex justify-between items-center mt-8">
-          <ul className="flex items-center gap-4">
+        <h1 className="text-2xl font-semibold mb-8">투표글</h1>
+        <div className="flex justify-between mb-7">
+          <ul className="flex gap-4">
             {sortNames.map((sortName) => (
               <li
                 key={sortName.name}
@@ -42,7 +42,6 @@ const PostListPage = (): JSX.Element => {
               </li>
             ))}
           </ul>
-
           <Link to="/create" className="font-bold">
             글쓰기
           </Link>

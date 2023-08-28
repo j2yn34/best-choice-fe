@@ -12,7 +12,7 @@ const HotListPage = (): JSX.Element => {
   return (
     <>
       <>
-        <h1 className="text-2xl font-semibold">HOT 투표글</h1>
+        <h1 className="text-2xl font-semibold mb-8">HOT 투표글</h1>
         <ErrorBoundary FallbackComponent={ErrorMessage}>
           <Suspense fallback={<LoadPostCard limit={10} />}>
             <PostCardList limit={PostCardList.length} />
