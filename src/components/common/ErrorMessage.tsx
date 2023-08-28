@@ -1,7 +1,9 @@
 const ErrorMessage = (): JSX.Element => {
   return (
-    <div className="w-full text-center mt-20">
-      <p>🥹 데이터를 불러올 수 없어요.</p>
+    <div className="flex flex-col items-center justify-center w-full h-44 bg-white text-center rounded-xl">
+      <p>🥹</p>
+      <p>데이터를 불러올 수 없어요</p>
+      <p>새로고침 후 이용해 주세요</p>
     </div>
   );
 };

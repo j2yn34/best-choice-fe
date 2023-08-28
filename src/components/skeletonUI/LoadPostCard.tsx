@@ -16,10 +16,10 @@ const LoadPostCard = ({ limit }: { limit: number }) => {
                   <div className="flex items-center bg-gray/[0.2] w-full min-h-[76px] rounded-xl"></div>
                 </div>
                 <div className="flex justify-between items-baseline mt-5 w-full">
-                  <div className="flex items-center w-[20%]">
+                  <div className="flex items-center w-20">
                     <div className="ml-1 w-full h-5 bg-gray/[0.2] rounded-md"></div>
                   </div>
-                  <div className="flex items-center w-[30%]">
+                  <div className="flex items-center w-32">
                     <div className="ml-1 w-full h-5 bg-gray/[0.2] rounded-md"></div>
                   </div>
                 </div>
