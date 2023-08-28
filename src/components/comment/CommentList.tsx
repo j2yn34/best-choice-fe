@@ -73,9 +73,7 @@ const CommentList = ({ commentData }: { commentData: Comment[] }) => {
       </ul>
       {showModal ? (
         <BasicModal message="댓글을 삭제할까요?" closeModal={closeModal} />
-      ) : (
-        ""
-      )}
+      ) : null}
     </>
   );
 };
