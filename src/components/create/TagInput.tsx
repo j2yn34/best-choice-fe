@@ -5,47 +5,48 @@ import { InputValue } from "../../states/recoilType";
 import { TiDelete } from "react-icons/ti";
 
 const maxTagCnt = 5;
+const regExp = /[ [\]/?.,;:|)*~`!^\\-_+┼<>@#$%&'"(=]/gi;
 
 const TagInput = () => {
   const [tagItem, setTagItem] = useState<string>("");
   const [tagList, setTagList] = useState<string[]>([]);
   const [maxTag, setMaxTag] = useState<boolean>(false);
-  const [check, setCheck] = useState<boolean>(false);
+  const [isValid, setIsValid] = useState<boolean>(true);
 
   const [, setInputValue] = useRecoilState(
     inputValueState as RecoilState<InputValue>
   );
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    setIsValid(true);
     const target = e.target as HTMLInputElement;
+
+    if (regExp.test(tagItem)) {
+      setIsValid(false);
+      return;
+    }
+
     if (
       target.value.length !== 0 &&
       e.key === "Enter" &&
-      e.nativeEvent.isComposing === false
+      e.nativeEvent.isComposing === false &&
+      isValid === true
     ) {
       submitTagItem();
     }
   };
 
   const submitTagItem = () => {
-    setCheck(false);
-
-    if (tagItem.includes(" ")) {
-      setCheck(true);
-      setTagItem("");
-      return;
-    }
-
     const updatedTagList = [...tagList];
     updatedTagList.unshift(tagItem);
     setTagList(updatedTagList);
-
-    setTagItem("");
 
     setInputValue((prevInputValues) => ({
       ...prevInputValues,
       tags: [...updatedTagList],
     }));
+
+    setTagItem("");
   };
 
   const deleteTagItem = (tagItem: string) => {
@@ -68,9 +69,9 @@ const TagInput = () => {
 
   return (
     <>
-      <div className="flex items-center ext-lg mb-4">
+      <div className="flex items-center text-lg mb-4">
         <p>해시태그</p>
-        <p className="ml-2 text-xs text-gray">* 최대 5개 입력 가능</p>
+        <p className="ml-2 text-xs text-gray">(최대 5개 입력 가능)</p>
       </div>
       <input
         type="text"
@@ -83,9 +84,9 @@ const TagInput = () => {
         }`}
         disabled={maxTag}
       ></input>
-      {check ? (
+      {!isValid ? (
         <p className="text-sm mt-1 text-red-dark">
-          * 공백 문자를 포함할 수 없습니다.
+          * 공백 문자와 특수문자를 포함할 수 없습니다.
         </p>
       ) : (
         ""
