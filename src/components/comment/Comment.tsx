@@ -23,7 +23,7 @@ const Comment = (): JSX.Element => {
   return (
     <div className="w-full py-8 px-4 sm:px-6 md:pt-10 md:px-[70px] bg-white rounded-xl">
       <div className="flex items-center justify-between mb-6">
-        <p className="text-lg">댓글 {commentData.length}개</p>
+        <p className="text-lg">댓글 ({commentData.length})</p>
         <ul className="flex items-center gap-4">
           {sortNames.map((sortName) => (
             <li
