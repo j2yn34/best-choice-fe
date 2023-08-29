@@ -81,7 +81,7 @@ const FileInput = () => {
     <>
       <div className="flex items-center text-lg mb-4 mt-8">
         <p>파일 첨부</p>
-        <p className="ml-2 text-xs text-gray">* 최대 5개 업로드 가능</p>
+        <p className="ml-2 text-xs text-gray">(최대 5개 업로드 가능)</p>
       </div>
 
       <input

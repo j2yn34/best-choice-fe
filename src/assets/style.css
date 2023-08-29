@@ -25,6 +25,7 @@
 }
 
 .ql-container.ql-snow {
+  font-size: 16px;
   background-color: #f5f6f8;
   border: none;
 }
@@ -32,6 +33,11 @@
 .disabled-btn {
   cursor: not-allowed !important;
   opacity: 0.4;
+}
+
+.quill > .ql-container > .ql-editor.ql-blank::before {
+  font-size: 16px;
+  color: #aaaaaa;
 }
 
 @media (max-width: 767px) {

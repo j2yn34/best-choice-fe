@@ -25,13 +25,13 @@ const CreatePost = (): JSX.Element => {
   const [showUploadModal, setShowUploadModal] = useState<boolean>(false);
   const [disabledBtn, setDisabledBtn] = useState<boolean>(true);
 
-  const openModal = (setFun: Dispatch<SetStateAction<boolean>>) => {
-    setFun(true);
+  const openModal = (setFunc: Dispatch<SetStateAction<boolean>>) => {
+    setFunc(true);
     document.body.style.overflow = "hidden";
   };
 
-  const closeModal = (setFun: Dispatch<SetStateAction<boolean>>) => {
-    setFun(false);
+  const closeModal = (setFunc: Dispatch<SetStateAction<boolean>>) => {
+    setFunc(false);
     document.body.style.overflow = "auto";
   };
 
@@ -49,7 +49,7 @@ const CreatePost = (): JSX.Element => {
     openModal(setShowUploadModal);
   };
 
-  const onDelete = (e: FormEvent) => {
+  const onCancel = (e: FormEvent) => {
     e.preventDefault();
     openModal(setShowCancelModal);
   };
@@ -94,21 +94,18 @@ const CreatePost = (): JSX.Element => {
         <FileInput />
       </div>
       <div className="flex justify-center items-center mt-8 gap-6">
-        <button className="btn btn-outline" onClick={onDelete}>
+        <button className="btn btn-outline" onClick={onCancel}>
           취소
         </button>
-        {disabledBtn ? (
-          <button disabled className="btn opacity-30">
-            작성 완료
-          </button>
-        ) : (
-          <button
-            className="btn bg-black-primary hover:bg-black text-white"
-            onClick={onSubmit}
-          >
-            작성 완료
-          </button>
-        )}
+        <button
+          className={`btn bg-black-primary hover:bg-black text-white ${
+            disabledBtn ? "opacity-30" : null
+          }`}
+          onClick={onSubmit}
+          disabled={disabledBtn}
+        >
+          작성 완료
+        </button>
       </div>
       {showCancelModal ? (
         <CancelCreate closeModal={() => closeModal(setShowCancelModal)} />
