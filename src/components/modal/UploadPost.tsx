@@ -24,13 +24,10 @@ const UploadPost = ({ closeModal }: { closeModal: () => void }) => {
   const upload = async () => {
     const formData = new FormData();
 
-    // ----- 임시 : Blob로 감싸서 전송하는 경우
-    // formData.append(
-    //   "inputData",
-    //   new Blob([JSON.stringify(inputData)], { type: "application/json" })
-    // );
-
-    formData.append("inputData", JSON.stringify(inputData));
+    formData.append(
+      "inputData",
+      new Blob([JSON.stringify(inputData)], { type: "application/json" })
+    );
 
     if (inputValue.files) {
       for (let i = 0; i < inputValue.files.length; i++) {
