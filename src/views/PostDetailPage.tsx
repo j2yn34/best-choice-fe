@@ -31,15 +31,7 @@ const PostDetailPage = (): JSX.Element => {
       <div className="flex justify-end my-8">
         <button onClick={onClick}>목록으로</button>
       </div>
-      <ErrorBoundary FallbackComponent={ErrorMessage}>
-        <Suspense
-          fallback={
-            <span className="flex mx-auto loading loading-spinner loading-md text-gray/[0.2]"></span>
-          }
-        >
-          <Comment />
-        </Suspense>
-      </ErrorBoundary>
+      <Comment />
     </>
   );
 };
