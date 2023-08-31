@@ -1,26 +1,22 @@
-import { Suspense, useCallback, lazy } from "react";
+import { Suspense, lazy, useState } from "react";
 import { Link } from "react-router-dom";
 import ScrollTopBtn from "../components/common/ScrollTopBtn";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessage from "../components/common/ErrorMessage";
 
-// 실제 서버와 연결할 때는 message가 아닌 정렬 함수가 들어갈 예정!
 const sortNames = [
-  { name: "최신순", message: "최신순 클릭" },
-  { name: "추천순", message: "추천순 클릭" },
-  { name: "참여자순", message: "참여자순 클릭" },
+  { name: "최신순", sort: "LATEST" },
+  { name: "추천순", sort: "LIKES" },
+  { name: "참여자순", sort: "HOT" },
 ];
 
 const PostListPage = (): JSX.Element => {
+  const [postSort, setPostSort] = useState<string>("LATEST");
+
   const PostCardList = lazy(
     () => import("../components/contents/PostCardList")
   );
-
-  const clickSort = useCallback((message: string) => {
-    console.log("클릭 성공!");
-    alert(message);
-  }, []);
 
   return (
     <>
@@ -30,13 +26,13 @@ const PostListPage = (): JSX.Element => {
           <ul className="flex gap-4">
             {sortNames.map((sortName) => (
               <li
-                key={sortName.name}
+                key={sortName.sort}
                 className={`cursor-pointer ${
-                  sortName.name === "최신순"
+                  sortName.sort === postSort
                     ? "text-blue-dark font-semibold"
                     : ""
                 }`}
-                onClick={() => clickSort(sortName.message)}
+                onClick={() => setPostSort(sortName.sort)}
               >
                 {sortName.name}
               </li>
@@ -48,7 +44,7 @@ const PostListPage = (): JSX.Element => {
         </div>
         <ErrorBoundary FallbackComponent={ErrorMessage}>
           <Suspense fallback={<LoadPostCard limit={10} />}>
-            <PostCardList limit={PostCardList.length} />
+            <PostCardList limit={PostCardList.length} sort={postSort} />
           </Suspense>
         </ErrorBoundary>
       </>
