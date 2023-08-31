@@ -4,7 +4,7 @@ import { Post } from "../../mocks/mockType";
 import NoDataMessage from "../common/NoDataMessage";
 
 const PostCardList = ({ limit }: { limit: number }): JSX.Element => {
-  const { data: postData } = useFetchData("/postListData", ["postData"]);
+  const { data: postData } = useFetchData("/api/posts", ["postData"]);
 
   if (postData.length === 0) {
     return <NoDataMessage message="투표글 데이터가 없어요" />;
