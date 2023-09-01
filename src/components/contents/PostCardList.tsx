@@ -3,11 +3,28 @@ import PostCard from "./PostCard";
 import { Post } from "../../mocks/mockType";
 import NoDataMessage from "../common/NoDataMessage";
 
-const PostCardList = ({ limit }: { limit: number }): JSX.Element => {
-  const { data: postData } = useFetchData("/api/posts", ["postData"]);
+const PostCardList = ({
+  limit,
+  sort,
+}: {
+  limit: number;
+  sort: string | null;
+}): JSX.Element => {
+  // const [page, setPage] = useState<number>(1);
+
+  const { data: postData } = useFetchData(
+    `/api/posts?sort=${sort}&page=1`,
+    [`${sort}PostData`],
+    ""
+  );
 
   if (postData.length === 0) {
-    return <NoDataMessage message="투표글 데이터가 없어요" />;
+    return (
+      <>
+        <NoDataMessage message="투표글 데이터가 없어요" />
+        {/* <button onClick={() => setPage(page + 1)}>page ++</button> */}
+      </>
+    );
   }
 
   return (

@@ -11,7 +11,11 @@ const ChatCardList = () => {
   const [showModal, setShowModal] = useState(false);
   const [clickedChatData, setClickedChatData] = useState<number | null>(null);
 
-  const { data: chatData } = useFetchData("/activeChatListData", ["chatData"]);
+  const { data: chatData } = useFetchData(
+    "/activeChatListData",
+    ["chatData"],
+    ""
+  );
 
   if (chatData.length === 0) {
     return <NoDataMessage message="채팅방 데이터가 없어요" />;

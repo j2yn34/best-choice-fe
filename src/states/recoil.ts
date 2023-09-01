@@ -11,3 +11,8 @@ export const inputValueState = atom({
     files: null,
   },
 });
+
+export const commentLengthState = atom({
+  key: "commentLengthState",
+  default: 0,
+});

@@ -9,7 +9,11 @@ const MainChattingList = (): JSX.Element => {
   const [showModal, setShowModal] = useState(false);
   const [clickedChatData, setClickedChatData] = useState<number | null>(null);
 
-  const { data: chatData } = useFetchData("/activeChatListData", ["chatData"]);
+  const { data: chatData } = useFetchData(
+    "/activeChatListData",
+    ["chatData"],
+    ""
+  );
 
   if (chatData.length === 0) {
     return <NoDataMessage message="진행 중인 채팅방이 없어요" />;

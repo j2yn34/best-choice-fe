@@ -1,50 +1,47 @@
-// api/posts/{postId}/comments?page=1&sort=type -> 실제 서버 요청
+import { useState, Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import CommentList from "./CommentList";
 import CommentInput from "./CommentInput";
-import { useCallback } from "react";
-import useFetchData from "../../hooks/useFetchData";
-import NoDataMessage from "../common/NoDataMessage";
+import { useRecoilState } from "recoil";
+import { commentLengthState } from "../../states/recoil";
+import ErrorMessage from "../common/ErrorMessage";
 
 const sortNames = [
-  { name: "최신순", message: "최신순 클릭" },
-  { name: "추천순", message: "추천순 클릭" },
+  { name: "최신순", sort: "LATEST" },
+  { name: "추천순", sort: "LIKES" },
 ];
 
 const Comment = (): JSX.Element => {
-  const { data: commentData } = useFetchData("/commentListData", [
-    "commentData",
-  ]);
-
-  const clickSort = useCallback((message: string) => {
-    console.log("클릭 성공!");
-    alert(message);
-  }, []);
+  const [postSort, setPostSort] = useState<string>("LATEST");
+  const [commentLength] = useRecoilState(commentLengthState);
 
   return (
     <div className="w-full py-8 px-4 sm:px-6 md:pt-10 md:px-[70px] bg-white rounded-xl">
       <div className="flex items-center justify-between mb-6">
-        <p className="text-lg">댓글 ({commentData.length})</p>
+        <p className="text-lg">댓글 ({commentLength})</p>
         <ul className="flex items-center gap-4">
           {sortNames.map((sortName) => (
             <li
-              key={sortName.name}
+              key={sortName.sort}
               className={`cursor-pointer text-sm ${
-                sortName.name === "최신순" ? "text-blue-dark font-semibold" : ""
+                sortName.sort === postSort ? "text-blue-dark font-semibold" : ""
               }`}
-              onClick={() => {
-                clickSort(sortName.message);
-              }}
+              onClick={() => setPostSort(sortName.sort)}
             >
               {sortName.name}
             </li>
           ))}
         </ul>
       </div>
-      {commentData.length === 0 ? (
-        <NoDataMessage message="아직 작성된 댓글이 없어요" />
-      ) : (
-        <CommentList commentData={commentData} />
-      )}
+      <ErrorBoundary FallbackComponent={ErrorMessage}>
+        <Suspense
+          fallback={
+            <span className="flex mx-auto loading loading-spinner loading-md text-gray/[0.2]"></span>
+          }
+        >
+          <CommentList sort={postSort} />
+        </Suspense>
+      </ErrorBoundary>
       <CommentInput />
     </div>
   );
