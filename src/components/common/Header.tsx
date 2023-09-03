@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { useRecoilValue } from "recoil";
+import { accessTokenState } from "../../states/recoil";
 
 const Header = (): JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,6 +23,8 @@ const Header = (): JSX.Element => {
       document.body.style.overflow = "auto";
     }
   };
+
+  const token = useRecoilValue<string>(accessTokenState);
 
   return (
     <>
@@ -56,12 +60,21 @@ const Header = (): JSX.Element => {
             </div>
           </nav>
           <div className="flex flex-row items-center">
-            <Link to="/notification" className="text-2xl">
+            <Link
+              to="/notification"
+              className={`text-2xl ${token ? "" : "hidden"}`}
+            >
               <IoMdNotificationsOutline />
             </Link>
-            <Link to="/member" className="text-base ml-5 font-bold">
-              MY
-            </Link>
+            {token ? (
+              <Link to="/member" className="text-base ml-5 font-bold">
+                MY
+              </Link>
+            ) : (
+              <Link to="/login" className="text-base ml-5 font-bold">
+                로그인
+              </Link>
+            )}
           </div>
         </div>
       </header>
