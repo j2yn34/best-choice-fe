@@ -7,7 +7,7 @@ const useFetchData = (url: string, key: string[], auth: string) => {
       const response = await axios({
         method: "get",
         url: url,
-        headers: { Authorization: auth },
+        headers: { Authorization: `Bearer  ${auth}` },
         responseType: "json",
       });
       return response.data["content"];

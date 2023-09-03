@@ -15,7 +15,7 @@ const EnterChatRoom = ({
     isLoading,
     data: chatData,
     isError,
-  } = useFetchData("/activeChatListData", ["chatData"]);
+  } = useFetchData("/activeChatListData", ["chatData"], "");
 
   if (isError) {
     console.log("데이터 불러오기 실패");

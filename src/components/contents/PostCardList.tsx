@@ -6,17 +6,21 @@ import NoDataMessage from "../common/NoDataMessage";
 const PostCardList = ({
   limit,
   sort,
+  token,
 }: {
   limit: number;
   sort: string | null;
+  token: string | null;
 }): JSX.Element => {
   // const [page, setPage] = useState<number>(1);
 
-  const { data: postData } = useFetchData(
-    `/api/posts?sort=${sort}&page=1`,
-    [`${sort}PostData`],
-    ""
-  );
+  const url = token
+    ? `/api/posts/my?sort=${sort}&page=0`
+    : `/api/posts?sort=${sort}&page=0`;
+  const key = token ? `${sort}myPostData` : `${sort}PostData`;
+  const auth = token ? token : "";
+
+  const { data: postData } = useFetchData(url, [key], auth);
 
   if (postData.length === 0) {
     return (

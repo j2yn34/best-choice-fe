@@ -10,6 +10,7 @@ import MemberPage from "../views/MemberPage";
 import NotificationPage from "../views/NotificationPage";
 import LoginPage from "../views/LoginPage";
 import NotFoundPage from "../views/NotFoundPage";
+import LoginRedirectPage from "../views/LoginCallbackPage";
 
 const Router = (): JSX.Element => {
   return (
@@ -17,6 +18,7 @@ const Router = (): JSX.Element => {
       <Route path="*" element={<NotFoundPage />} />
       <Route path="/" element={<MainPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/login/callback" element={<LoginRedirectPage />} />
       <Route path="/posts" element={<PostListPage />} />
       <Route path="/hot" element={<HotListPage />} />
       <Route path="/chat" element={<ChatListPage />} />

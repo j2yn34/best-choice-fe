@@ -44,7 +44,11 @@ const PostListPage = (): JSX.Element => {
         </div>
         <ErrorBoundary FallbackComponent={ErrorMessage}>
           <Suspense fallback={<LoadPostCard limit={10} />}>
-            <PostCardList limit={PostCardList.length} sort={postSort} />
+            <PostCardList
+              limit={PostCardList.length}
+              sort={postSort}
+              token={null}
+            />
           </Suspense>
         </ErrorBoundary>
       </>
