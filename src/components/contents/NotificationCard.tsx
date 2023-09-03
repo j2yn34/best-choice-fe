@@ -8,9 +8,11 @@ const NotificationCard = (): JSX.Element => {
   const [showModal, setShowModal] = useState(false);
   const [clickedData, setClickedData] = useState<number | null>(null);
 
-  const { data: notificationData } = useFetchData("/notificationData", [
-    "notificationData",
-  ]);
+  const { data: notificationData } = useFetchData(
+    "/notificationData",
+    ["notificationData"],
+    ""
+  );
 
   if (notificationData.length === 0) {
     return <NoDataMessage message="새로운 알림이 없어요" />;
