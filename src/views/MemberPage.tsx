@@ -6,6 +6,7 @@ import ErrorMessage from "../components/common/ErrorMessage";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { accessTokenState, userDataState } from "../states/recoil";
 import { useNavigate } from "react-router-dom";
+import ScrollTopBtn from "../components/common/ScrollTopBtn";
 
 const sortNames = [
   { name: "작성한 투표글", sort: "POSTS" },
@@ -86,6 +87,7 @@ const MemberPage = (): JSX.Element => {
           <PostCardList limit={3} sort={postSort} token={token} />
         </Suspense>
       </ErrorBoundary>
+      <ScrollTopBtn />
       {showModal ? <ChangeNickname closeModal={closeModal} /> : null}
     </>
   );

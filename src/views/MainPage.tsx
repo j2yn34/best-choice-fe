@@ -4,6 +4,7 @@ import LoadMainChat from "../components/skeletonUI/LoadMainChat";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessage from "../components/common/ErrorMessage";
+import ScrollTopBtn from "../components/common/ScrollTopBtn";
 
 const MainPage = (): JSX.Element => {
   const MainChattingList = lazy(
@@ -50,6 +51,7 @@ const MainPage = (): JSX.Element => {
           <Link to="/posts">투표글 더 보러가기 &gt;</Link>
         </div>
       </section>
+      <ScrollTopBtn />
     </>
   );
 };
