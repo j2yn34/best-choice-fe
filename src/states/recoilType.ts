@@ -1,3 +1,8 @@
+export type UserDataState = {
+  memberId: number;
+  nickname: string;
+};
+
 export type InputValue = {
   title: string;
   content: string;

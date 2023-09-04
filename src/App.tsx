@@ -6,6 +6,7 @@ import Footer from "./components/common/Footer";
 import Router from "./router/router";
 import ScrollToTop from "./components/ScrollToTop";
 import ErrorPage from "./views/ErrorPage";
+import { Suspense } from "react";
 
 function App() {
   return (
@@ -15,7 +16,13 @@ function App() {
         <Header />
         <main className="main pt-12 md:pt-20 pb-24 px-4 md:px-12 mx-auto xl:container">
           <ErrorBoundary FallbackComponent={ErrorPage}>
-            <Router />
+            <Suspense
+              fallback={
+                <span className="flex mx-auto loading loading-spinner loading-md text-gray/[0.2]"></span>
+              }
+            >
+              <Router />
+            </Suspense>
           </ErrorBoundary>
         </main>
         <Footer />

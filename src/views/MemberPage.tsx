@@ -3,10 +3,10 @@ import ChangeNickname from "../components/modal/ChangeNickname";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessage from "../components/common/ErrorMessage";
-import { useRecoilState } from "recoil";
-import { accessTokenState } from "../states/recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { accessTokenState, userDataState } from "../states/recoil";
 import { useNavigate } from "react-router-dom";
-// import useFetchData from "../hooks/useFetchData";
+import ScrollTopBtn from "../components/common/ScrollTopBtn";
 
 const sortNames = [
   { name: "작성한 투표글", sort: "POSTS" },
@@ -45,19 +45,17 @@ const MemberPage = (): JSX.Element => {
     document.body.style.overflow = "auto";
   };
 
-  // const { data: memberData } = useFetchData(
-  //   "api/members/mypage",
-  //   ["memberData"],
-  //   token
-  // );
+  const userData = useRecoilValue(userDataState);
+  const nickname = userData.nickname;
 
   return (
     <>
       <div className="flex justify-between items-center mb-8">
         <div className="flex items-center">
           <p className="text-2xl mr-6">
-            안녕하세요,<span className="font-semibold">닉네임 </span>님!
-            {/* <span className="font-semibold">${memberData.nickname} </span>님! */}
+            안녕하세요,
+            <span className="font-semibold"> {nickname} </span>
+            님!
           </p>
           <button
             onClick={() => openModal()}
@@ -89,6 +87,7 @@ const MemberPage = (): JSX.Element => {
           <PostCardList limit={3} sort={postSort} token={token} />
         </Suspense>
       </ErrorBoundary>
+      <ScrollTopBtn />
       {showModal ? <ChangeNickname closeModal={closeModal} /> : null}
     </>
   );

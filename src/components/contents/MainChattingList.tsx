@@ -15,7 +15,7 @@ const MainChattingList = (): JSX.Element => {
     ""
   );
 
-  if (chatData.length === 0) {
+  if (chatData["content"].length === 0) {
     return <NoDataMessage message="진행 중인 채팅방이 없어요" />;
   }
 
@@ -37,7 +37,7 @@ const MainChattingList = (): JSX.Element => {
         data-scroll={true}
         className="grid sm:grid-cols-4 md:grid-cols-2 xl:grid-cols-4 gap-6 main_chat"
       >
-        {chatData.slice(0, 4).map((data: Post) => (
+        {chatData["content"].slice(0, 4).map((data: Post) => (
           <div
             key={data.postId}
             onClick={() => openModal(data)}

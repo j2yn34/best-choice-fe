@@ -22,7 +22,7 @@ const PostCardList = ({
 
   const { data: postData } = useFetchData(url, [key], auth);
 
-  if (postData.length === 0) {
+  if (postData["content"].length === 0) {
     return (
       <>
         <NoDataMessage message="투표글 데이터가 없어요" />
@@ -33,7 +33,7 @@ const PostCardList = ({
 
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 xl:gap-x-6 gap-y-8">
-      {postData.slice(0, limit).map((post: Post) => (
+      {postData["content"].slice(0, limit).map((post: Post) => (
         <PostCard Data={post} key={post.postId} />
       ))}
     </div>

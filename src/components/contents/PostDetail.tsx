@@ -1,6 +1,5 @@
 import { FormEvent, useState } from "react";
 import useFetchData from "../../hooks/useFetchData";
-import { Post } from "../../mocks/mockType";
 import LikeBtn from "../common/LikeBtn";
 import VoteGraph from "./VoteGraph";
 import BasicModal from "../modal/BasicModal";
@@ -12,15 +11,15 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
   const [isVoted, setIsVoted] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const { data: postData } = useFetchData("/postListData", ["postData"]);
-
-  const filteredPostData = postData.filter(
-    (data: Post) => data.postId === parseInt(postId)
+  const { data: postData } = useFetchData(
+    `/api/posts/${postId}`,
+    [`postData${postId}`],
+    ""
   );
-  if (filteredPostData.length === 0) {
+
+  if (postData === 0) {
     return <NoDataMessage message="해당하는 투표글이 없어요" />;
   }
-  const viewData = filteredPostData[0];
 
   const handleOptionChange = (option: "A" | "B") => {
     setSelectedOption(option);
@@ -33,15 +32,15 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
       console.log(
         `${
           selectedOption === "A"
-            ? "A " + viewData.optionA
-            : "B " + viewData.optionB
+            ? "A " + postData.optionA
+            : "B " + postData.optionB
         }에 투표했어요!`
       );
       // 임시로 직접 카운트 증가시킴
       if (selectedOption === "A") {
-        viewData.ACount++;
+        postData.ACount++;
       } else if (selectedOption === "B") {
-        viewData.BCount++;
+        postData.BCount++;
       }
       setVotedOption(selectedOption);
       setIsVoted(true);
@@ -76,10 +75,10 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
           </button>
         </div>
         <div className="flex flex-wrap justify-between items-center pb-2 sm:py-2 px-2 border-b border-blue-200">
-          <h2 className="text-lg sm:text-xl mr-2 sm:mr-4">{viewData.title}</h2>
+          <h2 className="text-lg sm:text-xl mr-2 sm:mr-4">{postData.title}</h2>
           <div className="text-sm text-gray">
-            <span className="mr-4">{viewData.member.nickname}</span>
-            <span>{viewData.createdDate}</span>
+            <span className="mr-4">{postData.member.nickname}</span>
+            <span>{postData.createdDate}</span>
           </div>
         </div>
 
@@ -89,12 +88,12 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
               {/* <div className="pb-4">
               <div>사진</div>
             </div> */}
-              <div className="pb-6">{viewData.content}</div>
+              <div className="pb-6">{postData.content}</div>
             </div>
 
             <div className="flex items-center justify-between mb-6">
               <div className="flex gap-2 flex-wrap mr-1">
-                {viewData.tag.map((tag: string, index: number) => (
+                {postData.tags.map((tag: string, index: number) => (
                   <div
                     key={index}
                     className="badge badge-lg py-3.5 bg-blue-100/[0.2] border-blue-300 text-blue"
@@ -105,7 +104,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
               </div>
               <LikeBtn
                 isComment={false}
-                initialLikeCount={viewData.likeCount}
+                initialLikeCount={postData.likeCount}
               />
             </div>
           </div>
@@ -131,7 +130,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
                 onChange={() => handleOptionChange("A")}
               />
               <span className="font-semibold mx-3">A</span>
-              <span>{viewData.optionA}</span>
+              <span>{postData.optionA}</span>
             </label>
             <label
               className={`flex items-center p-4 mb-1 w-full rounded-xl ${
@@ -151,12 +150,12 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
                 onChange={() => handleOptionChange("B")}
               />
               <span className="font-semibold mx-3">B</span>
-              <span>{viewData.optionB}</span>
+              <span>{postData.optionB}</span>
             </label>
           </form>
 
           <div className="w-full bg-color-bg/[0.6] rounded-xl my-4 px-4 pb-3">
-            <VoteGraph ACount={viewData.ACount} BCount={viewData.BCount} />
+            <VoteGraph ACount={postData.acount} BCount={postData.bcount} />
           </div>
 
           <div className="flex flex-col items-center justify-center pt-4 mb-4">

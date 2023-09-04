@@ -10,7 +10,7 @@ const useFetchData = (url: string, key: string[], auth: string) => {
         headers: { Authorization: `Bearer  ${auth}` },
         responseType: "json",
       });
-      return response.data["content"];
+      return response.data;
     };
     return fetchData();
   });
