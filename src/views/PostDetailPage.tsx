@@ -32,7 +32,7 @@ const PostDetailPage = (): JSX.Element => {
       <div className="flex justify-end my-8">
         <button onClick={onClick}>목록으로</button>
       </div>
-      <Comment />
+      <Comment postId={postId} />
       <ScrollTopBtn />
     </>
   );
