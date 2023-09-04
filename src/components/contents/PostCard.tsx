@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Post } from "../../mocks/mockType";
 import ChattingBadge from "../common/ChattingBadge";
+import moment from "moment";
 import { AiOutlineComment } from "react-icons/ai";
 import { RiThumbUpLine } from "react-icons/ri";
 
@@ -39,7 +40,7 @@ const PostCard = ({ Data }: { Data: Post }): JSX.Element => {
         </div>
         <div className="flex text-sm text-gray">
           <p className="mr-3.5">{Data.member.nickname}</p>
-          <p>{Data.createdDate}</p>
+          <p>{moment(Data.createdDate).format("YYYY.MM.DD")}</p>
         </div>
       </div>
     </Link>
