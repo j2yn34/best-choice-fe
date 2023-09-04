@@ -1,32 +1,48 @@
-import { FormEvent, ChangeEvent, useState, useCallback } from "react";
+import {
+  FormEvent,
+  ChangeEvent,
+  useState,
+  useCallback,
+  useEffect,
+} from "react";
 import axios from "axios";
+import { Post } from "../../mocks/mockType";
+import PostCard from "../contents/PostCard";
 
 const Search = (): JSX.Element => {
   const [inputValue, setInputValue] = useState<string>("");
-  const [submitValue, setSubmitValue] = useState<string>("");
+  const [submitValue, setSubmitValue] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [, setTagPostData] = useState(null);
+  const [tagPostData, setTagPostData] = useState<Post[] | null>(null);
 
-  const searchClick = async (e: FormEvent) => {
+  const searchClick = (e: FormEvent) => {
     e.preventDefault();
     setSubmitValue(inputValue);
-    setIsLoading(true);
+  };
 
+  useEffect(() => {
     if (isLoading) {
       return;
     }
 
-    try {
-      // 아래 url 주소는 없는 주소(임시 주소) => 요청하면 지금은 무조건 에러 발생
-      const response = await axios.get(`/postData/tag=${submitValue}`);
-      const data = response.data["content"];
-      setTagPostData(data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
+    if (submitValue !== null) {
+      setIsLoading(true);
+
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`/api/posts/tag?tag=${submitValue}`);
+          const data = response.data["content"];
+          setTagPostData(data);
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      fetchData();
     }
-  };
+  }, [submitValue]);
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -55,11 +71,13 @@ const Search = (): JSX.Element => {
       </form>
       <p className="text-xl mt-8">
         <span className="font-semibold">#{submitValue} </span>
-        검색 결과 (0)
+        검색 결과 ({tagPostData === null ? 0 : tagPostData?.length})
       </p>
-      {/* <div>
-        {TagPostData.map...}
-      </div> */}
+      <div className="grid grid-cols-1 mt-7 xl:grid-cols-2 xl:gap-x-6 gap-y-8">
+        {tagPostData?.map((post: Post) => (
+          <PostCard Data={post} key={post.postId} />
+        ))}
+      </div>
     </>
   );
 };
