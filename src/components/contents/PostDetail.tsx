@@ -4,6 +4,7 @@ import LikeBtn from "../common/LikeBtn";
 import VoteGraph from "./VoteGraph";
 import BasicModal from "../modal/BasicModal";
 import NoDataMessage from "../common/NoDataMessage";
+import moment from "moment";
 
 const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
   const [selectedOption, setSelectedOption] = useState<"A" | "B" | null>(null);
@@ -78,7 +79,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
           <h2 className="text-lg sm:text-xl mr-2 sm:mr-4">{postData.title}</h2>
           <div className="text-sm text-gray">
             <span className="mr-4">{postData.member.nickname}</span>
-            <span>{postData.createdDate}</span>
+            <span>{moment(postData.createdDate).format("YYYY.MM.DD")}</span>
           </div>
         </div>
 

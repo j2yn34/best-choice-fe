@@ -15,7 +15,7 @@ const PostCardList = ({
   // const [page, setPage] = useState<number>(1);
 
   const url = token
-    ? `/api/posts/my?sort=${sort}&page=0`
+    ? `/api/api/posts/my?sort=${sort}&page=0`
     : `/api/posts?sort=${sort}&page=0`;
   const key = token ? `${sort}myPostData` : `${sort}PostData`;
   const auth = token ? token : "";

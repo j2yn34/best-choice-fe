@@ -1,5 +1,7 @@
 import { Suspense, lazy, useState } from "react";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { accessTokenState } from "../states/recoil";
 import ScrollTopBtn from "../components/common/ScrollTopBtn";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
 import { ErrorBoundary } from "react-error-boundary";
@@ -12,6 +14,7 @@ const sortNames = [
 ];
 
 const PostListPage = (): JSX.Element => {
+  const token = useRecoilValue<string>(accessTokenState);
   const [postSort, setPostSort] = useState<string>("LATEST");
 
   const PostCardList = lazy(
@@ -38,7 +41,7 @@ const PostListPage = (): JSX.Element => {
               </li>
             ))}
           </ul>
-          <Link to="/create" className="font-bold">
+          <Link to={token ? `/create` : `/login`} className="font-bold">
             글쓰기
           </Link>
         </div>

@@ -4,11 +4,11 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import App from "./App.tsx";
 import "./assets/style.css";
-import { worker } from "./mocks/worker.ts";
+// import { worker } from "./mocks/worker.ts";
 
-if (import.meta.env.VITE_MSW_ENABLED === "true") {
-  worker.start();
-}
+// if (import.meta.env.VITE_MSW_ENABLED === "true") {
+//   worker.start();
+// }
 
 const queryClient = new QueryClient({
   defaultOptions: {

@@ -11,7 +11,7 @@ const sortNames = [
   { name: "추천순", sort: "LIKES" },
 ];
 
-const Comment = (): JSX.Element => {
+const Comment = ({ postId }: { postId: string }): JSX.Element => {
   const [postSort, setPostSort] = useState<string>("LATEST");
   const [commentLength] = useRecoilState(commentLengthState);
 
@@ -39,10 +39,10 @@ const Comment = (): JSX.Element => {
             <span className="flex mx-auto loading loading-spinner loading-md text-gray/[0.2]"></span>
           }
         >
-          <CommentList sort={postSort} />
+          <CommentList sort={postSort} postId={postId} />
         </Suspense>
       </ErrorBoundary>
-      <CommentInput />
+      <CommentInput postId={postId} />
     </div>
   );
 };
