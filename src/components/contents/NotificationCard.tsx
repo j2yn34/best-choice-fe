@@ -14,7 +14,7 @@ const NotificationCard = (): JSX.Element => {
     ""
   );
 
-  if (notificationData.length === 0) {
+  if (notificationData["content"].length === 0) {
     return <NoDataMessage message="새로운 알림이 없어요" />;
   }
 
@@ -33,7 +33,7 @@ const NotificationCard = (): JSX.Element => {
   return (
     <>
       <>
-        {notificationData.map((data: Notification) => (
+        {notificationData["content"].map((data: Notification) => (
           <div key={data.notificationId}>
             <div className="flex justify-between mb-4">
               <div>{data.createdDate}</div>

@@ -17,7 +17,7 @@ const ChatCardList = () => {
     ""
   );
 
-  if (chatData.length === 0) {
+  if (chatData["content"].length === 0) {
     return <NoDataMessage message="채팅방 데이터가 없어요" />;
   }
 
@@ -37,7 +37,7 @@ const ChatCardList = () => {
     <>
       <div className="grid grid-cols-1 xl:grid-cols-2 xl:gap-x-6 gap-y-8">
         {/* card */}
-        {chatData.map((chat: Post) => (
+        {chatData["content"].map((chat: Post) => (
           <div
             className="w-full bg-white rounded-xl p-5 shadow-md cursor-pointer"
             onClick={() => openModal(chat)}

@@ -38,11 +38,11 @@ const CommentList = ({ sort }: { sort: string }) => {
 
   return (
     <>
-      {commentsData.length === 0 ? (
+      {commentsData["content"].length === 0 ? (
         <NoDataMessage message="아직 작성된 댓글이 없어요" />
       ) : (
         <div>
-          {commentsData.map((commentData: Comment) => (
+          {commentsData["content"].map((commentData: Comment) => (
             <div
               key={commentData.commentId}
               className="p-3 md:px-4 md:pb-4 bg-color-bg border-b border-blue-200"
