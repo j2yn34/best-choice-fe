@@ -1,13 +1,17 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, RecoilState } from "recoil";
-import { inputValueState } from "../../states/recoil";
+import { useRecoilState, RecoilState, useRecoilValue } from "recoil";
+import { inputValueState, accessTokenState } from "../../states/recoil";
 import { InputValue } from "../../states/recoilType";
 import { MdOutlineClose } from "react-icons/md";
 import { AiFillNotification } from "react-icons/ai";
 
 const UploadPost = ({ closeModal }: { closeModal: () => void }) => {
+  const token = useRecoilValue<string>(accessTokenState);
   const navigate = useNavigate();
+  const [, setInputValue] = useRecoilState(
+    inputValueState as RecoilState<InputValue>
+  );
 
   const [inputValue] = useRecoilState(
     inputValueState as RecoilState<InputValue>
@@ -21,28 +25,42 @@ const UploadPost = ({ closeModal }: { closeModal: () => void }) => {
     tags: inputValue.tags,
   };
 
+  const inputValueClean = () => {
+    setInputValue({
+      title: "",
+      content: "",
+      optionA: "",
+      optionB: "",
+      tags: null,
+      files: null,
+    });
+  };
+
   const upload = async () => {
     const formData = new FormData();
 
-    formData.append(
-      "inputData",
-      new Blob([JSON.stringify(inputData)], { type: "application/json" })
-    );
-
     if (inputValue.files) {
       for (let i = 0; i < inputValue.files.length; i++) {
-        formData.append(`files[${i}]`, inputValue.files[i]);
+        formData.append(`files`, inputValue.files[i]);
       }
     }
 
-    // 임시 post
+    formData.append(
+      "data",
+      new Blob([JSON.stringify(inputData)], { type: "application/json" })
+    );
+
     try {
-      await axios.post("/postListData", formData, {
+      await axios({
+        method: "post",
+        url: "/api/api/posts",
+        withCredentials: true,
         headers: {
+          Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
+        data: formData,
       });
-      console.log("전송 완료");
       navigate("/posts");
     } catch (error) {
       console.error("Error sending data: ", error);
@@ -68,6 +86,7 @@ const UploadPost = ({ closeModal }: { closeModal: () => void }) => {
               className="btn bg-black-primary text-white hover:bg-black mt-10 px-8"
               onClick={() => {
                 upload();
+                inputValueClean();
                 closeModal();
               }}
             >
