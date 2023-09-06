@@ -3,7 +3,7 @@ import { recoilPersist } from "recoil-persist";
 import { UserInfoState } from "./recoilType";
 
 const { persistAtom } = recoilPersist({
-  key: "token",
+  key: "user",
   storage: sessionStorage,
 });
 
@@ -19,6 +19,7 @@ export const userInfoState = atom<UserInfoState>({
     memberId: 0,
     nickname: "",
   },
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const inputValueState = atom({
