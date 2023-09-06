@@ -25,6 +25,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
   const [isVoted, setIsVoted] = useState<boolean>(false);
   const [showReportModal, setShowReportModal] = useState<boolean>(false);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  const [showAlretModal, setShowAlretModal] = useState<boolean>(false);
   const token = useRecoilValue<string>(accessTokenState);
   const userInfo = useRecoilValue<UserInfoState>(userInfoState);
   const memberId = userInfo.memberId;
@@ -61,37 +62,43 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
 
   const handleVoteSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (selectedOption) {
-      if (selectedOption === "A") {
-        postData.acount++;
-      } else if (selectedOption === "B") {
-        postData.bcount++;
-      }
-      setVotedOption(selectedOption);
-      setIsVoted(true);
-      try {
-        await axios({
-          method: "post",
-          url: `/api/api/posts/${postId}/choice?option=${selectedOption}`,
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-      } catch (error) {
-        console.error("투표 데이터 전송 실패: ", error);
-        if (selectedOption === "A") {
-          postData.acount--;
-        } else if (selectedOption === "B") {
-          postData.bcount--;
-        }
-        setSelectedOption(null);
-        setVotedOption(null);
-        setIsVoted(false);
-      }
-    } else {
+    if (!token) {
+      openModal(setShowAlretModal);
+      setSelectedOption(null);
+      return;
+    }
+    if (!selectedOption) {
       alert("투표할 항목을 선택해 주세요.");
       return;
+    }
+
+    if (selectedOption === "A") {
+      postData.acount++;
+    } else if (selectedOption === "B") {
+      postData.bcount++;
+    }
+    setVotedOption(selectedOption);
+    setIsVoted(true);
+
+    try {
+      await axios({
+        method: "post",
+        url: `/api/api/posts/${postId}/choice?option=${selectedOption}`,
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.error("투표 데이터 전송 실패: ", error);
+      if (selectedOption === "A") {
+        postData.acount--;
+      } else if (selectedOption === "B") {
+        postData.bcount--;
+      }
+      setSelectedOption(null);
+      setVotedOption(null);
+      setIsVoted(false);
     }
   };
 
@@ -269,6 +276,14 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
           confirm={deletePost}
         />
       ) : null}
+      )}
+      {showAlretModal && (
+        <BasicModal
+          message="로그인 후 이용해 주세요"
+          closeModal={() => closeModal(setShowAlretModal)}
+          confirm={() => closeModal(setShowAlretModal)}
+        />
+      )}
     </>
   );
 };
