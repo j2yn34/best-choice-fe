@@ -2,8 +2,8 @@ const LoadNotification = () => {
   return (
     <>
       {Array.from(Array(2)).map((_, index) => (
-        <div key={index}>
-          <div className="flex justify-between pt-8 mb-4 animate-pulse">
+        <div key={index} className="animate-pulse">
+          <div className="flex justify-between pt-8 mb-4">
             <div className="w-[80px] h-5 bg-gray/[0.2] rounded-md"></div>
             <div className="w-[30px] h-5 bg-gray/[0.2] rounded-md"></div>
           </div>
