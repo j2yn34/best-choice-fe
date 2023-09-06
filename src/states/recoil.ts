@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
-import { UserDataState } from "./recoilType";
+import { UserInfoState } from "./recoilType";
 
 const { persistAtom } = recoilPersist({
   key: "token",
@@ -13,8 +13,8 @@ export const accessTokenState = atom<string>({
   effects_UNSTABLE: [persistAtom],
 });
 
-export const userDataState = atom<UserDataState>({
-  key: "userData",
+export const userInfoState = atom<UserInfoState>({
+  key: "userInfo",
   default: {
     memberId: 0,
     nickname: "",

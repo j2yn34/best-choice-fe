@@ -1,4 +1,4 @@
-export type UserDataState = {
+export type UserInfoState = {
   memberId: number;
   nickname: string;
 };

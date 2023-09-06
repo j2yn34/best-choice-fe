@@ -4,7 +4,7 @@ import useFetchData from "../../hooks/useFetchData";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   commentLengthState,
-  userDataState,
+  userInfoState,
   accessTokenState,
 } from "../../states/recoil";
 import { Comment } from "../../mocks/mockType";
@@ -18,7 +18,7 @@ const CommentList = ({ sort, postId }: { sort: string; postId: string }) => {
   // const [click, setClick] = useState<number>(1);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [, setCommentLength] = useRecoilState(commentLengthState);
-  const [useData] = useRecoilState(userDataState);
+  const [useData] = useRecoilState(userInfoState);
   const [commentId, setCommentId] = useState<number | null>(null);
 
   const { data: commentsData } = useFetchData(
