@@ -8,7 +8,7 @@ const PostCardList = ({
   sort,
   token,
 }: {
-  limit: number;
+  limit: number | null;
   sort: string | null;
   token: string | null;
 }): JSX.Element => {
@@ -22,7 +22,7 @@ const PostCardList = ({
 
   const { data: postData } = useFetchData(url, [key], auth);
 
-  if (postData["content"].length === 0) {
+  if (postData["content"].length <= 0) {
     return (
       <>
         <NoDataMessage message="투표글 데이터가 없어요" />
@@ -33,9 +33,13 @@ const PostCardList = ({
 
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 xl:gap-x-6 gap-y-8">
-      {postData["content"].slice(0, limit).map((post: Post) => (
-        <PostCard Data={post} key={post.postId} />
-      ))}
+      {limit === null
+        ? postData["content"].map((post: Post) => (
+            <PostCard Data={post} key={post.postId} />
+          ))
+        : postData["content"]
+            .slice(0, limit)
+            .map((post: Post) => <PostCard Data={post} key={post.postId} />)}
     </div>
   );
 };

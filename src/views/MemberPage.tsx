@@ -83,7 +83,7 @@ const MemberPage = (): JSX.Element => {
       </ul>
       <ErrorBoundary FallbackComponent={ErrorMessage}>
         <Suspense fallback={<LoadPostCard limit={2} />}>
-          <PostCardList limit={3} sort={postSort} token={token} />
+          <PostCardList limit={null} sort={postSort} token={token} />
         </Suspense>
       </ErrorBoundary>
       <ScrollTopBtn />
