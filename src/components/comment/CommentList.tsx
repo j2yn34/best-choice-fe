@@ -110,7 +110,11 @@ const CommentList = ({ sort, postId }: { sort: string; postId: string }) => {
         </div>
       )}
       {showModal ? (
-        <BasicModal message="댓글을 삭제할까요?" closeModal={closeModal} />
+        <BasicModal
+          message="댓글을 삭제할까요?"
+          closeModal={closeModal}
+          confirm={closeModal}
+        />
       ) : null}
     </>
   );

@@ -3,9 +3,11 @@ import { MdOutlineClose } from "react-icons/md";
 const BasicModal = ({
   message,
   closeModal,
+  confirm,
 }: {
   message: string;
   closeModal: () => void;
+  confirm: () => void;
 }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/[0.8] z-50">
@@ -18,9 +20,7 @@ const BasicModal = ({
             <p className="text-lg">{message}</p>
             <button
               className="btn bg-black-primary text-white hover:bg-black mt-12 px-8"
-              onClick={() => {
-                closeModal();
-              }}
+              onClick={confirm}
             >
               확인
             </button>

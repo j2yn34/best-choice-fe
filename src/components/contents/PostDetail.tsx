@@ -1,4 +1,10 @@
 import { FormEvent, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+} from "react";
+import { useNavigate } from "react-router";
+import axios from "axios";
 import DOMPurify from "dompurify";
 import parse from "html-react-parser";
 import useFetchData from "../../hooks/useFetchData";
@@ -7,17 +13,26 @@ import VoteGraph from "./VoteGraph";
 import BasicModal from "../modal/BasicModal";
 import NoDataMessage from "../common/NoDataMessage";
 import moment from "moment";
+import { useRecoilValue } from "recoil";
+import { accessTokenState, userInfoState } from "../../states/recoil";
+import { UserInfoState } from "../../states/recoilType";
 
 const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
   const [selectedOption, setSelectedOption] = useState<"A" | "B" | null>(null);
   const [votedOption, setVotedOption] = useState<"A" | "B" | null>(null);
   const [isVoted, setIsVoted] = useState<boolean>(false);
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showReportModal, setShowReportModal] = useState<boolean>(false);
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  const token = useRecoilValue<string>(accessTokenState);
+  const userInfo = useRecoilValue<UserInfoState>(userInfoState);
+  const memberId = userInfo.memberId;
+
+  const navigate = useNavigate();
 
   const { data: postData } = useFetchData(
     `/api/posts/${postId}`,
     [`postData${postId}`],
-    ""
+    token
   );
 
   if (postData === 0) {
@@ -60,24 +75,55 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
     handleVoteSubmit(e);
   };
 
-  const openModal = () => {
-    setShowModal(true);
+  const openModal = (setFunc: Dispatch<SetStateAction<boolean>>) => {
+    setFunc(true);
     document.body.style.overflow = "hidden";
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  const closeModal = (setFunc: Dispatch<SetStateAction<boolean>>) => {
+    setFunc(false);
     document.body.style.overflow = "auto";
-    console.log("게시글 신고 삭제");
+  };
+
+  const onReport = () => {
+    openModal(setShowReportModal);
+  };
+
+  const onDelete = () => {
+    openModal(setShowDeleteModal);
+  };
+
+  const deletePost = async () => {
+    try {
+      await axios({
+        method: "delete",
+        url: `/api/api/posts/${postId}`,
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      navigate(-1);
+    } catch (error) {
+      console.error("게시글 삭제 실패: ", error);
+    }
+    setShowDeleteModal(false);
+    document.body.style.overflow = "auto";
   };
 
   return (
     <>
       <div className="w-full bg-white rounded-xl px-4 sm:px-6 md:px-[70px] py-4">
         <div className="flex justify-end">
-          <button className="text-red-dark text-sm" onClick={openModal}>
-            신고
-          </button>
+          {memberId === postData.member.memberId ? (
+            <button className="text-red-dark text-sm" onClick={onDelete}>
+              삭제
+            </button>
+          ) : (
+            <button className="text-red-dark text-sm" onClick={onReport}>
+              신고
+            </button>
+          )}
         </div>
         <div className="flex flex-wrap justify-between items-center pb-2 sm:py-2 px-2 border-b border-blue-200">
           <h2 className="text-lg sm:text-xl mr-2 sm:mr-4">{postData.title}</h2>
@@ -184,10 +230,18 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
           </div>
         </div>
       </div>
-      {showModal ? (
+      {showReportModal ? (
         <BasicModal
           message="해당 투표글을 신고 할까요?"
-          closeModal={closeModal}
+          closeModal={() => closeModal(setShowReportModal)}
+          confirm={() => closeModal(setShowReportModal)}
+        />
+      ) : null}
+      {showDeleteModal ? (
+        <BasicModal
+          message="해당 투표글을 삭제 할까요?"
+          closeModal={() => closeModal(setShowDeleteModal)}
+          confirm={deletePost}
         />
       ) : null}
     </>

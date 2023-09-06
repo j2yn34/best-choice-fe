@@ -63,6 +63,7 @@ const LoginCallbackPage = () => {
             <BasicModal
               message="로그인을 다시 시도해 주세요"
               closeModal={closeModal}
+              confirm={closeModal}
             />
           ) : (
             ""
