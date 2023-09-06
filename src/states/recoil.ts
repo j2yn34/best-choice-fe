@@ -29,7 +29,7 @@ export const inputValueState = atom({
     content: "",
     optionA: "",
     optionB: "",
-    tags: null,
+    tags: [],
     files: null,
   },
 });

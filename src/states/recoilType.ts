@@ -8,6 +8,6 @@ export type InputValue = {
   content: string;
   optionA: string;
   optionB: string;
-  tags: string[] | null;
+  tags: string[] | [];
   files: File[] | null;
 };
