@@ -1,4 +1,6 @@
 import { FormEvent, useState } from "react";
+import DOMPurify from "dompurify";
+import parse from "html-react-parser";
 import useFetchData from "../../hooks/useFetchData";
 import LikeBtn from "../common/LikeBtn";
 import VoteGraph from "./VoteGraph";
@@ -21,6 +23,8 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
   if (postData === 0) {
     return <NoDataMessage message="해당하는 투표글이 없어요" />;
   }
+
+  const safeContent = DOMPurify.sanitize(postData.content);
 
   const handleOptionChange = (option: "A" | "B") => {
     setSelectedOption(option);
@@ -89,7 +93,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
               {/* <div className="pb-4">
               <div>사진</div>
             </div> */}
-              <div className="pb-6">{postData.content}</div>
+              <div className="pb-6">{parse(safeContent)}</div>
             </div>
 
             <div className="flex items-center justify-between mb-6">
