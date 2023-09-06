@@ -1,18 +1,20 @@
-import { FormEvent, useState } from "react";
 import {
   Dispatch,
+  FormEvent,
   SetStateAction,
+  useEffect,
+  useState,
 } from "react";
 import { useNavigate } from "react-router";
+import { useRecoilValue } from "recoil";
 import axios from "axios";
+import moment from "moment";
 import DOMPurify from "dompurify";
 import parse from "html-react-parser";
 import useFetchData from "../../hooks/useFetchData";
 import VoteGraph from "./VoteGraph";
 import BasicModal from "../modal/BasicModal";
 import NoDataMessage from "../common/NoDataMessage";
-import moment from "moment";
-import { useRecoilValue } from "recoil";
 import { accessTokenState, userInfoState } from "../../states/recoil";
 import { UserInfoState } from "../../states/recoilType";
 import PostLikeBtn from "../common/button/PostLikeBtn";
@@ -35,7 +37,19 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
     token
   );
 
-  if (postData === 0) {
+  useEffect(() => {
+    if (postData && postData.myChoice) {
+      const myChoice = postData.myChoice;
+
+      if (myChoice === "A" || myChoice === "B") {
+        setSelectedOption(myChoice);
+        setVotedOption(myChoice);
+        setIsVoted(true);
+      }
+    }
+  }, [postData]);
+
+  if (postData <= 0) {
     return <NoDataMessage message="해당하는 투표글이 없어요" />;
   }
 
@@ -45,26 +59,36 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
     setSelectedOption(option);
   };
 
-  const handleVoteSubmit = (e: FormEvent) => {
+  const handleVoteSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (selectedOption) {
-      // alret 띄우면 새로고침 돼서 카운트 반영 안 됨 -> 임시로 console.log로 작성
-      console.log(
-        `${
-          selectedOption === "A"
-            ? "A " + postData.optionA
-            : "B " + postData.optionB
-        }에 투표했어요!`
-      );
-      // 임시로 직접 카운트 증가시킴
       if (selectedOption === "A") {
-        postData.ACount++;
+        postData.acount++;
       } else if (selectedOption === "B") {
-        postData.BCount++;
+        postData.bcount++;
       }
       setVotedOption(selectedOption);
       setIsVoted(true);
-      // 실제로는 투표 데이터 post 전송 (`/api/posts/${postId}/`, {"option": selectedOption})
+      try {
+        await axios({
+          method: "post",
+          url: `/api/api/posts/${postId}/choice?option=${selectedOption}`,
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      } catch (error) {
+        console.error("투표 데이터 전송 실패: ", error);
+        if (selectedOption === "A") {
+          postData.acount--;
+        } else if (selectedOption === "B") {
+          postData.bcount--;
+        }
+        setSelectedOption(null);
+        setVotedOption(null);
+        setIsVoted(false);
+      }
     } else {
       alert("투표할 항목을 선택해 주세요.");
       return;
