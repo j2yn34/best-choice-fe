@@ -8,7 +8,6 @@ import axios from "axios";
 import DOMPurify from "dompurify";
 import parse from "html-react-parser";
 import useFetchData from "../../hooks/useFetchData";
-import LikeBtn from "../common/LikeBtn";
 import VoteGraph from "./VoteGraph";
 import BasicModal from "../modal/BasicModal";
 import NoDataMessage from "../common/NoDataMessage";
@@ -16,6 +15,7 @@ import moment from "moment";
 import { useRecoilValue } from "recoil";
 import { accessTokenState, userInfoState } from "../../states/recoil";
 import { UserInfoState } from "../../states/recoilType";
+import PostLikeBtn from "../common/button/PostLikeBtn";
 
 const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
   const [selectedOption, setSelectedOption] = useState<"A" | "B" | null>(null);
@@ -153,9 +153,10 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
                   </div>
                 ))}
               </div>
-              <LikeBtn
-                isComment={false}
-                initialLikeCount={postData.likeCount}
+              <PostLikeBtn
+                postId={postData.postId}
+                likeCount={postData.likeCount}
+                liked={postData.liked ? true : false}
               />
             </div>
           </div>

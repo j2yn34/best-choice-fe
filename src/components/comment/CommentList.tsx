@@ -8,10 +8,10 @@ import {
   accessTokenState,
 } from "../../states/recoil";
 import { Comment } from "../../mocks/mockType";
-import LikeBtn from "../common/LikeBtn";
 import BasicModal from "../modal/BasicModal";
 import NoDataMessage from "../common/NoDataMessage";
 import moment from "moment";
+import CommentLikeBtn from "../common/button/CommentLikeBtn";
 
 const CommentList = ({ sort, postId }: { sort: string; postId: string }) => {
   const token = useRecoilValue<string>(accessTokenState);
@@ -87,9 +87,11 @@ const CommentList = ({ sort, postId }: { sort: string; postId: string }) => {
                     <li className="text-sm text-gray">
                       {moment(commentData.createdDate).format("YYYY.MM.DD")}
                     </li>
-                    <LikeBtn
-                      isComment={true}
-                      initialLikeCount={commentData.likeCount}
+                    <CommentLikeBtn
+                      commentId={commentData.commentId}
+                      sort={sort}
+                      likeCount={commentData.likeCount}
+                      // liked={commentData.liked}
                     />
                   </ul>
                   {useData.memberId === commentData.member.memberId ? (
