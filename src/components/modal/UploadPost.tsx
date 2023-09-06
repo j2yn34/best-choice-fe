@@ -9,11 +9,7 @@ import { AiFillNotification } from "react-icons/ai";
 const UploadPost = ({ closeModal }: { closeModal: () => void }) => {
   const token = useRecoilValue<string>(accessTokenState);
   const navigate = useNavigate();
-  const [, setInputValue] = useRecoilState(
-    inputValueState as RecoilState<InputValue>
-  );
-
-  const [inputValue] = useRecoilState(
+  const [inputValue, setInputValue] = useRecoilState(
     inputValueState as RecoilState<InputValue>
   );
 
@@ -31,7 +27,7 @@ const UploadPost = ({ closeModal }: { closeModal: () => void }) => {
       content: "",
       optionA: "",
       optionB: "",
-      tags: null,
+      tags: [],
       files: null,
     });
   };

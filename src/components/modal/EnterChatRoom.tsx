@@ -30,7 +30,11 @@ const EnterChatRoom = ({
 
   if (filteredPostData.length === 0) {
     return (
-      <BasicModal message="해당하는 채팅방이 없어요" closeModal={closeModal} />
+      <BasicModal
+        message="해당하는 채팅방이 없어요"
+        closeModal={closeModal}
+        confirm={closeModal}
+      />
     );
   }
 

@@ -4,21 +4,21 @@ import useFetchData from "../../hooks/useFetchData";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   commentLengthState,
-  userDataState,
+  userInfoState,
   accessTokenState,
 } from "../../states/recoil";
 import { Comment } from "../../mocks/mockType";
-import LikeBtn from "../common/LikeBtn";
 import BasicModal from "../modal/BasicModal";
 import NoDataMessage from "../common/NoDataMessage";
 import moment from "moment";
+import CommentLikeBtn from "../common/button/CommentLikeBtn";
 
 const CommentList = ({ sort, postId }: { sort: string; postId: string }) => {
   const token = useRecoilValue<string>(accessTokenState);
   // const [click, setClick] = useState<number>(1);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [, setCommentLength] = useRecoilState(commentLengthState);
-  const [useData] = useRecoilState(userDataState);
+  const [useData] = useRecoilState(userInfoState);
   const [commentId, setCommentId] = useState<number | null>(null);
 
   const { data: commentsData } = useFetchData(
@@ -87,9 +87,11 @@ const CommentList = ({ sort, postId }: { sort: string; postId: string }) => {
                     <li className="text-sm text-gray">
                       {moment(commentData.createdDate).format("YYYY.MM.DD")}
                     </li>
-                    <LikeBtn
-                      isComment={true}
-                      initialLikeCount={commentData.likeCount}
+                    <CommentLikeBtn
+                      commentId={commentData.commentId}
+                      sort={sort}
+                      likeCount={commentData.likeCount}
+                      // liked={commentData.liked}
                     />
                   </ul>
                   {useData.memberId === commentData.member.memberId ? (
@@ -110,7 +112,11 @@ const CommentList = ({ sort, postId }: { sort: string; postId: string }) => {
         </div>
       )}
       {showModal ? (
-        <BasicModal message="댓글을 삭제할까요?" closeModal={closeModal} />
+        <BasicModal
+          message="댓글을 삭제할까요?"
+          closeModal={closeModal}
+          confirm={closeModal}
+        />
       ) : null}
     </>
   );

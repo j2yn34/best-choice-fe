@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { accessTokenState, userDataState } from "../states/recoil";
+import { accessTokenState, userInfoState } from "../states/recoil";
 import { useSetRecoilState } from "recoil";
 import BasicModal from "../components/modal/BasicModal";
-import { UserDataState } from "../states/recoilType";
+import { UserInfoState } from "../states/recoilType";
 import axios from "axios";
 
 const LoginCallbackPage = () => {
   const setAccessToken = useSetRecoilState<string>(accessTokenState);
-  const setUserData = useSetRecoilState<UserDataState>(userDataState);
+  const setUserInfo = useSetRecoilState<UserInfoState>(userInfoState);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -16,7 +16,7 @@ const LoginCallbackPage = () => {
   useEffect(() => {
     const token = new URL(window.location.href).searchParams.get("token");
 
-    const getUserData = async (token: string) => {
+    const getUserInfo = async (token: string) => {
       try {
         const response = await axios({
           method: "get",
@@ -26,7 +26,7 @@ const LoginCallbackPage = () => {
         });
 
         const { memberId, nickname } = response.data;
-        setUserData({ memberId, nickname });
+        setUserInfo({ memberId, nickname });
       } catch (error) {
         console.error(error);
       }
@@ -36,14 +36,14 @@ const LoginCallbackPage = () => {
     if (token) {
       setIsLoading(false);
       setAccessToken(token);
-      getUserData(token);
+      getUserInfo(token);
       navigate("/");
       alert("반가워요! 로그인 되었어요.");
     } else {
       setIsLoading(false);
       setShowModal(true);
     }
-  }, [navigate, setAccessToken, setUserData]);
+  }, [navigate, setAccessToken, setUserInfo]);
 
   const closeModal = () => {
     setShowModal(false);
@@ -63,6 +63,7 @@ const LoginCallbackPage = () => {
             <BasicModal
               message="로그인을 다시 시도해 주세요"
               closeModal={closeModal}
+              confirm={closeModal}
             />
           ) : (
             ""

@@ -16,7 +16,7 @@ const CancelCreate = ({ closeModal }: { closeModal: () => void }) => {
       content: "",
       optionA: "",
       optionB: "",
-      tags: null,
+      tags: [],
       files: null,
     });
   };

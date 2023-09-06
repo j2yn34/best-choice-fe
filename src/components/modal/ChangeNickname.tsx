@@ -1,15 +1,38 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import axios from "axios";
 import { MdOutlineClose } from "react-icons/md";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { accessTokenState, userInfoState } from "../../states/recoil";
+import { UserInfoState } from "../../states/recoilType";
 
 const ChangeNickname = ({ closeModal }: { closeModal: () => void }) => {
   const [inputValue, setInputValue] = useState<string>("");
+  const token = useRecoilValue<string>(accessTokenState);
+  const setUserInfo = useSetRecoilState<UserInfoState>(userInfoState);
 
-  const nickname = "기존 닉네임";
   const checkMessage = "유효성 검사 메시지";
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log("제출된 닉네임:", inputValue);
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await axios({
+        method: "put",
+        url: `/api/api/members`,
+        data: { nickname: inputValue },
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUserInfo((prev) => ({
+        ...prev,
+        nickname: inputValue,
+      }));
+    } catch (error) {
+      console.error("닉네임 변경 실패: ", error);
+      return;
+    }
+
     closeModal();
   };
 
@@ -33,7 +56,7 @@ const ChangeNickname = ({ closeModal }: { closeModal: () => void }) => {
             <input
               type="text"
               className="input bg-color-bg w-full border-0 rounded-none focus:outline-none"
-              placeholder={`${nickname}`}
+              placeholder="닉네임"
               onChange={handleChange}
               value={inputValue}
               required

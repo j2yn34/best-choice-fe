@@ -26,8 +26,10 @@ const VoteGraph = ({
   BCount: number;
 }): JSX.Element => {
   const totalVotes = ACount + BCount;
-  const optionAPercent = Math.round((ACount / totalVotes) * 100);
-  const optionBPercent = Math.round((BCount / totalVotes) * 100);
+  const optionAPercent =
+    totalVotes === 0 ? 0 : Math.round((ACount / totalVotes) * 100);
+  const optionBPercent =
+    totalVotes === 0 ? 0 : Math.round((BCount / totalVotes) * 100);
 
   const data = {
     labels: ["A", "B"],

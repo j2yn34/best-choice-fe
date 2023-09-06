@@ -4,9 +4,10 @@ import LoadPostCard from "../components/skeletonUI/LoadPostCard";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessage from "../components/common/ErrorMessage";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { accessTokenState, userDataState } from "../states/recoil";
+import { accessTokenState, userInfoState } from "../states/recoil";
 import { useNavigate } from "react-router-dom";
 import ScrollTopBtn from "../components/common/ScrollTopBtn";
+import { UserInfoState } from "../states/recoilType";
 
 const sortNames = [
   { name: "작성한 투표글", sort: "POSTS" },
@@ -18,13 +19,14 @@ const sortNames = [
 const MemberPage = (): JSX.Element => {
   const [showModal, setShowModal] = useState(false);
   const [postSort, setPostSort] = useState<string>("POSTS");
+  const [token, setToken] = useRecoilState<string>(accessTokenState);
+  const userInfo = useRecoilValue<UserInfoState>(userInfoState);
+  const nickname = userInfo.nickname;
+  const navigate = useNavigate();
 
   const PostCardList = lazy(
     () => import("../components/contents/PostCardList")
   );
-
-  const [token, setToken] = useRecoilState<string>(accessTokenState);
-  const navigate = useNavigate();
 
   const onLogoutClick = () => {
     const ok = confirm("로그아웃 할까요?");
@@ -44,9 +46,6 @@ const MemberPage = (): JSX.Element => {
     setShowModal(false);
     document.body.style.overflow = "auto";
   };
-
-  const userData = useRecoilValue(userDataState);
-  const nickname = userData.nickname;
 
   return (
     <>
@@ -84,7 +83,7 @@ const MemberPage = (): JSX.Element => {
       </ul>
       <ErrorBoundary FallbackComponent={ErrorMessage}>
         <Suspense fallback={<LoadPostCard limit={2} />}>
-          <PostCardList limit={3} sort={postSort} token={token} />
+          <PostCardList limit={null} sort={postSort} token={token} />
         </Suspense>
       </ErrorBoundary>
       <ScrollTopBtn />
