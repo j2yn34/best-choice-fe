@@ -53,9 +53,9 @@ const MainChattingList = (): JSX.Element => {
           </div>
         ))}
       </div>
-      {showModal ? (
+      {showModal && (
         <EnterChatRoom postId={clickedChatData} closeModal={closeModal} />
-      ) : null}
+      )}
     </>
   );
 };

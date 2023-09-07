@@ -83,9 +83,9 @@ const ChatCardList = () => {
         ))}
         {/* card */}
       </div>
-      {showModal ? (
+      {showModal && (
         <EnterChatRoom postId={clickedChatData} closeModal={closeModal} />
-      ) : null}
+      )}
     </>
   );
 };

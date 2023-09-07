@@ -106,6 +106,7 @@ const FileInput = () => {
         <BasicModal
           message={`파일 업로드는 최대 ${maxFileCnt}까지만 가능합니다. `}
           closeModal={closeModal}
+          confirm={closeModal}
         />
       ) : null}
     </>
