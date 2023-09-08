@@ -10,7 +10,7 @@ import ErrorMessage from "../components/common/ErrorMessage";
 const sortNames = [
   { name: "최신순", sort: "LATEST" },
   { name: "추천순", sort: "LIKES" },
-  { name: "참여자순", sort: "HOT" },
+  { name: "댓글순", sort: "COMMENTS" },
 ];
 
 const PostListPage = (): JSX.Element => {
