@@ -7,12 +7,12 @@ import { commentLengthState } from "../../states/recoil";
 import ErrorMessage from "../common/ErrorMessage";
 
 const sortNames = [
-  { name: "최신순", sort: "LATEST" },
+  { name: "날짜순", sort: "LATEST" },
   { name: "추천순", sort: "LIKES" },
 ];
 
 const Comment = ({ postId }: { postId: string }): JSX.Element => {
-  const [postSort, setPostSort] = useState<string>("LATEST");
+  const [commentSort, setCommentSort] = useState<string>("LATEST");
   const [commentLength] = useRecoilState(commentLengthState);
 
   return (
@@ -24,9 +24,9 @@ const Comment = ({ postId }: { postId: string }): JSX.Element => {
             <li
               key={sortName.sort}
               className={`cursor-pointer text-sm ${
-                sortName.sort === postSort ? "text-blue-dark font-semibold" : ""
+                sortName.sort === commentSort && "text-blue-dark font-semibold"
               }`}
-              onClick={() => setPostSort(sortName.sort)}
+              onClick={() => setCommentSort(sortName.sort)}
             >
               {sortName.name}
             </li>
@@ -39,7 +39,7 @@ const Comment = ({ postId }: { postId: string }): JSX.Element => {
             <span className="flex mx-auto loading loading-spinner loading-md text-gray/[0.2]"></span>
           }
         >
-          <CommentList sort={postSort} postId={postId} />
+          <CommentList sort={commentSort} postId={postId} />
         </Suspense>
       </ErrorBoundary>
       <CommentInput postId={postId} />

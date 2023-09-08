@@ -56,7 +56,7 @@ const CommentInput = ({ postId }: { postId: string }) => {
         ></textarea>
         <button
           className={`btn md:px-5 bg-black-primary hover:bg-black text-white ${
-            !token ? "opacity-30" : null
+            !token && "opacity-30"
           }`}
           disabled={!token}
         >
