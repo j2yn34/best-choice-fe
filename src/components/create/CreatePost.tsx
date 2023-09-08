@@ -66,6 +66,19 @@ const CreatePost = (): JSX.Element => {
     }
   }, [inputValue]);
 
+  useEffect(() => {
+    return () => {
+      setInputValue({
+        title: "",
+        content: null,
+        optionA: "",
+        optionB: "",
+        tags: [],
+        files: null,
+      });
+    };
+  }, []);
+
   return (
     <>
       <div className="w-full bg-white rounded-lg md:px-24 py-8 px-5">
@@ -99,7 +112,7 @@ const CreatePost = (): JSX.Element => {
         </button>
         <button
           className={`btn bg-black-primary hover:bg-black text-white ${
-            disabledBtn ? "opacity-30" : null
+            disabledBtn && "opacity-30"
           }`}
           onClick={onSubmit}
           disabled={disabledBtn}
