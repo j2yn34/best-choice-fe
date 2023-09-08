@@ -110,17 +110,15 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
     setFunc(true);
     document.body.style.overflow = "hidden";
   };
-
   const closeModal = (setFunc: Dispatch<SetStateAction<boolean>>) => {
     setFunc(false);
     document.body.style.overflow = "auto";
   };
 
-  const onReport = () => {
-    openModal(setShowReportModal);
+  const onReportClick = () => {
+    token ? openModal(setShowReportModal) : setShowAlretModal(true);
   };
-
-  const onDelete = () => {
+  const onDeleteClick = () => {
     openModal(setShowDeleteModal);
   };
 
@@ -142,16 +140,40 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
     document.body.style.overflow = "auto";
   };
 
+  const reportPost = async () => {
+    if (!token) {
+      openModal(setShowAlretModal);
+      setShowReportModal(false);
+      return;
+    }
+    try {
+      await axios({
+        method: "post",
+        url: `/api/api/posts/${postId}/report`,
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.error("게시글 신고 실패: ", error);
+    }
+    setShowReportModal(false);
+    document.body.style.overflow = "auto";
+  };
+
+  const isMyPost = memberId === postData.member.memberId;
+
   return (
     <>
       <div className="w-full bg-white rounded-xl px-4 sm:px-6 md:px-[70px] py-4">
         <div className="flex justify-end">
-          {memberId === postData.member.memberId ? (
-            <button className="text-red-dark text-sm" onClick={onDelete}>
+          {isMyPost ? (
+            <button className="text-red-dark text-sm" onClick={onDeleteClick}>
               삭제
             </button>
           ) : (
-            <button className="text-red-dark text-sm" onClick={onReport}>
+            <button className="text-red-dark text-sm" onClick={onReportClick}>
               신고
             </button>
           )}
@@ -262,20 +284,26 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
           </div>
         </div>
       </div>
-      {showReportModal ? (
-        <BasicModal
-          message="해당 투표글을 신고 할까요?"
-          closeModal={() => closeModal(setShowReportModal)}
-          confirm={() => closeModal(setShowReportModal)}
-        />
-      ) : null}
-      {showDeleteModal ? (
+      {showReportModal &&
+        (postData.reported ? (
+          <BasicModal
+            message="이미 신고한 투표글이에요"
+            closeModal={() => closeModal(setShowReportModal)}
+            confirm={() => closeModal(setShowReportModal)}
+          />
+        ) : (
+          <BasicModal
+            message="해당 투표글을 신고 할까요?"
+            closeModal={() => closeModal(setShowReportModal)}
+            confirm={reportPost}
+          />
+        ))}
+      {showDeleteModal && (
         <BasicModal
           message="해당 투표글을 삭제 할까요?"
           closeModal={() => closeModal(setShowDeleteModal)}
           confirm={deletePost}
         />
-      ) : null}
       )}
       {showAlretModal && (
         <BasicModal
