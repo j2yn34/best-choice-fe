@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { useRecoilState, RecoilState } from "recoil";
+import { RecoilState, useSetRecoilState } from "recoil";
 import { inputValueState } from "../../states/recoil";
 import { InputValue } from "../../states/recoilType";
 import BasicModal from "../modal/BasicModal";
@@ -7,6 +7,10 @@ import BasicModal from "../modal/BasicModal";
 const maxFileCnt = 5;
 
 const FileInput = () => {
+  // let filesSize = 0;
+  // 용량 제한 안내 추가 = 정해진 이미지 용량 넘으면 alert 창으로 알려주기
+  // 각각 파일 용량 체크 + 총 용량 체크
+
   const [media, setMedia] = useState<{
     images: string[] | null;
     videos: string[] | null;
@@ -15,7 +19,7 @@ const FileInput = () => {
     videos: null,
   });
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [, setInputValue] = useRecoilState(
+  const setInputValue = useSetRecoilState(
     inputValueState as RecoilState<InputValue>
   );
 
@@ -49,7 +53,14 @@ const FileInput = () => {
     if (files) {
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
+        // const fileSize = file.size;
+        // filesSize = filesSize + fileSize;
         const url = URL.createObjectURL(file);
+
+        // if (fileSize > 정해진 용량){
+        //   alert("용량 제한으로 해당 파일을 첨부할 수 없습니다.")
+        //   return
+        // }
 
         if (file.type.includes("video")) {
           newMedia.videos.push(url);
@@ -91,14 +102,17 @@ const FileInput = () => {
         className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:cursor-pointer file:border-0 file:text-sm file:font-semibold file:bg-color-bg file:text-black"
       />
       <div className="flex items-center md:gap-5 mt-3 gap-1">
-        {media.images?.map((image, id) => (
-          <div key={id}>
-            <img src={image} alt={`${image}-${id}`} width={300} />
+        {media.images?.map((image, index) => (
+          <div key={index}>
+            <img src={image} alt={`이미지-${index}`} width={300} />
           </div>
         ))}
-        {media.videos?.map((video, id) => (
-          <div key={id}>
-            <video src={video} controls width={300} />
+        {media.videos?.map((video, index) => (
+          <div key={index}>
+            <video controls width={300}>
+              <source src={video} />
+              `동영상-${index}`
+            </video>
           </div>
         ))}
       </div>
