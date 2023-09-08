@@ -8,15 +8,16 @@ import { accessTokenState } from "../../../states/recoil";
 const CommentLikeBtn = ({
   commentId,
   sort,
-  likeCount, // liked,
+  likeCount,
+  liked,
 }: {
   commentId: number | null;
   sort: string;
   likeCount: number;
-  // liked: boolean;
+  liked: boolean;
 }): JSX.Element => {
   const [likeInfo, setLikeInfo] = useState({
-    isLiked: false,
+    isLiked: liked,
     totalLikeCount: likeCount,
   });
   const token = useRecoilValue<string>(accessTokenState);
@@ -32,7 +33,7 @@ const CommentLikeBtn = ({
       const apiUrl = `/api/api/comments/${commentId}`;
       const likeUrl = likeInfo.isLiked ? `${apiUrl}/unlike` : `${apiUrl}/like`;
 
-      const response = await axios({
+      await axios({
         method: "post",
         url: likeUrl,
         withCredentials: true,
@@ -40,8 +41,6 @@ const CommentLikeBtn = ({
           Authorization: `Bearer ${token}`,
         },
       });
-
-      return response.data;
     },
     {
       onMutate: () => {
@@ -61,10 +60,7 @@ const CommentLikeBtn = ({
         );
       },
       onError: (error) => {
-        console.error(
-          likeInfo.isLiked ? "좋아요 취소 실패:" : "좋아요 실패",
-          error
-        );
+        console.error(liked ? "좋아요 취소 실패:" : "좋아요 실패", error);
         queryClient.setQueryData<LikeInfo | undefined>(
           `${sort}CommentData${commentId}`,
           (prev) => {
@@ -72,7 +68,7 @@ const CommentLikeBtn = ({
 
             return {
               ...prev,
-              isLiked: likeInfo.isLiked,
+              isLiked: liked,
               totalLikeCount: likeCount,
             };
           }
@@ -90,18 +86,19 @@ const CommentLikeBtn = ({
 
   useEffect(() => {
     setLikeInfo({
-      isLiked: likeInfo.isLiked,
+      isLiked: liked,
       totalLikeCount: likeCount,
     });
-  }, [likeInfo.isLiked, likeCount]);
+  }, [liked, likeCount]);
 
   return (
     <div className="flex items-center min-w-fit">
       <button
+        disabled={token ? false : true}
         onClick={onLikeClick}
-        className={`flex items-center mr-1 hover:text-blue shrink-0 ${
-          likeInfo.isLiked ? "text-blue" : ""
-        }`}
+        className={`flex items-center mr-1 shrink-0 ${
+          token ? "hover:text-blue" : ""
+        } ${likeInfo.isLiked ? "text-blue" : ""}`}
       >
         <span>{likeInfo.isLiked ? <RiThumbUpFill /> : <RiThumbUpLine />}</span>
       </button>

@@ -23,9 +23,9 @@ const CommentList = ({ sort, postId }: { sort: string; postId: string }) => {
   const [commentId, setCommentId] = useState<number | null>(null);
 
   const { data: commentsData } = useFetchData(
-    `/api/posts/${postId}/comments?page=${page}&sort=${sort}`,
-    [`${sort}CommentData${postId}-${page}`],
-    ""
+    `/api/posts/${postId}/comments?page=0&sort=${sort}`,
+    [`${sort}CommentData${postId}`],
+    token
   );
 
   const movePage = (pageNumber: number) => {
@@ -102,7 +102,7 @@ const CommentList = ({ sort, postId }: { sort: string; postId: string }) => {
                     commentId={commentData.commentId}
                     sort={sort}
                     likeCount={commentData.likeCount}
-                    // liked={commentData.liked}
+                    liked={commentData.liked ? true : false}
                   />
                 </ul>
                 {userData.memberId === commentData.member.memberId && (

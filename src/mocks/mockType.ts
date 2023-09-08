@@ -30,6 +30,7 @@ export type Comment = {
   createdDate: string;
   deletedDate: string | null;
   likeCount: number;
+  liked: boolean;
 };
 
 export type Notification = {
