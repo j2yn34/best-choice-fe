@@ -1,5 +1,5 @@
 import { Suspense, lazy } from "react";
-import ScrollTopBtn from "../components/common/ScrollTopBtn";
+import ScrollTopBtn from "../components/common/button/ScrollTopBtn";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessage from "../components/common/ErrorMessage";

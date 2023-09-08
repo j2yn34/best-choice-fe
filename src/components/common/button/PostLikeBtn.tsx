@@ -4,6 +4,7 @@ import { RiThumbUpLine, RiThumbUpFill } from "react-icons/ri";
 import { useRecoilValue } from "recoil";
 import { useMutation, useQueryClient } from "react-query";
 import { accessTokenState } from "../../../states/recoil";
+import BasicModal from "../../modal/BasicModal";
 
 const PostLikeBtn = ({
   postId,
@@ -18,6 +19,7 @@ const PostLikeBtn = ({
     isLiked: liked,
     totalLikeCount: likeCount,
   });
+  const [showModal, setShowModal] = useState(false);
   const token = useRecoilValue<string>(accessTokenState);
   const queryClient = useQueryClient();
 
@@ -31,7 +33,7 @@ const PostLikeBtn = ({
       const apiUrl = `/api/api/posts/${postId}`;
       const likeUrl = likeInfo.isLiked ? `${apiUrl}/unlike` : `${apiUrl}/like`;
 
-      const response = await axios({
+      await axios({
         method: "post",
         url: likeUrl,
         withCredentials: true,
@@ -39,8 +41,6 @@ const PostLikeBtn = ({
           Authorization: `Bearer ${token}`,
         },
       });
-
-      return response.data;
     },
     {
       onMutate: () => {
@@ -81,6 +81,10 @@ const PostLikeBtn = ({
   );
 
   const onLikeClick = () => {
+    if (!token) {
+      openModal();
+      return;
+    }
     mutation.mutate();
   };
 
@@ -91,21 +95,40 @@ const PostLikeBtn = ({
     });
   }, [liked, likeCount]);
 
+  const openModal = () => {
+    setShowModal(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    document.body.style.overflow = "auto";
+  };
+
   return (
-    <div className="flex items-center min-w-fit">
-      <button
-        onClick={onLikeClick}
-        className={`flex items-center mr-1 hover:text-blue shrink-0 ${
-          likeInfo.isLiked ? "text-blue" : ""
-        }`}
-      >
-        <span className="text-sm mr-1">추천</span>
-        <span className="text-lg">
-          {likeInfo.isLiked ? <RiThumbUpFill /> : <RiThumbUpLine />}
-        </span>
-      </button>
-      <span className="font-semibold">{likeInfo.totalLikeCount}</span>
-    </div>
+    <>
+      <div className="flex items-center min-w-fit">
+        <button
+          onClick={onLikeClick}
+          className={`flex items-center mr-1 hover:text-blue shrink-0 ${
+            likeInfo.isLiked ? "text-blue" : ""
+          }`}
+        >
+          <span className="text-sm mr-1">추천</span>
+          <span className="text-lg">
+            {likeInfo.isLiked ? <RiThumbUpFill /> : <RiThumbUpLine />}
+          </span>
+        </button>
+        <span className="font-semibold">{likeInfo.totalLikeCount}</span>
+      </div>
+      {showModal && (
+        <BasicModal
+          message="로그인 후 이용해 주세요"
+          closeModal={closeModal}
+          confirm={closeModal}
+        />
+      )}
+    </>
   );
 };
 

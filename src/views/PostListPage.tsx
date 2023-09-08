@@ -2,7 +2,7 @@ import { Suspense, lazy, useState } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { accessTokenState } from "../states/recoil";
-import ScrollTopBtn from "../components/common/ScrollTopBtn";
+import ScrollTopBtn from "../components/common/button/ScrollTopBtn";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessage from "../components/common/ErrorMessage";
@@ -10,7 +10,7 @@ import ErrorMessage from "../components/common/ErrorMessage";
 const sortNames = [
   { name: "최신순", sort: "LATEST" },
   { name: "추천순", sort: "LIKES" },
-  { name: "참여자순", sort: "HOT" },
+  { name: "댓글순", sort: "COMMENTS" },
 ];
 
 const PostListPage = (): JSX.Element => {

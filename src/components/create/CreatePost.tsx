@@ -107,12 +107,12 @@ const CreatePost = (): JSX.Element => {
           작성 완료
         </button>
       </div>
-      {showCancelModal ? (
+      {showCancelModal && (
         <CancelCreate closeModal={() => closeModal(setShowCancelModal)} />
-      ) : null}
-      {showUploadModal ? (
+      )}
+      {showUploadModal && (
         <UploadPost closeModal={() => closeModal(setShowUploadModal)} />
-      ) : null}
+      )}
     </>
   );
 };

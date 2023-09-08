@@ -2,7 +2,7 @@ import { Suspense, lazy } from "react";
 import LoadNotification from "../components/skeletonUI/LoadNotification";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessage from "../components/common/ErrorMessage";
-import ScrollTopBtn from "../components/common/ScrollTopBtn";
+import ScrollTopBtn from "../components/common/button/ScrollTopBtn";
 
 const NotificationPage = (): JSX.Element => {
   const NotificationCard = lazy(

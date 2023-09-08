@@ -84,12 +84,10 @@ const TagInput = () => {
         }`}
         disabled={maxTag}
       ></input>
-      {!isValid ? (
+      {!isValid && (
         <p className="text-sm mt-1 text-red-dark">
           * 공백 문자와 특수문자를 포함할 수 없습니다.
         </p>
-      ) : (
-        ""
       )}
       <div className="flex md:gap-4 mt-5 gap-2 overflow-x-auto">
         {tagList.map((tagItem, index) => {

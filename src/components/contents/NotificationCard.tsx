@@ -58,9 +58,9 @@ const NotificationCard = (): JSX.Element => {
           </div>
         ))}
       </>
-      {showModal ? (
+      {showModal && (
         <EnterChatRoom postId={clickedData} closeModal={closeModal} />
-      ) : null}
+      )}
     </>
   );
 };

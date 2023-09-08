@@ -4,7 +4,7 @@ import Comment from "../components/comment/Comment";
 import LoadPostDetail from "../components/skeletonUI/LoadPostDetail";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessage from "../components/common/ErrorMessage";
-import ScrollTopBtn from "../components/common/ScrollTopBtn";
+import ScrollTopBtn from "../components/common/button/ScrollTopBtn";
 
 const PostDetailPage = (): JSX.Element => {
   const PostDetail = lazy(() => import("../components/contents/PostDetail"));

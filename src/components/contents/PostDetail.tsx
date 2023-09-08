@@ -18,6 +18,8 @@ import NoDataMessage from "../common/NoDataMessage";
 import { accessTokenState, userInfoState } from "../../states/recoil";
 import { UserInfoState } from "../../states/recoilType";
 import PostLikeBtn from "../common/button/PostLikeBtn";
+import MakeChatRoomBtn from "../common/button/MakeChatRoomBtn";
+import EnterChatRoomBtn from "../common/button/EnterChatRoomBtn";
 
 const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
   const [selectedOption, setSelectedOption] = useState<"A" | "B" | null>(null);
@@ -25,6 +27,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
   const [isVoted, setIsVoted] = useState<boolean>(false);
   const [showReportModal, setShowReportModal] = useState<boolean>(false);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  const [showAlretModal, setShowAlretModal] = useState<boolean>(false);
   const token = useRecoilValue<string>(accessTokenState);
   const userInfo = useRecoilValue<UserInfoState>(userInfoState);
   const memberId = userInfo.memberId;
@@ -61,37 +64,43 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
 
   const handleVoteSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (selectedOption) {
-      if (selectedOption === "A") {
-        postData.acount++;
-      } else if (selectedOption === "B") {
-        postData.bcount++;
-      }
-      setVotedOption(selectedOption);
-      setIsVoted(true);
-      try {
-        await axios({
-          method: "post",
-          url: `/api/api/posts/${postId}/choice?option=${selectedOption}`,
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-      } catch (error) {
-        console.error("투표 데이터 전송 실패: ", error);
-        if (selectedOption === "A") {
-          postData.acount--;
-        } else if (selectedOption === "B") {
-          postData.bcount--;
-        }
-        setSelectedOption(null);
-        setVotedOption(null);
-        setIsVoted(false);
-      }
-    } else {
+    if (!token) {
+      openModal(setShowAlretModal);
+      setSelectedOption(null);
+      return;
+    }
+    if (!selectedOption) {
       alert("투표할 항목을 선택해 주세요.");
       return;
+    }
+
+    if (selectedOption === "A") {
+      postData.acount++;
+    } else if (selectedOption === "B") {
+      postData.bcount++;
+    }
+    setVotedOption(selectedOption);
+    setIsVoted(true);
+
+    try {
+      await axios({
+        method: "post",
+        url: `/api/api/posts/${postId}/choice?option=${selectedOption}`,
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.error("투표 데이터 전송 실패: ", error);
+      if (selectedOption === "A") {
+        postData.acount--;
+      } else if (selectedOption === "B") {
+        postData.bcount--;
+      }
+      setSelectedOption(null);
+      setVotedOption(null);
+      setIsVoted(false);
     }
   };
 
@@ -103,17 +112,15 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
     setFunc(true);
     document.body.style.overflow = "hidden";
   };
-
   const closeModal = (setFunc: Dispatch<SetStateAction<boolean>>) => {
     setFunc(false);
     document.body.style.overflow = "auto";
   };
 
-  const onReport = () => {
-    openModal(setShowReportModal);
+  const onReportClick = () => {
+    token ? openModal(setShowReportModal) : setShowAlretModal(true);
   };
-
-  const onDelete = () => {
+  const onDeleteClick = () => {
     openModal(setShowDeleteModal);
   };
 
@@ -135,16 +142,41 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
     document.body.style.overflow = "auto";
   };
 
+  const reportPost = async () => {
+    if (!token) {
+      openModal(setShowAlretModal);
+      setShowReportModal(false);
+      return;
+    }
+    try {
+      await axios({
+        method: "post",
+        url: `/api/api/posts/${postId}/report`,
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.error("게시글 신고 실패: ", error);
+    }
+    setShowReportModal(false);
+    document.body.style.overflow = "auto";
+  };
+
+  const isChatActive = postData.liveChatUrl;
+  const isMyPost = memberId === postData.member.memberId;
+
   return (
     <>
       <div className="w-full bg-white rounded-xl px-4 sm:px-6 md:px-[70px] py-4">
         <div className="flex justify-end">
-          {memberId === postData.member.memberId ? (
-            <button className="text-red-dark text-sm" onClick={onDelete}>
+          {isMyPost ? (
+            <button className="text-red-dark text-sm" onClick={onDeleteClick}>
               삭제
             </button>
           ) : (
-            <button className="text-red-dark text-sm" onClick={onReport}>
+            <button className="text-red-dark text-sm" onClick={onReportClick}>
               신고
             </button>
           )}
@@ -235,40 +267,57 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
           </div>
 
           <div className="flex flex-col items-center justify-center pt-4 mb-4">
-            <span className="text-sm mb-2.5">지금 채팅 중인 투표글이에요!</span>
+            {isChatActive && (
+              <span className="text-sm mb-2.5">
+                지금 채팅 중인 투표글이에요!
+              </span>
+            )}
             <div className="flex gap-4">
               <button
                 id="vote"
                 type="button"
                 disabled={isVoted ? true : false}
                 onClick={handleVoteBtnClick}
-                className={`btn bg-white text-black-primary hover:bg-blue-100/[0.5] ${
+                className={`btn bg-black-primary text-white hover:bg-black ${
                   isVoted ? "disabled-btn" : ""
                 }`}
               >
                 투표하기
               </button>
-              <button className="btn bg-black-primary text-white hover:bg-black">
-                채팅방 입장하기
-              </button>
+              {isMyPost && !isChatActive && <MakeChatRoomBtn />}
+              {isChatActive && <EnterChatRoomBtn />}
             </div>
           </div>
         </div>
       </div>
-      {showReportModal ? (
-        <BasicModal
-          message="해당 투표글을 신고 할까요?"
-          closeModal={() => closeModal(setShowReportModal)}
-          confirm={() => closeModal(setShowReportModal)}
-        />
-      ) : null}
-      {showDeleteModal ? (
+      {showReportModal &&
+        (postData.reported ? (
+          <BasicModal
+            message="이미 신고한 투표글이에요"
+            closeModal={() => closeModal(setShowReportModal)}
+            confirm={() => closeModal(setShowReportModal)}
+          />
+        ) : (
+          <BasicModal
+            message="해당 투표글을 신고 할까요?"
+            closeModal={() => closeModal(setShowReportModal)}
+            confirm={reportPost}
+          />
+        ))}
+      {showDeleteModal && (
         <BasicModal
           message="해당 투표글을 삭제 할까요?"
           closeModal={() => closeModal(setShowDeleteModal)}
           confirm={deletePost}
         />
-      ) : null}
+      )}
+      {showAlretModal && (
+        <BasicModal
+          message="로그인 후 이용해 주세요"
+          closeModal={() => closeModal(setShowAlretModal)}
+          confirm={() => closeModal(setShowAlretModal)}
+        />
+      )}
     </>
   );
 };
