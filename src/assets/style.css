@@ -19,6 +19,7 @@
   min-height: calc(100vh - 70px - 96px);
 }
 
+/* react-quill */
 .ql-toolbar.ql-snow {
   background-color: #c9ddf4;
   border: none;
@@ -39,6 +40,33 @@
   font-size: 16px;
   color: #aaaaaa;
 }
+/* react-quill */
+
+/* react-js-pagination */
+ul.pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  margin-top: 28px;
+}
+
+ul.pagination > li {
+  padding: 4px 11px;
+  border-radius: 5px;
+
+  transition: all 0.1s ease-in-out;
+}
+
+ul.pagination > li.disabled {
+  opacity: 0.3;
+}
+
+ul.pagination > li.active {
+  background-color: #e1eaf4;
+  font-weight: 600;
+}
+/* react-js-pagination */
 
 @media (max-width: 767px) {
   .main_chat[data-scroll="true"] {
