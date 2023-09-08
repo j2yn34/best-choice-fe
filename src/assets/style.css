@@ -13,36 +13,41 @@
 :root {
   color: #1c1c1c;
   background-color: #f5f6f8;
+  --color-bg: #f5f6f8;
+  --blue-100: #e1eaf4;
+  --blue-200: #c9ddf4;
+  --gray-light: #aaaaaa;
 }
 
 .main {
   min-height: calc(100vh - 70px - 96px);
 }
 
-/* react-quill */
+/* s: react-quill */
 .ql-toolbar.ql-snow {
-  background-color: #c9ddf4;
+  background-color: var(--blue-200);
   border: none;
 }
 
 .ql-container.ql-snow {
   font-size: 16px;
-  background-color: #f5f6f8;
+  background-color: var(--color-bg);
   border: none;
 }
 
 .disabled-btn {
   cursor: not-allowed !important;
   opacity: 0.4;
+  border: 1px solid var(--gray-light);
 }
 
 .quill > .ql-container > .ql-editor.ql-blank::before {
   font-size: 16px;
-  color: #aaaaaa;
+  color: var(--gray-light);
 }
-/* react-quill */
+/* e: react-quill */
 
-/* react-js-pagination */
+/* s: react-js-pagination */
 ul.pagination {
   display: flex;
   flex-direction: row;
@@ -63,10 +68,10 @@ ul.pagination > li.disabled {
 }
 
 ul.pagination > li.active {
-  background-color: #e1eaf4;
+  background-color: var(--blue-100);
   font-weight: 600;
 }
-/* react-js-pagination */
+/* e: react-js-pagination */
 
 @media (max-width: 767px) {
   .main_chat[data-scroll="true"] {
