@@ -67,6 +67,10 @@ ul.pagination > li.disabled {
   opacity: 0.3;
 }
 
+ul.pagination > li.disabled > a {
+  pointer-events: none;
+}
+
 ul.pagination > li.active {
   background-color: var(--blue-100);
   font-weight: 600;
