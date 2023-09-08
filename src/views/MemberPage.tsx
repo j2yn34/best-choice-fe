@@ -1,12 +1,12 @@
 import { Suspense, lazy, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ChangeNickname from "../components/modal/ChangeNickname";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessage from "../components/common/ErrorMessage";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { accessTokenState, userInfoState } from "../states/recoil";
-import { useNavigate } from "react-router-dom";
-import ScrollTopBtn from "../components/common/ScrollTopBtn";
+import ScrollTopBtn from "../components/common/button/ScrollTopBtn";
 import { UserInfoState } from "../states/recoilType";
 
 const sortNames = [
@@ -19,7 +19,8 @@ const sortNames = [
 const MemberPage = (): JSX.Element => {
   const [showModal, setShowModal] = useState(false);
   const [postSort, setPostSort] = useState<string>("POSTS");
-  const [token, setToken] = useRecoilState<string>(accessTokenState);
+  // const [token, setToken] = useRecoilState<string>(accessTokenState);
+  const token = useRecoilValue<string>(accessTokenState);
   const userInfo = useRecoilValue<UserInfoState>(userInfoState);
   const nickname = userInfo.nickname;
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const MemberPage = (): JSX.Element => {
   const onLogoutClick = () => {
     const ok = confirm("로그아웃 할까요?");
     if (ok) {
-      setToken("");
+      sessionStorage.removeItem("user");
       navigate("/");
       alert("로그아웃 되었어요. 또 만나요!");
     } else return;
