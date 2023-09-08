@@ -4,7 +4,7 @@ import LoadMainChat from "../components/skeletonUI/LoadMainChat";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessage from "../components/common/ErrorMessage";
-import ScrollTopBtn from "../components/common/ScrollTopBtn";
+import ScrollTopBtn from "../components/common/button/ScrollTopBtn";
 
 const MainPage = (): JSX.Element => {
   const MainChattingList = lazy(

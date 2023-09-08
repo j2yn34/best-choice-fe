@@ -2,7 +2,7 @@ import { Suspense, lazy, useState } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { accessTokenState } from "../states/recoil";
-import ScrollTopBtn from "../components/common/ScrollTopBtn";
+import ScrollTopBtn from "../components/common/button/ScrollTopBtn";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessage from "../components/common/ErrorMessage";

@@ -1,4 +1,4 @@
-import ScrollTopBtn from "../components/common/ScrollTopBtn";
+import ScrollTopBtn from "../components/common/button/ScrollTopBtn";
 import Search from "../components/contents/Search";
 
 const SearchPage = (): JSX.Element => {
