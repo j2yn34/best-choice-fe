@@ -94,7 +94,9 @@ const CommentList = ({ sort, postId }: { sort: string; postId: string }) => {
 
                   <li className="text-sm">{commentData.member.nickname}</li>
                   <li className="text-sm text-gray">
-                    {moment(commentData.createdDate).format("YYYY.MM.DD")}
+                    {moment(commentData.createdDate).format(
+                      "YYYY.MM.DD  HH:mm"
+                    )}
                   </li>
                   <CommentLikeBtn
                     commentId={commentData.commentId}
