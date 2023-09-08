@@ -18,6 +18,8 @@ import NoDataMessage from "../common/NoDataMessage";
 import { accessTokenState, userInfoState } from "../../states/recoil";
 import { UserInfoState } from "../../states/recoilType";
 import PostLikeBtn from "../common/button/PostLikeBtn";
+import MakeChatRoomBtn from "../common/button/MakeChatRoomBtn";
+import EnterChatRoomBtn from "../common/button/EnterChatRoomBtn";
 
 const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
   const [selectedOption, setSelectedOption] = useState<"A" | "B" | null>(null);
@@ -162,6 +164,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
     document.body.style.overflow = "auto";
   };
 
+  const isChatActive = postData.liveChatUrl;
   const isMyPost = memberId === postData.member.memberId;
 
   return (
@@ -264,22 +267,25 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
           </div>
 
           <div className="flex flex-col items-center justify-center pt-4 mb-4">
-            <span className="text-sm mb-2.5">지금 채팅 중인 투표글이에요!</span>
+            {isChatActive && (
+              <span className="text-sm mb-2.5">
+                지금 채팅 중인 투표글이에요!
+              </span>
+            )}
             <div className="flex gap-4">
               <button
                 id="vote"
                 type="button"
                 disabled={isVoted ? true : false}
                 onClick={handleVoteBtnClick}
-                className={`btn bg-white text-black-primary hover:bg-blue-100/[0.5] ${
+                className={`btn bg-black-primary text-white hover:bg-black ${
                   isVoted ? "disabled-btn" : ""
                 }`}
               >
                 투표하기
               </button>
-              <button className="btn bg-black-primary text-white hover:bg-black">
-                채팅방 입장하기
-              </button>
+              {isMyPost && !isChatActive && <MakeChatRoomBtn />}
+              {isChatActive && <EnterChatRoomBtn />}
             </div>
           </div>
         </div>
