@@ -37,7 +37,7 @@ const UploadPost = ({ closeModal }: { closeModal: () => void }) => {
 
     if (inputValue.files) {
       for (let i = 0; i < inputValue.files.length; i++) {
-        formData.append(`files`, inputValue.files[i]);
+        formData.append("file", inputValue.files[i]);
       }
     }
 

@@ -1,5 +1,5 @@
 import { KeyboardEvent, useState, useEffect } from "react";
-import { useRecoilState, RecoilState } from "recoil";
+import { RecoilState, useSetRecoilState } from "recoil";
 import { inputValueState } from "../../states/recoil";
 import { InputValue } from "../../states/recoilType";
 import { TiDelete } from "react-icons/ti";
@@ -13,7 +13,7 @@ const TagInput = () => {
   const [maxTag, setMaxTag] = useState<boolean>(false);
   const [isValid, setIsValid] = useState<boolean>(true);
 
-  const [, setInputValue] = useRecoilState(
+  const setInputValue = useSetRecoilState(
     inputValueState as RecoilState<InputValue>
   );
 
@@ -38,7 +38,7 @@ const TagInput = () => {
 
   const submitTagItem = () => {
     const updatedTagList = [...tagList];
-    updatedTagList.unshift(tagItem);
+    updatedTagList.push(tagItem);
     setTagList(updatedTagList);
 
     setInputValue((prevInputValues) => ({
@@ -80,13 +80,13 @@ const TagInput = () => {
         placeholder="엔터를 입력하시면 해시태그를 등록할 수 있어요."
         onKeyDown={onKeyDown}
         className={`w-full bg-color-bg focus:outline-none p-3 ${
-          maxTag ? "opacity-30" : null
+          maxTag && "opacity-30"
         }`}
         disabled={maxTag}
       ></input>
       {!isValid && (
         <p className="text-sm mt-1 text-red-dark">
-          * 공백 문자와 특수문자를 포함할 수 없습니다.
+          * 띄어쓰기와 특수문자를 포함할 수 없어요.
         </p>
       )}
       <div className="flex md:gap-4 mt-5 gap-2 overflow-x-auto">
