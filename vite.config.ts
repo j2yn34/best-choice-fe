@@ -13,6 +13,11 @@ export default defineConfig({
         secure: false,
         ws: true,
       },
+      // "/ws-stomp": {
+      //   target: "ws://www.winnow-bestchoice.com:8080/ws-stomp",
+      //   changeOrigin: true,
+      //   ws: true,
+      // },
     },
   },
 });

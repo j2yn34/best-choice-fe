@@ -185,7 +185,9 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
           <h2 className="text-lg sm:text-xl mr-2 sm:mr-4">{postData.title}</h2>
           <div className="text-sm text-gray">
             <span className="mr-4">{postData.member.nickname}</span>
-            <span>{moment(postData.createdDate).format("YYYY.MM.DD")}</span>
+            <span>
+              {moment(postData.createdDate).format("YYYY.MM.DD HH:mm")}
+            </span>
           </div>
         </div>
 

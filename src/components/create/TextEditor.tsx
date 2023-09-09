@@ -33,7 +33,7 @@ const TextEditor = () => {
       <div className="mb-20">
         <ReactQuill
           theme="snow"
-          value={inputValue.content}
+          value={inputValue.content || ""}
           onChange={onChangeContentInput}
           className="h-[250px]"
           placeholder="투표에 대한 설명을 적어 주세요."
