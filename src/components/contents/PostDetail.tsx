@@ -18,7 +18,7 @@ import NoDataMessage from "../common/NoDataMessage";
 import { accessTokenState, userInfoState } from "../../states/recoil";
 import { UserInfoState } from "../../states/recoilType";
 import PostLikeBtn from "../common/button/PostLikeBtn";
-import MakeChatRoomBtn from "../common/button/MakeChatRoomBtn";
+import CreateChatRoomBtn from "../common/button/CreateChatRoomBtn";
 import EnterChatRoomBtn from "../common/button/EnterChatRoomBtn";
 
 const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
@@ -286,8 +286,12 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
               >
                 투표하기
               </button>
-              {isMyPost && !isChatActive && <MakeChatRoomBtn />}
-              {isChatActive && <EnterChatRoomBtn />}
+              {isMyPost && !isChatActive && (
+                <CreateChatRoomBtn postId={postData.postId} token={token} />
+              )}
+              {isChatActive && (
+                <EnterChatRoomBtn postId={postData.postId} token={token} />
+              )}
             </div>
           </div>
         </div>
