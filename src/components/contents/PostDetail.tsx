@@ -27,7 +27,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
   const [isVoted, setIsVoted] = useState<boolean>(false);
   const [showReportModal, setShowReportModal] = useState<boolean>(false);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-  const [showAlretModal, setShowAlretModal] = useState<boolean>(false);
+  const [showAlertModal, setShowAlertModal] = useState<boolean>(false);
   const token = useRecoilValue<string>(accessTokenState);
   const userInfo = useRecoilValue<UserInfoState>(userInfoState);
   const memberId = userInfo.memberId;
@@ -65,7 +65,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
   const handleVoteSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!token) {
-      openModal(setShowAlretModal);
+      openModal(setShowAlertModal);
       setSelectedOption(null);
       return;
     }
@@ -118,7 +118,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
   };
 
   const onReportClick = () => {
-    token ? openModal(setShowReportModal) : setShowAlretModal(true);
+    token ? openModal(setShowReportModal) : setShowAlertModal(true);
   };
   const onDeleteClick = () => {
     openModal(setShowDeleteModal);
@@ -144,7 +144,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
 
   const reportPost = async () => {
     if (!token) {
-      openModal(setShowAlretModal);
+      openModal(setShowAlertModal);
       setShowReportModal(false);
       return;
     }
@@ -166,10 +166,17 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
 
   const isChatActive = postData.liveChatUrl;
   const isMyPost = memberId === postData.member.memberId;
+  const srcUrl = "https://winnow-bestchoice.s3.ap-northeast-2.amazonaws.com/";
+  const images = postData.resources.filter((resource: string | string[]) =>
+    resource.includes("image")
+  );
+  const videos = postData.resources.filter((resource: string | string[]) =>
+    resource.includes("video")
+  );
 
   return (
     <>
-      <div className="w-full bg-white rounded-xl px-4 sm:px-6 md:px-[70px] py-4">
+      <div className="w-full bg-white rounded-xl px-4 sm:px-6 lg:px-[70px] py-4">
         <div className="flex justify-end">
           {isMyPost ? (
             <button className="text-red-dark text-sm" onClick={onDeleteClick}>
@@ -193,19 +200,34 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
 
         <div className="pt-4">
           <div className="px-2">
-            <div className="min-h-[80px]">
-              {/* <div className="pb-4">
-              <div>사진</div>
-            </div> */}
-              <div className="pb-6">{parse(safeContent)}</div>
-            </div>
+            {images.length > 0 || videos.length > 0 ? (
+              <div className="flex items-center gap-2 overflow-x-scroll lg:overflow-auto mb-6">
+                {images.map((resource: string, index: number) => (
+                  <div key={index} className="shrink-0 w-56 md:shrink md:w-72">
+                    <img
+                      src={`${srcUrl}${resource}`}
+                      alt={`이미지${index + 1}`}
+                    />
+                  </div>
+                ))}
+                {videos.map((resource: string, index: number) => (
+                  <div key={index} className="shrink-0 w-56 md:shrink md:w-72">
+                    <video controls width={300}>
+                      <source src={`${srcUrl}${resource}`} />
+                      {`동영상${index + 1}`}
+                    </video>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+            <div className="min-h-[80px] pb-10">{parse(safeContent)}</div>
 
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex gap-2 flex-wrap mr-1">
+            <div className="flex items-end justify-between mb-4">
+              <div className="flex gap-2 flex-wrap mr-1.5">
                 {postData.tags.map((tag: string, index: number) => (
                   <div
                     key={index}
-                    className="badge badge-lg py-3.5 bg-blue-100/[0.2] border-blue-300 text-blue"
+                    className="badge badge-lg md:py-3.5 md:text-base text-sm py-3 px-2.5 bg-blue-100/[0.2] border-blue-300 text-blue"
                   >
                     #{tag}
                   </div>
@@ -317,11 +339,11 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
           confirm={deletePost}
         />
       )}
-      {showAlretModal && (
+      {showAlertModal && (
         <BasicModal
           message="로그인 후 이용해 주세요"
-          closeModal={() => closeModal(setShowAlretModal)}
-          confirm={() => closeModal(setShowAlretModal)}
+          closeModal={() => closeModal(setShowAlertModal)}
+          confirm={() => closeModal(setShowAlertModal)}
         />
       )}
     </>
