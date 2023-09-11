@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { accessTokenState, userInfoState } from "../../states/recoil";
 import * as StompJs from "@stomp/stompjs";
-import Header from "./Header";
+import ChatHeader from "./ChatHeader";
 import InfoBar from "./InfoBar";
 import ChatList from "./ChatList";
 import MessageForm from "./MessageForm";
@@ -114,7 +114,7 @@ const Chat = (): JSX.Element => {
   return (
     <>
       <section className="relative h-full w-[425px] m-auto border border-black">
-        <Header roomId={roomId} />
+        <ChatHeader roomId={roomId} exit={disConnect} />
         <InfoBar />
         <div className="min-h-[350px] bg-color-bg">
           <ChatList chatList={chatList} />
