@@ -9,15 +9,27 @@ import axios from "axios";
 import { Post } from "../../mocks/mockType";
 import PostCard from "../contents/PostCard";
 
+// 임시 그태 목록
+const recommendSearchTags = [
+  { name: "balance", tag: "밸런스" },
+  { name: "food", tag: "음식" },
+  { name: "worry", tag: "고민" },
+  { name: "date", tag: "연애" },
+];
+
 const Search = (): JSX.Element => {
   const [inputValue, setInputValue] = useState<string>("");
   const [submitValue, setSubmitValue] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [tagPostData, setTagPostData] = useState<Post[] | null>(null);
 
-  const searchClick = (e: FormEvent) => {
+  const searchBtnClick = (e: FormEvent) => {
     e.preventDefault();
     setSubmitValue(inputValue);
+  };
+
+  const searchTagClick = (searchTag: string) => {
+    setSubmitValue(searchTag);
   };
 
   useEffect(() => {
@@ -51,7 +63,10 @@ const Search = (): JSX.Element => {
 
   return (
     <>
-      <form onSubmit={searchClick} className="flex justify-center items-center">
+      <form
+        onSubmit={searchBtnClick}
+        className="flex justify-center items-center"
+      >
         <input
           value={inputValue}
           type="text"
@@ -69,6 +84,18 @@ const Search = (): JSX.Element => {
           검색
         </button>
       </form>
+      <div className="flex items-center justify-center mt-4">
+        {/* <p>추천 해시태그</p> */}
+        {recommendSearchTags.map((searchTag) => (
+          <button
+            key={searchTag.name}
+            className="badge badge-lg py-3.5 ml-2 bg-blue-100/[0.2] border-blue-300 text-blue"
+            onClick={() => searchTagClick(searchTag.tag)}
+          >
+            #{searchTag.tag}
+          </button>
+        ))}
+      </div>
       <p className="text-xl mt-8">
         <span className="font-semibold">#{submitValue} </span>
         검색 결과 ({tagPostData === null ? 0 : tagPostData?.length})
