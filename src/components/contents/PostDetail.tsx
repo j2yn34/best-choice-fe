@@ -222,12 +222,12 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
             ) : null}
             <div className="min-h-[80px] pb-10">{parse(safeContent)}</div>
 
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex gap-2 flex-wrap mr-1">
+            <div className="flex items-end justify-between mb-4">
+              <div className="flex gap-2 flex-wrap mr-1.5">
                 {postData.tags.map((tag: string, index: number) => (
                   <div
                     key={index}
-                    className="badge badge-lg py-3.5 bg-blue-100/[0.2] border-blue-300 text-blue"
+                    className="badge badge-lg md:py-3.5 md:text-base text-sm py-3 px-2.5 bg-blue-100/[0.2] border-blue-300 text-blue"
                   >
                     #{tag}
                   </div>
