@@ -113,10 +113,10 @@ const Chat = (): JSX.Element => {
 
   return (
     <>
-      <section className="h-full w-[425px] m-auto border border-black">
+      <section className="relative h-full w-[425px] m-auto border border-black">
         <Header roomId={roomId} />
         <InfoBar />
-        <div className="min-h-[300px] bg-color-bg">
+        <div className="min-h-[350px] bg-color-bg">
           <ChatList chatList={chatList} />
         </div>
         <div>
