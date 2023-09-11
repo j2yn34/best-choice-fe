@@ -23,8 +23,8 @@ const CommentList = ({ sort, postId }: { sort: string; postId: string }) => {
   const [commentId, setCommentId] = useState<number | null>(null);
 
   const { data: commentsData } = useFetchData(
-    `/api/posts/${postId}/comments?page=0&sort=${sort}`,
-    [`${sort}CommentData${postId}`],
+    `/api/posts/${postId}/comments?page=${page}&sort=${sort}`,
+    [`${sort}CommentData${postId}-${page}`],
     token
   );
 

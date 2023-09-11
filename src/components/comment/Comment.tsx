@@ -16,7 +16,7 @@ const Comment = ({ postId }: { postId: string }): JSX.Element => {
   const [commentLength] = useRecoilState(commentLengthState);
 
   return (
-    <div className="w-full py-8 px-4 sm:px-6 md:pt-10 md:px-[70px] bg-white rounded-xl">
+    <div className="w-full py-8 px-4 sm:px-6 md:pt-10 lg:px-[70px] bg-white rounded-xl">
       <div className="flex items-center justify-between mb-6">
         <p className="text-lg">댓글 ({commentLength})</p>
         <ul className="flex items-center gap-4">

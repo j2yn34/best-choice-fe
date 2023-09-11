@@ -5,11 +5,10 @@ import { InputValue } from "../../states/recoilType";
 import BasicModal from "../modal/BasicModal";
 
 const maxFileCnt = 5;
+const maxFileSize = 1024 * 1024 * 100;
 
 const FileInput = () => {
-  // let filesSize = 0;
-  // 용량 제한 안내 추가 = 정해진 이미지 용량 넘으면 alert 창으로 알려주기
-  // 각각 파일 용량 체크 + 총 용량 체크
+  let filesSize = 0;
 
   const [media, setMedia] = useState<{
     images: string[] | null;
@@ -22,6 +21,7 @@ const FileInput = () => {
   const setInputValue = useSetRecoilState(
     inputValueState as RecoilState<InputValue>
   );
+  const [modalMessage, setModalMessage] = useState<string>("");
 
   const openModal = () => {
     setShowModal(true);
@@ -35,6 +35,7 @@ const FileInput = () => {
 
   const processFiles = (files: FileList) => {
     if (files && files?.length > maxFileCnt) {
+      setModalMessage(`파일 업로드는 최대 ${maxFileCnt}까지만 가능합니다.`);
       openModal();
 
       setInputValue((prevInputValues) => ({
@@ -51,29 +52,33 @@ const FileInput = () => {
     };
 
     if (files) {
+      const imageFileList: File[] | null = [];
+      const videoFileList: File[] | null = [];
+
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        // const fileSize = file.size;
-        // filesSize = filesSize + fileSize;
+        filesSize = filesSize + file.size;
         const url = URL.createObjectURL(file);
-
-        // if (fileSize > 정해진 용량){
-        //   alert("용량 제한으로 해당 파일을 첨부할 수 없습니다.")
-        //   return
-        // }
 
         if (file.type.includes("video")) {
           newMedia.videos.push(url);
+          videoFileList.push(file);
         } else {
           newMedia.images.push(url);
+          imageFileList.push(file);
         }
       }
 
-      const fileList = Array.from(files);
+      if (filesSize > maxFileSize) {
+        setModalMessage("첨부파일 사이즈는 100MB 이내로 등록 가능합니다.");
+        openModal();
+        return;
+      }
 
       setInputValue((prevInputValues) => ({
         ...prevInputValues,
-        files: fileList,
+        imageFile: imageFileList,
+        videoFile: videoFileList,
       }));
     }
 
@@ -94,7 +99,6 @@ const FileInput = () => {
         <p>파일 첨부</p>
         <p className="ml-2 text-xs text-gray">(최대 5개 업로드 가능)</p>
       </div>
-
       <input
         type="file"
         multiple
@@ -118,7 +122,7 @@ const FileInput = () => {
       </div>
       {showModal ? (
         <BasicModal
-          message={`파일 업로드는 최대 ${maxFileCnt}까지만 가능합니다. `}
+          message={modalMessage}
           closeModal={closeModal}
           confirm={closeModal}
         />

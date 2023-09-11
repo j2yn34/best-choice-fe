@@ -74,7 +74,8 @@ const CreatePost = (): JSX.Element => {
         optionA: "",
         optionB: "",
         tags: [],
-        files: null,
+        imageFile: null,
+        videoFile: null,
       });
     };
   }, []);
