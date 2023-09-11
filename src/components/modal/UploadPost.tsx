@@ -28,16 +28,23 @@ const UploadPost = ({ closeModal }: { closeModal: () => void }) => {
       optionA: "",
       optionB: "",
       tags: [],
-      files: null,
+      imageFile: null,
+      videoFile: null,
     });
   };
 
   const upload = async () => {
     const formData = new FormData();
 
-    if (inputValue.files) {
-      for (let i = 0; i < inputValue.files.length; i++) {
-        formData.append("file", inputValue.files[i]);
+    if (inputValue.imageFile) {
+      for (let i = 0; i < inputValue.imageFile.length; i++) {
+        formData.append("imageFile", inputValue.imageFile[i]);
+      }
+    }
+
+    if (inputValue.videoFile) {
+      for (let i = 0; i < inputValue.videoFile.length; i++) {
+        formData.append("videoFile", inputValue.videoFile[i]);
       }
     }
 

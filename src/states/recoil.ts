@@ -30,7 +30,8 @@ export const inputValueState = atom({
     optionA: "",
     optionB: "",
     tags: [],
-    files: null,
+    imageFile: null,
+    videoFile: null,
   },
 });
 

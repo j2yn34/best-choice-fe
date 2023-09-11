@@ -9,5 +9,6 @@ export type InputValue = {
   optionA: string;
   optionB: string;
   tags: string[] | [];
-  files: File[] | null;
+  imageFile: File[] | null;
+  videoFile: File[] | null;
 };
