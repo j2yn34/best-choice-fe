@@ -52,13 +52,14 @@ ul.pagination {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  gap: 4px;
 
   margin-top: 28px;
 }
 
-ul.pagination > li {
-  padding: 4px 11px;
-  border-radius: 5px;
+ul.pagination > li > a {
+  padding: 4px 9px;
+  border-radius: 4px;
 
   transition: all 0.1s ease-in-out;
 }
@@ -68,10 +69,10 @@ ul.pagination > li.disabled {
 }
 
 ul.pagination > li.disabled > a {
-  pointer-events: none;
+  cursor: default;
 }
 
-ul.pagination > li.active {
+ul.pagination > li.active > a {
   background-color: var(--blue-100);
   font-weight: 600;
 }
