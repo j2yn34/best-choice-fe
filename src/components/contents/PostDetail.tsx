@@ -27,7 +27,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
   const [isVoted, setIsVoted] = useState<boolean>(false);
   const [showReportModal, setShowReportModal] = useState<boolean>(false);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-  const [showAlretModal, setShowAlretModal] = useState<boolean>(false);
+  const [showAlertModal, setShowAlertModal] = useState<boolean>(false);
   const token = useRecoilValue<string>(accessTokenState);
   const userInfo = useRecoilValue<UserInfoState>(userInfoState);
   const memberId = userInfo.memberId;
@@ -65,7 +65,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
   const handleVoteSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!token) {
-      openModal(setShowAlretModal);
+      openModal(setShowAlertModal);
       setSelectedOption(null);
       return;
     }
@@ -118,7 +118,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
   };
 
   const onReportClick = () => {
-    token ? openModal(setShowReportModal) : setShowAlretModal(true);
+    token ? openModal(setShowReportModal) : setShowAlertModal(true);
   };
   const onDeleteClick = () => {
     openModal(setShowDeleteModal);
@@ -144,7 +144,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
 
   const reportPost = async () => {
     if (!token) {
-      openModal(setShowAlretModal);
+      openModal(setShowAlertModal);
       setShowReportModal(false);
       return;
     }
@@ -339,11 +339,11 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
           confirm={deletePost}
         />
       )}
-      {showAlretModal && (
+      {showAlertModal && (
         <BasicModal
           message="로그인 후 이용해 주세요"
-          closeModal={() => closeModal(setShowAlretModal)}
-          confirm={() => closeModal(setShowAlretModal)}
+          closeModal={() => closeModal(setShowAlertModal)}
+          confirm={() => closeModal(setShowAlertModal)}
         />
       )}
     </>
