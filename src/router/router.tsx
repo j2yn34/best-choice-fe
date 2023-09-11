@@ -11,7 +11,7 @@ import NotificationPage from "../views/NotificationPage";
 import LoginPage from "../views/LoginPage";
 import NotFoundPage from "../views/NotFoundPage";
 import LoginRedirectPage from "../views/LoginCallbackPage";
-import Chat from "../components/chat/Chat";
+import ChatRoom from "../components/chat/ChatRoom";
 
 const Router = (): JSX.Element => {
   return (
@@ -28,7 +28,7 @@ const Router = (): JSX.Element => {
       <Route path="/create" element={<CreatePostPage />} />
       <Route path="/member" element={<MemberPage />} />
       <Route path="/notification" element={<NotificationPage />} />
-      <Route path="/chat/:postId" element={<Chat />} />
+      <Route path="/chat/:postId" element={<ChatRoom />} />
     </Routes>
   );
 };
