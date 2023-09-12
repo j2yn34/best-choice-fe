@@ -45,10 +45,11 @@ const Chat = (): JSX.Element => {
         heartbeatOutgoing: 4000,
       });
 
-      // 연결이 되면 room 입장
       client.onConnect = () => {
         console.log("연결 성공!");
-        client.subscribe(`/sub/chat/room/${roomId}`, subCallback);
+        client.subscribe(`/sub/chat/room/${roomId}`, subCallback, {
+          token: token,
+        });
       };
 
       client.activate();
