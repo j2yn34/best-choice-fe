@@ -19,7 +19,7 @@ const Chat = (): JSX.Element => {
   const userData = useRecoilValue(userInfoState);
 
   const [client, setClient] = useState<StompJs.Client | null>(null);
-  const [chatList, setChatList] = useState<string[]>([]);
+  const [chatList, setChatList] = useState([{ sender: null, chat: null }]);
   const [message, setMessage] = useState<string>("");
 
   const param = useParams();
@@ -60,10 +60,11 @@ const Chat = (): JSX.Element => {
   };
 
   // 주고 받는 메시지 list에 추가
-  const subCallback = (message: StompJs.IMessage) => {
-    if (message.body) {
-      const msg = JSON.parse(message.body);
-      setChatList((chats) => [...chats, msg]);
+  const subCallback = (res: StompJs.IMessage) => {
+    if (res.body) {
+      const { sender, message } = JSON.parse(res.body);
+      setChatList((prev) => [...prev, { sender: sender, chat: message }]);
+      console.log(`sender: ${sender}`);
     }
   };
 
