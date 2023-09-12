@@ -1,11 +1,17 @@
-import { KeyboardEvent, useState, useEffect } from "react";
+import {
+  KeyboardEvent,
+  ChangeEvent,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { RecoilState, useSetRecoilState } from "recoil";
 import { inputValueState } from "../../states/recoil";
 import { InputValue } from "../../states/recoilType";
 import { TiDelete } from "react-icons/ti";
 
 const maxTagCnt = 5;
-const regExp = /[ [\]/?.,;:|)*~`!^\\-_+┼<>@#$%&'"(=]/gi;
+const regExp = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
 
 const TagInput = () => {
   const [tagItem, setTagItem] = useState<string>("");
@@ -17,11 +23,16 @@ const TagInput = () => {
     inputValueState as RecoilState<InputValue>
   );
 
+  const onChangeTagInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setTagItem(value);
+  }, []);
+
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     setIsValid(true);
     const target = e.target as HTMLInputElement;
 
-    if (regExp.test(tagItem)) {
+    if (!regExp.test(tagItem)) {
       setIsValid(false);
       return;
     }
@@ -76,7 +87,7 @@ const TagInput = () => {
       <input
         type="text"
         value={tagItem}
-        onChange={(e) => setTagItem(e.target.value)}
+        onChange={onChangeTagInput}
         placeholder="엔터를 입력하시면 해시태그를 등록할 수 있어요."
         onKeyDown={onKeyDown}
         className={`w-full bg-color-bg focus:outline-none p-3 ${
@@ -84,12 +95,10 @@ const TagInput = () => {
         }`}
         disabled={maxTag}
       ></input>
-      {!isValid && (
-        <p className="text-sm mt-1 text-red-dark">
-          * 띄어쓰기와 특수문자를 포함할 수 없어요.
-        </p>
-      )}
-      <div className="flex md:gap-4 mt-5 gap-2 overflow-x-auto">
+      <p className="text-sm mt-1 text-red-dark h-5">
+        {!isValid && `* 띄어쓰기와 특수문자를 포함할 수 없어요.`}
+      </p>
+      <div className="flex md:gap-4 mt-2 gap-2 overflow-x-auto">
         {tagList.map((tagItem, index) => {
           return (
             <div
