@@ -12,7 +12,7 @@ const Header = ({
   const navigate = useNavigate();
   return (
     <>
-      <div className="flex items-center justify-between py-4 px-2 bg-white border-b border-gray/[0.2]">
+      <div className="flex items-center justify-between h-16 px-2 bg-white border-b border-gray/[0.2]">
         <button
           onClick={() => {
             exit();

@@ -19,7 +19,7 @@ const Chat = (): JSX.Element => {
   const userData = useRecoilValue(userInfoState);
 
   const [client, setClient] = useState<StompJs.Client | null>(null);
-  const [chatList, setChatList] = useState<string[]>([]);
+  const [chatList, setChatList] = useState([{ sender: null, chat: null }]);
   const [message, setMessage] = useState<string>("");
 
   const param = useParams();
@@ -45,10 +45,11 @@ const Chat = (): JSX.Element => {
         heartbeatOutgoing: 4000,
       });
 
-      // 연결이 되면 room 입장
       client.onConnect = () => {
         console.log("연결 성공!");
-        client.subscribe(`/sub/chat/room/${roomId}`, subCallback);
+        client.subscribe(`/sub/chat/room/${roomId}`, subCallback, {
+          token: token,
+        });
       };
 
       client.activate();
@@ -59,10 +60,11 @@ const Chat = (): JSX.Element => {
   };
 
   // 주고 받는 메시지 list에 추가
-  const subCallback = (message: StompJs.IMessage) => {
-    if (message.body) {
-      const msg = JSON.parse(message.body);
-      setChatList((chats) => [...chats, msg]);
+  const subCallback = (res: StompJs.IMessage) => {
+    if (res.body) {
+      const { sender, message } = JSON.parse(res.body);
+      setChatList((prev) => [...prev, { sender: sender, chat: message }]);
+      console.log(`sender: ${sender}`);
     }
   };
 
@@ -113,13 +115,13 @@ const Chat = (): JSX.Element => {
 
   return (
     <>
-      <section className="relative h-full w-[425px] m-auto border border-black">
+      <section className="relative h-screen min-h-[500px] w-full md:w-[425px] m-auto border border-black">
         <ChatHeader roomId={roomId} exit={disConnect} />
         <InfoBar />
-        <div className="min-h-[350px] bg-color-bg">
-          <ChatList chatList={chatList} />
-        </div>
-        <div>
+        <div className="flex flex-col justify-between h-[calc(100%-64px)]">
+          <div className="overflow-y-scroll bg-color-bg">
+            <ChatList chatList={chatList} />
+          </div>
           <MessageForm
             message={message}
             submitMsg={onSubmit}
