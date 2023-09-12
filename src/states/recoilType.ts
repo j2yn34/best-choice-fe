@@ -5,7 +5,7 @@ export type UserInfoState = {
 
 export type InputValue = {
   title: string;
-  content: string | null;
+  content: string;
   optionA: string;
   optionB: string;
   tags: string[] | [];
