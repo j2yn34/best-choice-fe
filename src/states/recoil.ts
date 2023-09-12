@@ -26,7 +26,7 @@ export const inputValueState = atom({
   key: "inputValueState",
   default: {
     title: "",
-    content: null,
+    content: "",
     optionA: "",
     optionB: "",
     tags: [],

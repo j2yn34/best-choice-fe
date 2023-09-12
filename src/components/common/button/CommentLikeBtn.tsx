@@ -4,6 +4,7 @@ import { RiThumbUpLine, RiThumbUpFill } from "react-icons/ri";
 import { useRecoilValue } from "recoil";
 import { useMutation, useQueryClient } from "react-query";
 import { accessTokenState } from "../../../states/recoil";
+import BasicModal from "../../modal/BasicModal";
 
 const CommentLikeBtn = ({
   commentId,
@@ -20,6 +21,7 @@ const CommentLikeBtn = ({
     isLiked: liked,
     totalLikeCount: likeCount,
   });
+  const [showModal, setShowModal] = useState(false);
   const token = useRecoilValue<string>(accessTokenState);
   const queryClient = useQueryClient();
 
@@ -81,6 +83,10 @@ const CommentLikeBtn = ({
   );
 
   const onLikeClick = () => {
+    if (!token) {
+      openModal();
+      return;
+    }
     mutation.mutate();
   };
 
@@ -91,19 +97,39 @@ const CommentLikeBtn = ({
     });
   }, [liked, likeCount]);
 
+  const openModal = () => {
+    setShowModal(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    document.body.style.overflow = "auto";
+  };
+
   return (
-    <div className="flex items-center min-w-fit">
-      <button
-        disabled={token ? false : true}
-        onClick={onLikeClick}
-        className={`flex items-center mr-1 shrink-0 ${
-          token ? "hover:text-blue" : ""
-        } ${likeInfo.isLiked ? "text-blue" : ""}`}
-      >
-        <span>{likeInfo.isLiked ? <RiThumbUpFill /> : <RiThumbUpLine />}</span>
-      </button>
-      <span>{likeInfo.totalLikeCount}</span>
-    </div>
+    <>
+      <div className="flex items-center min-w-fit">
+        <button
+          onClick={onLikeClick}
+          className={`flex items-center mr-1 shrink-0 hover:text-blue ${
+            likeInfo.isLiked ? "text-blue" : ""
+          }`}
+        >
+          <span>
+            {likeInfo.isLiked ? <RiThumbUpFill /> : <RiThumbUpLine />}
+          </span>
+        </button>
+        <span>{likeInfo.totalLikeCount}</span>
+      </div>
+      {showModal && (
+        <BasicModal
+          message="로그인 후 이용해 주세요"
+          closeModal={closeModal}
+          confirm={closeModal}
+        />
+      )}
+    </>
   );
 };
 

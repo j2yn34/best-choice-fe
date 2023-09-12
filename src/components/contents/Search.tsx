@@ -28,9 +28,9 @@ const Search = (): JSX.Element => {
     setSubmitValue(inputValue);
   };
 
-  const searchTagClick = (searchTag: string) => {
+  const searchTagClick = useCallback((searchTag: string) => {
     setSubmitValue(searchTag);
-  };
+  }, []);
 
   useEffect(() => {
     if (isLoading) {

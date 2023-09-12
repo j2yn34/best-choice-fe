@@ -70,7 +70,7 @@ const CreatePost = (): JSX.Element => {
     return () => {
       setInputValue({
         title: "",
-        content: null,
+        content: "",
         optionA: "",
         optionB: "",
         tags: [],
