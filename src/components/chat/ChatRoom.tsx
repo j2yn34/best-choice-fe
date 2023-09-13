@@ -120,7 +120,7 @@ const Chat = (): JSX.Element => {
         <InfoBar />
         <div className="flex flex-col justify-between h-[calc(100%-64px)]">
           <div className="overflow-y-scroll bg-color-bg">
-            <ChatList chatList={chatList} />
+            <ChatList chatList={chatList} userNickname={userData.nickname} />
           </div>
           <MessageForm
             message={message}
