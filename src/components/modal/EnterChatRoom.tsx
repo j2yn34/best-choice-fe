@@ -1,21 +1,32 @@
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { accessTokenState } from "../../states/recoil";
 import { MdOutlineClose } from "react-icons/md";
 import useFetchData from "../../hooks/useFetchData";
 import { Post } from "../../mocks/mockType";
 import BasicModal from "./BasicModal";
+import EnterChatRoomBtn from "../common/button/EnterChatRoomBtn";
 
 const EnterChatRoom = ({
   postId,
   closeModal,
+  page,
 }: {
   postId: number | null;
   closeModal: () => void;
+  page: number;
 }) => {
+  const token = useRecoilValue<string>(accessTokenState);
+
   const {
     isLoading,
     data: chatData,
     isError,
-  } = useFetchData("/activeChatListData", ["chatData"], "");
+  } = useFetchData(
+    `/api/chat/rooms?page=${page}&size=10`,
+    [`chatData-${page}`],
+    token
+  );
 
   if (isError) {
     console.log("데이터 불러오기 실패");
@@ -74,12 +85,7 @@ const EnterChatRoom = ({
             >
               투표글 보러가기
             </Link>
-            <button
-              className="btn bg-black-primary text-white hover:bg-black"
-              onClick={closeModal}
-            >
-              채팅방 입장하기
-            </button>
+            <EnterChatRoomBtn postId={String(postId)} token={token} />
           </div>
         </div>
       </div>
