@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+
 const ChatList = ({
   chatList,
   userNickname,
@@ -5,6 +7,14 @@ const ChatList = ({
   chatList: { sender: string | null; chat: string | null }[];
   userNickname: string;
 }): JSX.Element => {
+  const chatListRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (chatListRef.current) {
+      chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
+    }
+  }, [chatList]);
+
   const ChatListContent = chatList.map((chat, index) => {
     const isUser = chat.sender === userNickname;
 
@@ -39,7 +49,11 @@ const ChatList = ({
     );
   });
 
-  return <div className="pt-20 px-2">{ChatListContent}</div>;
+  return (
+    <div className="pt-20 px-2 overflow-y-scroll" ref={chatListRef}>
+      {ChatListContent}
+    </div>
+  );
 };
 
 export default ChatList;
