@@ -1,25 +1,29 @@
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { accessTokenState } from "../../states/recoil";
 import useFetchData from "../../hooks/useFetchData";
 import ChatUserBadge from "../common/ChatUserBadge";
 import EnterChatRoom from "../modal/EnterChatRoom";
-import { Post } from "../../mocks/mockType";
+import { Chat } from "../../mocks/mockType";
 import NoDataMessage from "../common/NoDataMessage";
 
 const MainChattingList = (): JSX.Element => {
+  const token = useRecoilValue<string>(accessTokenState);
   const [showModal, setShowModal] = useState(false);
   const [clickedChatData, setClickedChatData] = useState<number | null>(null);
+  const [page] = useState<number>(0);
 
   const { data: chatData } = useFetchData(
-    "/activeChatListData",
-    ["chatData"],
-    ""
+    `/api/chat/rooms?page=${page}&size=10`,
+    [`chatData-${page}`],
+    token
   );
 
-  if (chatData["content"].length === 0) {
+  if (chatData.length === 0) {
     return <NoDataMessage message="진행 중인 채팅방이 없어요" />;
   }
 
-  const openModal = (data: Post) => {
+  const openModal = (data: Chat) => {
     setShowModal(true);
     setClickedChatData(data.postId);
     document.body.style.overflow = "hidden";
@@ -37,7 +41,7 @@ const MainChattingList = (): JSX.Element => {
         data-scroll={true}
         className="grid sm:grid-cols-4 md:grid-cols-2 xl:grid-cols-4 gap-6 main_chat"
       >
-        {chatData["content"].slice(0, 4).map((data: Post) => (
+        {chatData.slice(0, 4).map((data: Chat) => (
           <div
             key={data.postId}
             onClick={() => openModal(data)}
@@ -45,7 +49,10 @@ const MainChattingList = (): JSX.Element => {
             tabIndex={0}
           >
             <div className="flex justify-end mb-2">
-              <ChatUserBadge ChatUserCount={data.liveChatUserCount} />
+              <ChatUserBadge
+                ChatUserCount={data.userCount}
+                isChatRoom={false}
+              />
             </div>
             <p className="text-lg text-center font-semibold p-4">
               {data.title}
@@ -54,7 +61,11 @@ const MainChattingList = (): JSX.Element => {
         ))}
       </div>
       {showModal && (
-        <EnterChatRoom postId={clickedChatData} closeModal={closeModal} />
+        <EnterChatRoom
+          postId={clickedChatData}
+          closeModal={closeModal}
+          page={page}
+        />
       )}
     </>
   );
