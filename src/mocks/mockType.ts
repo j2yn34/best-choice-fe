@@ -22,6 +22,18 @@ export type Post = {
   liveChatUserCount?: number;
 };
 
+export type Chat = {
+  commentCount: number;
+  createdDate: string;
+  likeCount: number;
+  nickname: string;
+  optionA: string;
+  optionB: string;
+  postId: number;
+  title: string;
+  userCount: number;
+};
+
 export type Comment = {
   commentId: number;
   member: Member;
