@@ -68,7 +68,7 @@ const Chat = (): JSX.Element => {
     }
   };
 
-  const onChangeText = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
+  const onChangeText = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setMessage(value);
   }, []);
