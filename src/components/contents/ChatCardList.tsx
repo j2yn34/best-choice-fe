@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { accessTokenState } from "../../states/recoil";
 import useFetchData from "../../hooks/useFetchData";
-import { Post } from "../../mocks/mockType";
+import { Chat } from "../../mocks/mockType";
 import EnterChatRoom from "../modal/EnterChatRoom";
 import ChatUserBadge from "../common/ChatUserBadge";
 import { AiOutlineComment } from "react-icons/ai";
@@ -8,20 +10,22 @@ import { RiThumbUpLine } from "react-icons/ri";
 import NoDataMessage from "../common/NoDataMessage";
 
 const ChatCardList = () => {
+  const token = useRecoilValue<string>(accessTokenState);
   const [showModal, setShowModal] = useState(false);
   const [clickedChatData, setClickedChatData] = useState<number | null>(null);
+  const [page] = useState<number>(0);
 
   const { data: chatData } = useFetchData(
-    "/activeChatListData",
-    ["chatData"],
-    ""
+    `/api/chat/rooms?page=${page}&size=10`,
+    [`chatData-${page}`],
+    token
   );
 
-  if (chatData["content"].length === 0) {
+  if (chatData.length === 0) {
     return <NoDataMessage message="채팅방 데이터가 없어요" />;
   }
 
-  const openModal = (data: Post) => {
+  const openModal = (data: Chat) => {
     setShowModal(true);
     setClickedChatData(data.postId);
     document.body.style.overflow = "hidden";
@@ -36,8 +40,7 @@ const ChatCardList = () => {
   return (
     <>
       <div className="grid grid-cols-1 xl:grid-cols-2 xl:gap-x-6 gap-y-8">
-        {/* card */}
-        {chatData["content"].map((chat: Post) => (
+        {chatData.map((chat: Chat) => (
           <div
             className="w-full bg-white rounded-xl p-5 shadow-md cursor-pointer"
             onClick={() => openModal(chat)}
@@ -45,9 +48,9 @@ const ChatCardList = () => {
           >
             <div className="flex justify-between items-center">
               <div className="font-semibold text-lg truncate">{chat.title}</div>
-              {chat.liveChatUserCount && (
+              {chat.userCount !== 0 && (
                 <ChatUserBadge
-                  ChatUserCount={chat.liveChatUserCount}
+                  ChatUserCount={chat.userCount}
                   isChatRoom={false}
                 />
               )}
@@ -76,16 +79,19 @@ const ChatCardList = () => {
                 </div>
               </div>
               <div className="flex text-sm text-gray">
-                <p className="mr-3.5">{chat.member.nickname}</p>
-                <p>{chat.createdDate}</p>
+                <p className="mr-3.5">{chat.nickname}</p>
+                <p>{chat.createdDate.split(" ")[0]}</p>
               </div>
             </div>
           </div>
         ))}
-        {/* card */}
       </div>
       {showModal && (
-        <EnterChatRoom postId={clickedChatData} closeModal={closeModal} />
+        <EnterChatRoom
+          postId={clickedChatData}
+          closeModal={closeModal}
+          page={page}
+        />
       )}
     </>
   );

@@ -5,10 +5,11 @@ import {
   useEffect,
   useCallback,
 } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { accessTokenState, userInfoState } from "../../states/recoil";
 import * as StompJs from "@stomp/stompjs";
+import useFetchData from "../../hooks/useFetchData";
 import ChatHeader from "./ChatHeader";
 import InfoBar from "./InfoBar";
 import ChatList from "./ChatList";
@@ -19,17 +20,25 @@ const Chat = (): JSX.Element => {
   const userData = useRecoilValue(userInfoState);
 
   const [client, setClient] = useState<StompJs.Client | null>(null);
-  const [chatList, setChatList] = useState([{ sender: null, chat: null }]);
+  const [chatList, setChatList] = useState([
+    { sender: null, chat: null, type: null, sendTime: null, userCount: 0 },
+  ]);
   const [message, setMessage] = useState<string>("");
 
+  const navigate = useNavigate();
+
   const param = useParams();
-  // postId 가져오기
   if (!param.postId) {
     throw new Error("postId가 없어요");
   }
   const roomId = param.postId;
 
-  // 소켓 연결
+  const { data: roomData } = useFetchData(
+    `/api/posts/${roomId}`,
+    [`postData${roomId}`],
+    token
+  );
+
   const connect = () => {
     try {
       const client = new StompJs.Client({
@@ -37,16 +46,12 @@ const Chat = (): JSX.Element => {
         connectHeaders: {
           token: token,
         },
-        debug: function (str) {
-          console.log(str);
-        },
         reconnectDelay: 5000,
         heartbeatIncoming: 4000,
         heartbeatOutgoing: 4000,
       });
 
       client.onConnect = () => {
-        console.log("연결 성공!");
         client.subscribe(`/sub/chat/room/${roomId}`, subCallback, {
           token: token,
         });
@@ -59,12 +64,28 @@ const Chat = (): JSX.Element => {
     }
   };
 
-  // 주고 받는 메시지 list에 추가
   const subCallback = (res: StompJs.IMessage) => {
     if (res.body) {
-      const { sender, message } = JSON.parse(res.body);
-      setChatList((prev) => [...prev, { sender: sender, chat: message }]);
-      console.log(`sender: ${sender}`);
+      const { sender, message, type, sendTime, userCount } = JSON.parse(
+        res.body
+      );
+
+      if (userCount === 0) {
+        disConnect();
+        alert("채팅방이 종료되었습니다.");
+        return navigate(-1);
+      }
+
+      setChatList((prev) => [
+        ...prev,
+        {
+          sender: sender,
+          chat: message,
+          type: type,
+          sendTime: sendTime,
+          userCount: userCount,
+        },
+      ]);
     }
   };
 
@@ -78,7 +99,6 @@ const Chat = (): JSX.Element => {
       return;
     }
 
-    // 메시지 전송 -> type = TALK
     client?.publish({
       destination: "/pub/chat/message",
       body: JSON.stringify({
@@ -101,23 +121,30 @@ const Chat = (): JSX.Element => {
     if (client === null) {
       return;
     }
+
     client.deactivate();
-    alert("채팅방에서 나갑니다.");
   };
 
   // 소켓 연결 끊기
   useEffect(() => {
-    console.log(roomId);
     connect();
 
-    return () => disConnect();
+    return () => {
+      disConnect();
+      alert("채팅방에서 나갑니다.");
+    };
   }, []);
 
   return (
     <>
       <section className="relative h-screen min-h-[500px] w-full md:w-[425px] m-auto">
-        <ChatHeader roomId={roomId} exit={disConnect} />
-        <InfoBar />
+        <ChatHeader
+          roomId={roomId}
+          exit={disConnect}
+          chatList={chatList}
+          roomData={roomData}
+        />
+        <InfoBar roomData={roomData} />
         <div className="flex flex-col justify-between h-[calc(100%-64px)] bg-blue-100">
           <ChatList chatList={chatList} userNickname={userData.nickname} />
           <MessageForm
