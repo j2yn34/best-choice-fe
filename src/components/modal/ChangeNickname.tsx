@@ -1,20 +1,40 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState, useCallback } from "react";
 import axios from "axios";
 import { MdOutlineClose } from "react-icons/md";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { accessTokenState, userInfoState } from "../../states/recoil";
 import { UserInfoState } from "../../states/recoilType";
 
+const regExp = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
+
+const validationMessages = {
+  lengthMsg: "1글자 이상 12글자 이하로 입력해 주세요.",
+  specialCharMsg: "특수문자와 공백을 포함할 수 없어요",
+  duplicationMsg: "사용 중인 닉네임입니다. 다시 입력해 주세요.",
+};
+
 const ChangeNickname = ({ closeModal }: { closeModal: () => void }) => {
   const [inputValue, setInputValue] = useState<string>("");
+  const [checkMessage, setCheckMessage] = useState<string | null>(null);
   const token = useRecoilValue<string>(accessTokenState);
   const setUserInfo = useSetRecoilState<UserInfoState>(userInfoState);
-
-  const checkMessage = "유효성 검사 메시지";
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      const response = await axios({
+        method: "get",
+        url: `/api/api/members/nickname-check?nickname=${inputValue}`,
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.data.result) {
+        return setCheckMessage(validationMessages.duplicationMsg);
+      }
+
       await axios({
         method: "put",
         url: `/api/api/members`,
@@ -24,6 +44,7 @@ const ChangeNickname = ({ closeModal }: { closeModal: () => void }) => {
           Authorization: `Bearer ${token}`,
         },
       });
+
       setUserInfo((prev) => ({
         ...prev,
         nickname: inputValue,
@@ -36,10 +57,20 @@ const ChangeNickname = ({ closeModal }: { closeModal: () => void }) => {
     closeModal();
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setInputValue(value);
-  };
+
+    if (value.length < 1 || value.length > 12) {
+      return setCheckMessage(validationMessages.lengthMsg);
+    }
+
+    if (!regExp.test(value)) {
+      return setCheckMessage(validationMessages.specialCharMsg);
+    }
+
+    setCheckMessage(null);
+  }, []);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/[0.8] z-50">
@@ -61,12 +92,17 @@ const ChangeNickname = ({ closeModal }: { closeModal: () => void }) => {
               value={inputValue}
               required
             />
-            <p className="text-xs text-red-dark pt-1">* {`${checkMessage}`}</p>
+            <p className="text-xs text-red-dark pt-1 h-5">
+              {checkMessage && `* ${checkMessage}`}
+            </p>
           </div>
           <div className="flex justify-center">
             <button
               type="submit"
-              className="btn px-8 bg-black-primary text-white hover:bg-black"
+              className={`btn px-8 bg-black-primary text-white hover:bg-black ${
+                checkMessage && "opacity-30"
+              }`}
+              disabled={checkMessage !== null}
             >
               확인
             </button>
