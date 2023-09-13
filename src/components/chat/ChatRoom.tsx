@@ -68,7 +68,7 @@ const Chat = (): JSX.Element => {
     }
   };
 
-  const onChangeText = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
+  const onChangeText = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setMessage(value);
   }, []);
@@ -115,13 +115,11 @@ const Chat = (): JSX.Element => {
 
   return (
     <>
-      <section className="relative h-screen min-h-[500px] w-full md:w-[425px] m-auto border border-black">
+      <section className="relative h-screen min-h-[500px] w-full md:w-[425px] m-auto">
         <ChatHeader roomId={roomId} exit={disConnect} />
         <InfoBar />
-        <div className="flex flex-col justify-between h-[calc(100%-64px)]">
-          <div className="overflow-y-scroll bg-color-bg">
-            <ChatList chatList={chatList} />
-          </div>
+        <div className="flex flex-col justify-between h-[calc(100%-64px)] bg-blue-100">
+          <ChatList chatList={chatList} userNickname={userData.nickname} />
           <MessageForm
             message={message}
             submitMsg={onSubmit}

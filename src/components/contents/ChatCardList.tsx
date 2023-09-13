@@ -45,10 +45,11 @@ const ChatCardList = () => {
           >
             <div className="flex justify-between items-center">
               <div className="font-semibold text-lg truncate">{chat.title}</div>
-              {chat.liveChatUserCount ? (
-                <ChatUserBadge ChatUserCount={chat.liveChatUserCount} />
-              ) : (
-                ""
+              {chat.liveChatUserCount && (
+                <ChatUserBadge
+                  ChatUserCount={chat.liveChatUserCount}
+                  isChatRoom={false}
+                />
               )}
             </div>
 
