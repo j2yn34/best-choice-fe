@@ -12,7 +12,6 @@ const Header = ({
   const navigate = useNavigate();
   return (
     <>
-        <ChatUserBadge ChatUserCount={1} />
       <div className="flex items-center justify-between h-16 px-2 bg-blue-200 drop-shadow-sm">
         <div className="flex items-center">
           <button
@@ -27,6 +26,7 @@ const Header = ({
           <span className="text-sm">나가기</span>
         </div>
         {/* <div>{roomId}번 채팅방</div> */}
+        <ChatUserBadge ChatUserCount={1} isChatRoom={true} />
       </div>
     </>
   );
