@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useRecoilValue } from "recoil";
-import { accessTokenState } from "../../states/recoil";
+import { accessTokenState, newNotificationState } from "../../states/recoil";
 
 const Header = (): JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const newNotice = useRecoilValue<boolean>(newNotificationState);
 
   const leftMenus = [
     { name: "posts", title: "투표글" },
@@ -62,8 +63,11 @@ const Header = (): JSX.Element => {
           <div className="flex flex-row items-center">
             <Link
               to="/notification"
-              className={`text-2xl ${token ? "" : "hidden"}`}
+              className={`indicator text-2xl ${token ? "" : "hidden"}`}
             >
+              {newNotice && (
+                <span className="indicator-item badge badge-sm bg-blue border-white"></span>
+              )}
               <IoMdNotificationsOutline />
             </Link>
             {token ? (

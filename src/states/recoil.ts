@@ -39,3 +39,8 @@ export const commentLengthState = atom({
   key: "commentLengthState",
   default: 0,
 });
+
+export const newNotificationState = atom<boolean>({
+  key: "newNotificationState",
+  default: false,
+});
