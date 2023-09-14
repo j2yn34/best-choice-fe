@@ -11,7 +11,8 @@ const LoginCallbackPage = () => {
   const setUserInfo = useSetRecoilState<UserInfoState>(userInfoState);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
+  const [showWelcomeModal, setShowWelcomeModal] = useState<boolean>(false);
 
   useEffect(() => {
     const token = new URL(window.location.href).searchParams.get("token");
@@ -21,7 +22,7 @@ const LoginCallbackPage = () => {
         const response = await axios({
           method: "get",
           url: "/api/api/members/mypage",
-          headers: { Authorization: `Bearer  ${token}` },
+          headers: { Authorization: `Bearer ${token}` },
           responseType: "json",
         });
 
@@ -37,40 +38,50 @@ const LoginCallbackPage = () => {
       setIsLoading(false);
       setAccessToken(token);
       getUserInfo(token);
-      navigate("/");
-      alert("반가워요! 로그인 되었어요.");
+      setShowWelcomeModal(true);
     } else {
       setIsLoading(false);
-      setShowModal(true);
+      setShowErrorModal(true);
     }
   }, [navigate, setAccessToken, setUserInfo]);
 
-  const closeModal = () => {
-    setShowModal(false);
+  const closeErrorModal = () => {
+    setShowErrorModal(false);
     document.body.style.overflow = "auto";
     navigate("/login");
   };
 
+  const closeWelcomeModal = () => {
+    setShowWelcomeModal(false);
+    document.body.style.overflow = "auto";
+    navigate("/");
+  };
+
   return (
-    <div>
+    <>
       {isLoading ? (
         <div>
           <span className="flex mx-auto loading loading-spinner loading-md text-gray/[0.2]"></span>
         </div>
       ) : (
-        <div>
-          {showModal ? (
+        <>
+          {showErrorModal && (
             <BasicModal
               message="로그인을 다시 시도해 주세요"
-              closeModal={closeModal}
-              confirm={closeModal}
+              closeModal={closeErrorModal}
+              confirm={closeErrorModal}
             />
-          ) : (
-            ""
           )}
-        </div>
+        </>
       )}
-    </div>
+      {showWelcomeModal && (
+        <BasicModal
+          message="반가워요! 로그인 되었어요."
+          closeModal={closeWelcomeModal}
+          confirm={closeWelcomeModal}
+        />
+      )}
+    </>
   );
 };
 
