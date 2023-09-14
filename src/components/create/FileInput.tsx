@@ -40,7 +40,8 @@ const FileInput = () => {
 
       setInputValue((prevInputValues) => ({
         ...prevInputValues,
-        files: null,
+        imageFile: null,
+        videoFile: null,
       }));
 
       return;
