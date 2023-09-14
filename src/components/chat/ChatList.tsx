@@ -71,7 +71,10 @@ const ChatList = ({
   });
 
   return (
-    <div className="pt-20 px-2 overflow-y-scroll" ref={chatListRef}>
+    <div
+      className="pt-20 px-2 overflow-y-scroll custom-scrollBar"
+      ref={chatListRef}
+    >
       {ChatListContent}
     </div>
   );

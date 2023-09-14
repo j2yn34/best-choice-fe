@@ -78,6 +78,20 @@ ul.pagination > li.active > a {
 }
 /* e: react-js-pagination */
 
+.custom-scrollBar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.custom-scrollBar::-webkit-scrollbar-thumb {
+  height: 10px;
+  background: var(--gray-light);
+  border-radius: 10px;
+}
+
+.custom-scrollBar::-webkit-scrollbar-track {
+  background: var(--blue-100);
+}
+
 @media (max-width: 767px) {
   .main_chat[data-scroll="true"] {
     overflow-x: scroll;
