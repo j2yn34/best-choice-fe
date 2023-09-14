@@ -1,18 +1,46 @@
 import axios from "axios";
+import { useState } from "react";
 import { useNavigate } from "react-router";
+import BasicModal from "../../modal/BasicModal";
+
+const maxUserCount = 10;
 
 const EnterChatRoomBtn = ({
   postId,
   token,
   isModal,
+  userCount,
 }: {
   postId: string;
   token: string;
   isModal: boolean;
+  userCount: number;
 }) => {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [modalMessage, setModalMessage] = useState<string>("");
+
+  const openModal = () => {
+    setShowModal(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    document.body.style.overflow = "auto";
+  };
 
   const handleEnterChatRoom = async () => {
+    if (token === "") {
+      setModalMessage("로그인 후 이용해 주세요");
+      return openModal();
+    }
+
+    if (userCount === maxUserCount) {
+      setModalMessage("제한 인원 초과로 해당 채팅방에 입장할 수 없어요.");
+      return openModal();
+    }
+
     try {
       const response = await axios({
         method: "get",
@@ -43,6 +71,13 @@ const EnterChatRoomBtn = ({
       >
         채팅방 입장하기
       </button>
+      {showModal && (
+        <BasicModal
+          message={modalMessage}
+          closeModal={closeModal}
+          confirm={closeModal}
+        />
+      )}
     </>
   );
 };
