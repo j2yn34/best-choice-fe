@@ -83,6 +83,7 @@ const NotificationEnterChatRoom = ({
               postId={viewData.postId}
               token={token}
               isModal={true}
+              userCount={viewData.liveChatUserCount}
             />
           </div>
         </div>
