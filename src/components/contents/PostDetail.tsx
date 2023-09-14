@@ -312,7 +312,11 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
                 <CreateChatRoomBtn postId={postData.postId} token={token} />
               )}
               {isChatActive && (
-                <EnterChatRoomBtn postId={postData.postId} token={token} />
+                <EnterChatRoomBtn
+                  postId={postData.postId}
+                  token={token}
+                  isModal={false}
+                />
               )}
             </div>
           </div>

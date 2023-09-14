@@ -4,9 +4,11 @@ import { useNavigate } from "react-router";
 const EnterChatRoomBtn = ({
   postId,
   token,
+  isModal,
 }: {
   postId: string;
   token: string;
+  isModal: boolean;
 }) => {
   const navigate = useNavigate();
 
@@ -33,7 +35,11 @@ const EnterChatRoomBtn = ({
     <>
       <button
         onClick={handleEnterChatRoom}
-        className="btn border-blue-300 bg-blue-200 text-black hover:bg-blue-300 hover:border-blue-300"
+        className={`${
+          isModal
+            ? "btn bg-black-primary text-white hover:bg-black"
+            : "btn border-blue-300 bg-blue-200 text-black hover:bg-blue-300 hover:border-blue-300"
+        }`}
       >
         채팅방 입장하기
       </button>

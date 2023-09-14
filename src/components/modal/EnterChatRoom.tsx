@@ -85,7 +85,11 @@ const EnterChatRoom = ({
             >
               투표글 보러가기
             </Link>
-            <EnterChatRoomBtn postId={String(postId)} token={token} />
+            <EnterChatRoomBtn
+              postId={viewData.postId}
+              token={token}
+              isModal={true}
+            />
           </div>
         </div>
       </div>

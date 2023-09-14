@@ -1,6 +1,6 @@
-import useFetchData from "../../hooks/useFetchData";
+import { useEffect, useRef, useState } from "react";
 import PostCard from "./PostCard";
-import { Post } from "../../mocks/mockType";
+import { useInfinitePosts } from "../../hooks/useInfinitePosts";
 import NoDataMessage from "../common/NoDataMessage";
 
 const PostCardList = ({
@@ -9,37 +9,64 @@ const PostCardList = ({
   token,
 }: {
   limit: number | null;
-  sort: string | null;
-  token: string | null;
-}): JSX.Element => {
-  // const [page, setPage] = useState<number>(1);
+  sort: string;
+  token: string;
+}) => {
+  const { data, fetchNextPage, hasNextPage } = useInfinitePosts({
+    token,
+    currentSort: sort,
+  });
+  const [isBottom, setIsBottom] = useState(false);
+  const bottomRef = useRef(null);
 
-  const url = token
-    ? `/api/api/posts/my?sort=${sort}&page=0`
-    : `/api/posts?sort=${sort}&page=0`;
-  const key = token ? `${sort}myPostData` : `${sort}PostData`;
-  const auth = token ? token : "";
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.1,
+    };
 
-  const { data: postData } = useFetchData(url, [key], auth);
+    const observer = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      if (entry.isIntersecting) {
+        setIsBottom(true);
+      } else {
+        setIsBottom(false);
+      }
+    }, options);
 
-  if (postData["content"].length <= 0) {
-    return (
-      <>
-        <NoDataMessage message="투표글 데이터가 없어요" />
-        {/* <button onClick={() => setPage(page + 1)}>page ++</button> */}
-      </>
-    );
+    if (bottomRef.current) {
+      observer.observe(bottomRef.current);
+    }
+
+    return () => {
+      if (bottomRef.current) {
+        observer.unobserve(bottomRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isBottom && hasNextPage) {
+      fetchNextPage();
+      setIsBottom(false);
+    }
+  }, [isBottom, hasNextPage, fetchNextPage]);
+
+  if (!data || data.pages.length <= 0) {
+    return <NoDataMessage message="투표글 데이터가 없어요" />;
   }
+
+  const viewPosts = data.pages.flatMap((page) => page.content);
 
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 xl:gap-x-6 gap-y-8">
       {limit === null
-        ? postData["content"].map((post: Post) => (
-            <PostCard Data={post} key={post.postId} />
-          ))
-        : postData["content"]
+        ? viewPosts.map((post) => <PostCard Data={post} key={post.postId} />)
+        : viewPosts
             .slice(0, limit)
-            .map((post: Post) => <PostCard Data={post} key={post.postId} />)}
+            .map((post) => <PostCard Data={post} key={post.postId} />)}
+      {hasNextPage && <div ref={bottomRef} />}
     </div>
   );
 };
