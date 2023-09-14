@@ -1,4 +1,4 @@
-import { Suspense, lazy, useState } from "react";
+import { Suspense, lazy, useState, Dispatch, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
 import ChangeNickname from "../components/modal/ChangeNickname";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
@@ -8,6 +8,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { accessTokenState, userInfoState } from "../states/recoil";
 import ScrollTopBtn from "../components/common/button/ScrollTopBtn";
 import { UserInfoState } from "../states/recoilType";
+import BasicModal from "../components/modal/BasicModal";
 
 const sortNames = [
   { name: "작성한 투표글", sort: "POSTS" },
@@ -17,7 +18,8 @@ const sortNames = [
 ];
 
 const MemberPage = (): JSX.Element => {
-  const [showModal, setShowModal] = useState(false);
+  const [showChangeNicknameModal, setShowChangeNicknameModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
   const [postSort, setPostSort] = useState<string>("POSTS");
   const [token, setToken] = useRecoilState<string>(accessTokenState);
   const userInfo = useRecoilValue<UserInfoState>(userInfoState);
@@ -28,23 +30,19 @@ const MemberPage = (): JSX.Element => {
     () => import("../components/contents/PostCardList")
   );
 
-  const onLogoutClick = () => {
-    const ok = confirm("로그아웃 할까요?");
-    if (ok) {
-      setToken("");
-      sessionStorage.removeItem("user");
-      navigate("/");
-      alert("로그아웃 되었어요. 또 만나요!");
-    } else return;
+  const LogoutClick = () => {
+    setToken("");
+    sessionStorage.removeItem("user");
+    navigate("/");
   };
 
-  const openModal = () => {
-    setShowModal(true);
+  const openModal = (setFunc: Dispatch<SetStateAction<boolean>>) => {
+    setFunc(true);
     document.body.style.overflow = "hidden";
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  const closeModal = (setFunc: Dispatch<SetStateAction<boolean>>) => {
+    setFunc(false);
     document.body.style.overflow = "auto";
   };
 
@@ -58,13 +56,16 @@ const MemberPage = (): JSX.Element => {
             님!
           </p>
           <button
-            onClick={() => openModal()}
+            onClick={() => openModal(setShowChangeNicknameModal)}
             className="btn btn-sm bg-white rounded-md"
           >
             닉네임 변경
           </button>
         </div>
-        <button onClick={onLogoutClick} className="font-bold">
+        <button
+          onClick={() => openModal(setShowConfirmModal)}
+          className="font-bold"
+        >
           로그아웃
         </button>
       </div>
@@ -88,7 +89,18 @@ const MemberPage = (): JSX.Element => {
         </Suspense>
       </ErrorBoundary>
       <ScrollTopBtn />
-      {showModal ? <ChangeNickname closeModal={closeModal} /> : null}
+      {showChangeNicknameModal ? (
+        <ChangeNickname
+          closeModal={() => closeModal(setShowChangeNicknameModal)}
+        />
+      ) : null}
+      {showConfirmModal && (
+        <BasicModal
+          message="로그아웃 할까요?"
+          closeModal={() => closeModal(setShowConfirmModal)}
+          confirm={LogoutClick}
+        />
+      )}
     </>
   );
 };
