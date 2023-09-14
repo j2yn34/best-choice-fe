@@ -1,6 +1,7 @@
 import { FcGoogle } from "react-icons/fc";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { SiNaver } from "react-icons/si";
+import { Link } from "react-router-dom";
 
 const LoginPage = (): JSX.Element => {
   const GOOGLE_AUTH_URI = "http://www.winnow-bestchoice.com:8080/login/google";
@@ -24,7 +25,9 @@ const LoginPage = (): JSX.Element => {
   return (
     <div className="fixed inset-0 flex items-center justify-center mb-24">
       <div className="flex flex-col items-center gap-12">
-        <span>로고</span>
+        <Link to="/">
+          <img src="/logo.png" className="w-32" alt="로고" />
+        </Link>
         <div className="flex flex-col gap-4">
           <button
             onClick={() => onSocialLogin("google")}
