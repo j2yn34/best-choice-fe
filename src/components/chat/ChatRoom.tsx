@@ -42,7 +42,7 @@ const Chat = (): JSX.Element => {
   const connect = () => {
     try {
       const client = new StompJs.Client({
-        brokerURL: "ws://www.winnow-bestchoice.com:8080/ws-stomp",
+        brokerURL: "wss://www.winnow-bestchoice.com:8080/ws-stomp",
         connectHeaders: {
           token: token,
         },
