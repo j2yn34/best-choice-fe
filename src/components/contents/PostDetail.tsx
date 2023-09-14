@@ -56,8 +56,6 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
     return <NoDataMessage message="해당하는 투표글이 없어요" />;
   }
 
-  const safeContent = DOMPurify.sanitize(postData.content);
-
   const handleOptionChange = (option: "A" | "B") => {
     setSelectedOption(option);
   };
@@ -164,7 +162,8 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
     document.body.style.overflow = "auto";
   };
 
-  const isChatActive = postData.liveChatUrl;
+  const isChatActive = postData.liveChatActive;
+  const safeContent = DOMPurify.sanitize(postData.content);
   const isMyPost = memberId === postData.member.memberId;
   const srcUrl = "https://winnow-bestchoice.s3.ap-northeast-2.amazonaws.com/";
   const images = postData.resources.filter((resource: string | string[]) =>
@@ -178,7 +177,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
     <>
       <div className="w-full bg-white rounded-xl px-4 sm:px-6 lg:px-[70px] py-4">
         <div className="flex justify-end">
-          {isMyPost ? (
+          {token && isMyPost ? (
             <button className="text-red-dark text-sm" onClick={onDeleteClick}>
               삭제
             </button>
@@ -201,7 +200,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
         <div className="pt-4">
           <div className="px-2">
             {images.length > 0 || videos.length > 0 ? (
-              <div className="flex items-center gap-2 overflow-x-scroll lg:overflow-auto mb-6">
+              <div className="flex items-center gap-2 overflow-x-scroll lg:overflow-auto mb-4 lg:mb-6">
                 {images.map((resource: string, index: number) => (
                   <div key={index} className="shrink-0 w-56 md:shrink md:w-72">
                     <img
@@ -220,7 +219,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
                 ))}
               </div>
             ) : null}
-            <div className="min-h-[80px] pb-10">{parse(safeContent)}</div>
+            <div className=" pb-10">{parse(safeContent)}</div>
 
             <div className="flex items-end justify-between mb-4">
               <div className="flex gap-2 flex-wrap mr-1.5">
