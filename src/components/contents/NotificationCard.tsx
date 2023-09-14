@@ -7,6 +7,7 @@ import NoDataMessage from "../common/NoDataMessage";
 import { useRecoilValue } from "recoil";
 import { accessTokenState } from "../../states/recoil";
 import BasicModal from "../modal/BasicModal";
+import { TimeDiff } from "../common/TimeDiff";
 
 const NotificationCard = (): JSX.Element => {
   const [showChatEnterModal, setShowChatEnterModal] = useState<boolean>(false);
@@ -85,7 +86,7 @@ const NotificationCard = (): JSX.Element => {
         {notificationData["content"].map((data: Notification) => (
           <div key={data.notificationId}>
             <div className="flex justify-between mb-3">
-              <div>{data.createdDate}</div>
+              <div>{TimeDiff(data.createdDate)}</div>
               <div>
                 <button onClick={() => onDeleteNoticeClick(data)}>삭제</button>
               </div>
