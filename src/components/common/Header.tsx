@@ -40,12 +40,16 @@ const Header = (): JSX.Element => {
                 <RxHamburgerMenu />
               </button>
               <Link to="/" className="mr-8">
-                로고
+                <img src="/logo.png" className="w-16" alt="로고" />
               </Link>
             </div>
-            <div className={`hidden md:flex ${isMenuOpen ? "hidden" : ""}`}>
+            <div
+              className={`hidden md:flex items-center ${
+                isMenuOpen ? "hidden" : ""
+              }`}
+            >
               <Link to="/" className="mr-8">
-                로고
+                <img src="/logo.png" className="w-16" alt="로고" />
               </Link>
               {leftMenus.map((menu) => (
                 <Link
