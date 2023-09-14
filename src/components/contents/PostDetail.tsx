@@ -316,6 +316,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
                   postId={postData.postId}
                   token={token}
                   isModal={false}
+                  userCount={postData.liveChatUserCount}
                 />
               )}
             </div>

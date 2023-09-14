@@ -31,6 +31,7 @@ const EnterChatRoom = ({
   if (isError) {
     console.log("데이터 불러오기 실패");
   }
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -89,6 +90,7 @@ const EnterChatRoom = ({
               postId={viewData.postId}
               token={token}
               isModal={true}
+              userCount={chatData[0].userCount}
             />
           </div>
         </div>
