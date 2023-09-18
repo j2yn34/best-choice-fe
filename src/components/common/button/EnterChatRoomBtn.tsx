@@ -57,6 +57,8 @@ const EnterChatRoomBtn = ({
     } catch (error) {
       console.error("채팅방 입장 오류:", error);
     }
+
+    document.body.style.overflow = "auto";
   };
 
   return (

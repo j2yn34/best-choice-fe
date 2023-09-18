@@ -33,6 +33,7 @@ const MemberPage = (): JSX.Element => {
   const LogoutClick = () => {
     setToken("");
     sessionStorage.removeItem("user");
+    closeModal(setShowConfirmModal);
     navigate("/");
   };
 
