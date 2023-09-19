@@ -23,7 +23,7 @@ const ChatList = ({
 
   const ChatListContent = chatList.map((chat, index) => {
     const isUser = chat.sender === userNickname;
-    const [firstTime, secondTime] = chat.sendTime?.split(" ")[1].split(":") || [
+    const [hour, minute] = chat.sendTime?.split(" ")[1].split(":") || [
       "00",
       "00",
     ];
@@ -47,13 +47,8 @@ const ChatList = ({
                   {chat.sender}
                 </div>
                 <div
-                  className={`flex items-end ${!isUser && "flex-row-reverse"}`}
+                  className={`flex items-end ${isUser && "flex-row-reverse"}`}
                 >
-                  <time
-                    className={`text-xs opacity-50 ${isUser ? "mr-1" : "ml-1"}`}
-                  >
-                    {firstTime}:{secondTime}
-                  </time>
                   <div
                     className={`chat-bubble shadow-sm ${
                       isUser ? "bg-blue-300" : "bg-white"
@@ -61,6 +56,11 @@ const ChatList = ({
                   >
                     {chat.chat}
                   </div>
+                  <time
+                    className={`text-xs opacity-50 ${isUser ? "mr-1" : "ml-1"}`}
+                  >
+                    {hour}:{minute}
+                  </time>
                 </div>
               </div>
             </>
