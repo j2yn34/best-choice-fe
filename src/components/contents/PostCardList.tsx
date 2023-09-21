@@ -53,7 +53,7 @@ const PostCardList = ({
     }
   }, [isBottom, hasNextPage, fetchNextPage]);
 
-  if (!data || data.pages.length <= 0) {
+  if (!data || data.pages[0].content.length <= 0) {
     return <NoDataMessage message="투표글 데이터가 없어요" />;
   }
 
