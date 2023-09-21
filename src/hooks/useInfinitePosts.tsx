@@ -28,23 +28,25 @@ const getPosts = async ({
   }
 };
 
-export function useInfinitePosts({
+export const useInfinitePosts = ({
   token,
   currentSort,
 }: {
   token: string;
   currentSort: string;
-}) {
+}) => {
+  const CONTENTS_LENGTH = 10;
+
   return useInfiniteQuery(
     `${currentSort}posts`,
     ({ pageParam = 0 }) => getPosts({ token, currentSort, pageParam }),
     {
       getNextPageParam: (lastPage, viewPages) => {
-        if (lastPage.content.length < 10) {
+        if (lastPage.content.length < CONTENTS_LENGTH) {
           return null;
         }
         return viewPages.length;
       },
     }
   );
-}
+};
