@@ -136,8 +136,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
     } catch (error) {
       console.error("게시글 삭제 실패: ", error);
     }
-    setShowDeleteModal(false);
-    document.body.style.overflow = "auto";
+    closeModal(setShowDeleteModal);
   };
 
   const reportPost = async () => {
@@ -158,8 +157,7 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
     } catch (error) {
       console.error("게시글 신고 실패: ", error);
     }
-    setShowReportModal(false);
-    document.body.style.overflow = "auto";
+    closeModal(setShowReportModal);
   };
 
   const isChatActive = postData.liveChatActive;

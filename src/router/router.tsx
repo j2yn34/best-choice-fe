@@ -30,9 +30,8 @@ const Router = (): JSX.Element => {
       {!hideHeaderFooter && <Header />}
       <main
         className={`${
-          !hideHeaderFooter
-            ? "main pt-12 md:pt-20 pb-24 px-4 md:px-12 mx-auto xl:container"
-            : ""
+          !hideHeaderFooter &&
+          "main pt-12 md:pt-20 pb-24 px-4 md:px-12 mx-auto xl:container"
         }`}
       >
         <ErrorBoundary FallbackComponent={ErrorPage}>

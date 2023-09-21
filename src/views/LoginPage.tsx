@@ -24,9 +24,9 @@ const LoginPage = (): JSX.Element => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center mb-24">
-      <div className="flex flex-col items-center gap-12">
+      <div className="flex flex-col items-center gap-10">
         <Link to="/">
-          <img src="/logo.png" className="w-32" alt="로고" />
+          <img src="/logoName.png" className="w-32" alt="로고" />
         </Link>
         <div className="flex flex-col gap-4">
           <button

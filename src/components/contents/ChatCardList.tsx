@@ -22,7 +22,7 @@ const ChatCardList = () => {
   );
 
   if (chatData.length === 0) {
-    return <NoDataMessage message="채팅방 데이터가 없어요" />;
+    return <NoDataMessage message="진행 중인 채팅방이 없어요" />;
   }
 
   const openModal = (data: Chat) => {

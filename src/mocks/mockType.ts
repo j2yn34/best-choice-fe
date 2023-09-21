@@ -18,7 +18,7 @@ export type Post = {
   commentCount: number;
   ACount: number;
   BCount: number;
-  chattingActive?: boolean;
+  liveChatActive?: boolean;
   liveChatUserCount?: number;
 };
 

@@ -13,7 +13,7 @@ const PostCard = ({ Data }: { Data: Post }): JSX.Element => {
     >
       <div className="flex justify-between items-center">
         <div className="font-semibold text-lg truncate">{Data.title}</div>
-        {Data.chattingActive ? <ChattingBadge /> : ""}
+        {Data.liveChatActive ? <ChattingBadge /> : ""}
       </div>
 
       <div className="mt-5 flex flex-col md:flex-row items-center justify-between">
