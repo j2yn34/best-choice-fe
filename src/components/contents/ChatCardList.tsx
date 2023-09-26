@@ -8,6 +8,7 @@ import ChatUserBadge from "../common/ChatUserBadge";
 import { AiOutlineComment } from "react-icons/ai";
 import { RiThumbUpLine } from "react-icons/ri";
 import NoDataMessage from "../common/NoDataMessage";
+import { TimeDiff } from "../common/TimeDiff";
 
 const ChatCardList = () => {
   const token = useRecoilValue<string>(accessTokenState);
@@ -80,7 +81,7 @@ const ChatCardList = () => {
               </div>
               <div className="flex text-sm text-gray">
                 <p className="mr-3.5">{chat.nickname}</p>
-                <p>{chat.createdDate.split(" ")[0]}</p>
+                <p>{TimeDiff(chat.createdDate)}</p>
               </div>
             </div>
           </div>
