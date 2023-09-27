@@ -80,7 +80,7 @@ const CommentList = ({ sort, postId }: { sort: string; postId: string }) => {
                 <ul className="flex items-center gap-2.5">
                   {commentData.option ? (
                     <li
-                      className={`min-w-[24px] min-h-[24px] pl-[7px] rounded-full text-sm md:text-base  ${
+                      className={`min-w-[24px] min-h-[24px] pl-[7.5px] pt-[1.5px] rounded-full text-sm md:text-base  ${
                         commentData.option === "A"
                           ? "text-red-dark bg-red-100"
                           : "text-blue-dark bg-blue-100"

@@ -85,7 +85,6 @@ const Search = (): JSX.Element => {
         </button>
       </form>
       <div className="flex items-center justify-center mt-4">
-        {/* <p>추천 해시태그</p> */}
         {recommendSearchTags.map((searchTag) => (
           <button
             key={searchTag.name}
@@ -96,10 +95,12 @@ const Search = (): JSX.Element => {
           </button>
         ))}
       </div>
-      <p className="text-xl mt-8">
-        <span className="font-semibold">#{submitValue} </span>
-        검색 결과 ({tagPostData === null ? 0 : tagPostData?.length})
-      </p>
+      {submitValue && (
+        <p className="text-xl mt-8">
+          <span className="font-semibold">#{submitValue} </span>
+          검색 결과 ({tagPostData === null ? 0 : tagPostData?.length})
+        </p>
+      )}
       <div className="grid grid-cols-1 mt-7 xl:grid-cols-2 xl:gap-x-6 gap-y-8">
         {tagPostData?.map((post: Post) => (
           <PostCard Data={post} key={post.postId} />
