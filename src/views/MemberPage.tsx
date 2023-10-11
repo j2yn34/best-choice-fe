@@ -1,10 +1,10 @@
 import { Suspense, lazy, useState, Dispatch, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import ChangeNickname from "../components/modal/ChangeNickname";
 import LoadPostCard from "../components/skeletonUI/LoadPostCard";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessage from "../components/common/ErrorMessage";
-import { useRecoilState, useRecoilValue } from "recoil";
 import { accessTokenState, userInfoState } from "../states/recoil";
 import ScrollTopBtn from "../components/common/button/ScrollTopBtn";
 import { UserInfoState } from "../states/recoilType";
@@ -24,6 +24,7 @@ const MemberPage = (): JSX.Element => {
   const [token, setToken] = useRecoilState<string>(accessTokenState);
   const userInfo = useRecoilValue<UserInfoState>(userInfoState);
   const nickname = userInfo.nickname;
+  const resetUserInfo = useResetRecoilState(userInfoState);
   const navigate = useNavigate();
 
   const PostCardList = lazy(
@@ -31,8 +32,8 @@ const MemberPage = (): JSX.Element => {
   );
 
   const LogoutClick = () => {
+    resetUserInfo();
     setToken("");
-    sessionStorage.removeItem("user");
     closeModal(setShowConfirmModal);
     navigate("/");
   };

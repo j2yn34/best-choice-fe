@@ -105,7 +105,7 @@ const CommentList = ({ sort, postId }: { sort: string; postId: string }) => {
                     liked={commentData.liked ? true : false}
                   />
                 </ul>
-                {userData.memberId === commentData.member.memberId && (
+                {token && userData.memberId === commentData.member.memberId && (
                   <button
                     className="text-red-dark text-sm"
                     onClick={() => openModal(commentData.commentId)}
