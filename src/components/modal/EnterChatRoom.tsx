@@ -4,7 +4,7 @@ import { accessTokenState } from "../../states/recoil";
 import { MdOutlineClose } from "react-icons/md";
 import useFetchData from "../../hooks/useFetchData";
 import { Post } from "../../mocks/mockType";
-import BasicModal from "./BasicModal";
+import AlertModal from "./AlertModal";
 import EnterChatRoomBtn from "../common/button/EnterChatRoomBtn";
 
 const EnterChatRoom = ({
@@ -42,11 +42,7 @@ const EnterChatRoom = ({
 
   if (filteredPostData.length === 0) {
     return (
-      <BasicModal
-        message="해당하는 채팅방이 없어요"
-        closeModal={closeModal}
-        confirm={closeModal}
-      />
+      <AlertModal message="해당하는 채팅방이 없어요" closeModal={closeModal} />
     );
   }
 

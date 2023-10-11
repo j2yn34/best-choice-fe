@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { accessTokenState, userInfoState } from "../states/recoil";
 import { useSetRecoilState } from "recoil";
-import BasicModal from "../components/modal/BasicModal";
+import AlertModal from "../components/modal/AlertModal";
 import { UserInfoState } from "../states/recoilType";
 import axios from "axios";
 
@@ -66,19 +66,17 @@ const LoginCallbackPage = () => {
       ) : (
         <>
           {showErrorModal && (
-            <BasicModal
+            <AlertModal
               message="로그인을 다시 시도해 주세요"
               closeModal={closeErrorModal}
-              confirm={closeErrorModal}
             />
           )}
         </>
       )}
       {showWelcomeModal && (
-        <BasicModal
+        <AlertModal
           message="반가워요! 로그인 되었어요."
           closeModal={closeWelcomeModal}
-          confirm={closeWelcomeModal}
         />
       )}
     </>

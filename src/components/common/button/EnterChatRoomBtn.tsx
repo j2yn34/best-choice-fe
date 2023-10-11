@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import BasicModal from "../../modal/BasicModal";
+import AlertModal from "../../modal/AlertModal";
 
 const maxUserCount = 10;
 
@@ -74,11 +74,7 @@ const EnterChatRoomBtn = ({
         채팅방 입장하기
       </button>
       {showModal && (
-        <BasicModal
-          message={modalMessage}
-          closeModal={closeModal}
-          confirm={closeModal}
-        />
+        <AlertModal message={modalMessage} closeModal={closeModal} />
       )}
     </>
   );

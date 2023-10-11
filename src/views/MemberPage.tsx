@@ -8,7 +8,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { accessTokenState, userInfoState } from "../states/recoil";
 import ScrollTopBtn from "../components/common/button/ScrollTopBtn";
 import { UserInfoState } from "../states/recoilType";
-import BasicModal from "../components/modal/BasicModal";
+import ConfirmModal from "../components/modal/ConfirmModal";
 
 const sortNames = [
   { name: "작성한 투표글", sort: "POSTS" },
@@ -96,7 +96,7 @@ const MemberPage = (): JSX.Element => {
         />
       ) : null}
       {showConfirmModal && (
-        <BasicModal
+        <ConfirmModal
           message="로그아웃 할까요?"
           closeModal={() => closeModal(setShowConfirmModal)}
           confirm={LogoutClick}

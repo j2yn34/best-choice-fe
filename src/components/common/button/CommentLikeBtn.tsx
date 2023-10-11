@@ -4,7 +4,7 @@ import { RiThumbUpLine, RiThumbUpFill } from "react-icons/ri";
 import { useRecoilValue } from "recoil";
 import { useMutation, useQueryClient } from "react-query";
 import { accessTokenState } from "../../../states/recoil";
-import BasicModal from "../../modal/BasicModal";
+import AlertModal from "../../modal/AlertModal";
 
 const CommentLikeBtn = ({
   commentId,
@@ -123,11 +123,7 @@ const CommentLikeBtn = ({
         <span>{likeInfo.totalLikeCount}</span>
       </div>
       {showModal && (
-        <BasicModal
-          message="로그인 후 이용해 주세요"
-          closeModal={closeModal}
-          confirm={closeModal}
-        />
+        <AlertModal message="로그인 후 이용해 주세요" closeModal={closeModal} />
       )}
     </>
   );

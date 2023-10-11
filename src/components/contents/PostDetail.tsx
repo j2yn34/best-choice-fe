@@ -13,7 +13,8 @@ import DOMPurify from "dompurify";
 import parse from "html-react-parser";
 import useFetchData from "../../hooks/useFetchData";
 import VoteGraph from "./VoteGraph";
-import BasicModal from "../modal/BasicModal";
+import AlertModal from "../modal/AlertModal";
+import ConfirmModal from "../modal/ConfirmModal";
 import NoDataMessage from "../common/NoDataMessage";
 import { accessTokenState, userInfoState } from "../../states/recoil";
 import { UserInfoState } from "../../states/recoilType";
@@ -322,30 +323,28 @@ const PostDetail = ({ postId }: { postId: string }): JSX.Element => {
       </div>
       {showReportModal &&
         (postData.reported ? (
-          <BasicModal
+          <AlertModal
             message="이미 신고한 투표글이에요"
             closeModal={() => closeModal(setShowReportModal)}
-            confirm={() => closeModal(setShowReportModal)}
           />
         ) : (
-          <BasicModal
+          <ConfirmModal
             message="해당 투표글을 신고 할까요?"
             closeModal={() => closeModal(setShowReportModal)}
             confirm={reportPost}
           />
         ))}
       {showDeleteModal && (
-        <BasicModal
+        <ConfirmModal
           message="해당 투표글을 삭제 할까요?"
           closeModal={() => closeModal(setShowDeleteModal)}
           confirm={deletePost}
         />
       )}
       {showAlertModal && (
-        <BasicModal
+        <AlertModal
           message="로그인 후 이용해 주세요"
           closeModal={() => closeModal(setShowAlertModal)}
-          confirm={() => closeModal(setShowAlertModal)}
         />
       )}
     </>

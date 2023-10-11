@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from "react";
 import { RecoilState, useSetRecoilState } from "recoil";
 import { inputValueState } from "../../states/recoil";
 import { InputValue } from "../../states/recoilType";
-import BasicModal from "../modal/BasicModal";
+import AlertModal from "../modal/AlertModal";
 
 const maxFileCnt = 5;
 const maxFileSize = 1024 * 1024 * 100;
@@ -122,11 +122,7 @@ const FileInput = () => {
         ))}
       </div>
       {showModal ? (
-        <BasicModal
-          message={modalMessage}
-          closeModal={closeModal}
-          confirm={closeModal}
-        />
+        <AlertModal message={modalMessage} closeModal={closeModal} />
       ) : null}
     </>
   );
