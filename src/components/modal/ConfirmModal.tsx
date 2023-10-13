@@ -1,6 +1,6 @@
 import { MdOutlineClose } from "react-icons/md";
 
-const BasicModal = ({
+const ConfirmModal = ({
   message,
   closeModal,
   confirm,
@@ -18,12 +18,17 @@ const BasicModal = ({
           </button>
           <div className="flex flex-col justify-center items-center px-4 py-2 md:px-8">
             <p className="text-lg">{message}</p>
-            <button
-              className="btn bg-black-primary text-white hover:bg-black mt-12 px-8"
-              onClick={confirm}
-            >
-              확인
-            </button>
+            <div className="flex gap-4">
+              <button className="btn mt-12 px-8" onClick={closeModal}>
+                취소
+              </button>
+              <button
+                className="btn bg-black-primary text-white hover:bg-black mt-12 px-8"
+                onClick={confirm}
+              >
+                확인
+              </button>
+            </div>
           </div>
         </div>
       </>
@@ -31,4 +36,4 @@ const BasicModal = ({
   );
 };
 
-export default BasicModal;
+export default ConfirmModal;

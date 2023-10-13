@@ -6,7 +6,7 @@ import { Notification } from "../../mocks/mockType";
 import NoDataMessage from "../common/NoDataMessage";
 import { useRecoilValue } from "recoil";
 import { accessTokenState } from "../../states/recoil";
-import BasicModal from "../modal/BasicModal";
+import ConfirmModal from "../modal/ConfirmModal";
 import { TimeDiff } from "../common/TimeDiff";
 
 const NotificationCard = (): JSX.Element => {
@@ -116,7 +116,7 @@ const NotificationCard = (): JSX.Element => {
         />
       )}
       {showDeleteAllModal && (
-        <BasicModal
+        <ConfirmModal
           message={"전체 알림을 삭제할까요?"}
           closeModal={() => closeModal(setShowDeleteAllModal)}
           confirm={onDeleteAllNoticeClick}

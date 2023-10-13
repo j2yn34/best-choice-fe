@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { MdOutlineClose } from "react-icons/md";
 import useFetchData from "../../hooks/useFetchData";
-import BasicModal from "./BasicModal";
+import AlertModal from "./AlertModal";
 import EnterChatRoomBtn from "../common/button/EnterChatRoomBtn";
 import { useRecoilValue } from "recoil";
 import { accessTokenState } from "../../states/recoil";
@@ -34,11 +34,7 @@ const NotificationEnterChatRoom = ({
 
   if (notificationData.length <= 0) {
     return (
-      <BasicModal
-        message="해당하는 채팅방이 없어요"
-        closeModal={closeModal}
-        confirm={closeModal}
-      />
+      <AlertModal message="해당하는 채팅방이 없어요" closeModal={closeModal} />
     );
   }
 

@@ -8,7 +8,7 @@ import {
   accessTokenState,
 } from "../../states/recoil";
 import { Comment } from "../../mocks/mockType";
-import BasicModal from "../modal/BasicModal";
+import ConfirmModal from "../modal/ConfirmModal";
 import NoDataMessage from "../common/NoDataMessage";
 import moment from "moment";
 import CommentLikeBtn from "../common/button/CommentLikeBtn";
@@ -105,7 +105,7 @@ const CommentList = ({ sort, postId }: { sort: string; postId: string }) => {
                     liked={commentData.liked ? true : false}
                   />
                 </ul>
-                {userData.memberId === commentData.member.memberId && (
+                {token && userData.memberId === commentData.member.memberId && (
                   <button
                     className="text-red-dark text-sm"
                     onClick={() => openModal(commentData.commentId)}
@@ -133,7 +133,7 @@ const CommentList = ({ sort, postId }: { sort: string; postId: string }) => {
         </div>
       )}
       {showModal && (
-        <BasicModal
+        <ConfirmModal
           message="댓글을 삭제할까요?"
           closeModal={closeModal}
           confirm={deleteComment}
