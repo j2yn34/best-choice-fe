@@ -32,7 +32,7 @@ const MainPage = (): JSX.Element => {
         <h1 className="text-2xl font-semibold mb-8">HOT한 투표글</h1>
         <ErrorBoundary FallbackComponent={ErrorMessage}>
           <Suspense fallback={<LoadPostCard limit={4} />}>
-            <PostCardList limit={4} sort="HOT" token={null} />
+            <PostCardList limit={4} sort="HOT" token={""} />
           </Suspense>
         </ErrorBoundary>
         <div className="mt-10 text-end">
@@ -44,7 +44,7 @@ const MainPage = (): JSX.Element => {
         <h1 className="text-2xl font-semibold mb-8">새로 올라온 투표글</h1>
         <ErrorBoundary FallbackComponent={ErrorMessage}>
           <Suspense fallback={<LoadPostCard limit={4} />}>
-            <PostCardList limit={4} sort="LATEST" token={null} />
+            <PostCardList limit={4} sort="LATEST" token={""} />
           </Suspense>
         </ErrorBoundary>
         <div className="mt-10 text-end">
